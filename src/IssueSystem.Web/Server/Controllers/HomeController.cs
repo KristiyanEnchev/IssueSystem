@@ -1,8 +1,8 @@
 ﻿namespace Server.Controllers
 {
     using System.Diagnostics;
-    using IssueSystem.Models;
     using Microsoft.AspNetCore.Mvc;
+    using Server.Models;
 
     public class HomeController : Controller
     {

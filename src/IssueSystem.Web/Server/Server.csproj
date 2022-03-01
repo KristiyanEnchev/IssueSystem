@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-Server-C1B44122-D4ED-49BB-B7F5-02ADF0417750</UserSecretsId>
   </PropertyGroup>
@@ -11,7 +11,6 @@
     <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
     <None Include="Properties\serviceDependencies.local.json.user" />
     <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_LoginPartial.cshtml" />
