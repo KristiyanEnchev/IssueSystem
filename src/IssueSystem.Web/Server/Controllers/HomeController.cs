@@ -1,18 +1,18 @@
 ﻿namespace Server.Controllers
 {
     using System.Diagnostics;
+
     using Microsoft.AspNetCore.Mvc;
+    
+    using IssueSystem.Services.Constants;
+    
     using Server.Models;
 
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
+            //ViewData[MessageConstants.ErrorMessage] = "Bla bla";
             return View();
         }
 

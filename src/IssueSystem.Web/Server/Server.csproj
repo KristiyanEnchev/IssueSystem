@@ -8,11 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Identity\Pages\Account\ChangePassword - Copy.cshtml.cs" />
+    <Compile Remove="Areas\Identity\Pages\Account\Login - Copy.cshtml.cs" />
+    <Compile Remove="Areas\Identity\Pages\Account\Login.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Areas\Identity\Pages\Account\ChangeSettings.cshtml.cs" />
+    <Content Include="Areas\Identity\Pages\Account\ChangePassword.cshtml.cs" />
+    <Content Include="Areas\Identity\Pages\Account\Register.cshtml.cs" />
+    <Content Include="Areas\Identity\Pages\Account\Login.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
     <None Include="Properties\serviceDependencies.local.json.user" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
-    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_LayoutOld.cshtml" />
     <None Include="Views\Shared\_LoginPartial.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Views\_ViewImports.cshtml" />
@@ -72,6 +85,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\IssueSystem.Data\IssueSystem.Data.csproj" />
+    <ProjectReference Include="..\..\IssueSystem.Services\IssueSystem.Services.csproj" />
   </ItemGroup>
 
 </Project>
