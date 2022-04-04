@@ -1,0 +1,60 @@
+﻿@inject IFileService _fileService
+@{
+    ResponseImageViewModel image = new ResponseImageViewModel();
+
+    var userId = await UserManager.GetUserAsync(User);
+
+    @if (userId != null)
+    {
+       image = await _fileService.GetImage(userId.Id);
+    }
+}
+
+<ul class="navbar-nav">
+    @if (this.User.Identity.IsAuthenticated)
+    {
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello
+                @this.User.Identity.Name!</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+                @if (image != null)
+                {
+                    <img class="header__avatar" style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                        src="data:image/*;base64,@(Convert.ToBase64String(image.Content))">
+                }
+                else
+                {
+                    <img class="header__avatar" id="profilePicture" src="~/assets/images/Portrait_Placeholder.png"
+                        object-fit:cover" src="">
+                }
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="~/Identity/Account/Manage">
+                        <i class="fa fa-solid fa-user"></i><strong> Profile </strong>
+                    </a>
+                    <form id="logout" class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+                        asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <a class="dropdown-item" href="#" onclick="logout()">
+                            <i class="fa fa-solid fa-door-open"></i><strong> Logout </strong>
+                        </a>
+                    </form>
+                </div>
+            </li>
+    }
+    else
+    {
+            <li class="nav-link">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
+                    <i class="fa fa-solid fa-fingerprint"></i><strong> Register </strong>
+                </a>
+            </li>
+            <li class="nav-item nav-link">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
+                    <i class="fa fa-solid fa-door-closed"></i><strong> Login </strong>
+                </a>
+            </li>
+    }
+</ul>

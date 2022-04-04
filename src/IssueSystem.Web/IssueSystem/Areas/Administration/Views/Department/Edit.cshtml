@@ -1,0 +1,71 @@
+﻿@model DepartmentEditModel
+@{
+}
+<section class="page-title">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Edit Deparment Name</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="page-title">
+    <div class="page-title-img bg-img" style="background-color: #1884e9;">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <div class="form-floating">
+                                <h3 style="color: #ffff;">Employee: @Html.DisplayFor(m => m.DepartmentName)</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row editBox">
+  <div class="col-5">
+    <form id="edit" method="post">
+      <input type="hidden" asp-for="@Model.DepartmentId" name="DepartmentId" value="@Model.DepartmentId" />
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-floating text-center">
+            <label asp-for="@Model.DepartmentName" class="form-label"></label>
+            <input asp-for="@Model.DepartmentName" class="form-control" aria-required="true" />
+            <span asp-validation-for="@Model.DepartmentName" class="text-danger"></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="row">&nbsp;</div>
+              <button type="submit" asp-area="Administration" asp-action="Edit" asp-controller="Department" asp-route-id="@Model.DepartmentId" class="btn btn-primary btn-block">Edit Departmnet</button>
+        </div>
+        <div class="col-6">
+          <div class="row">&nbsp;</div>
+            <a type="submit" asp-area="Administration" asp-action="CreateDepartment" asp-controller="Home" class="btn btn-primary btn-block">Create Departmnet</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<partial name="_DepartmentHistory_" model='ViewBag.History' />
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

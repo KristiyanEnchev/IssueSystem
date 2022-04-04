@@ -1,0 +1,49 @@
+﻿@inject IFileService _fileService
+@{
+    ResponseImageViewModel image = new ResponseImageViewModel();
+
+    var userId = await UserManager.GetUserAsync(User);
+
+    @if (userId != null)
+    {
+       image = await _fileService.GetImage(userId.Id);
+    }
+}
+
+<header class="header">
+    <nav class="navbar navbar-expand-xl">
+        <div class="container h-100">
+            <a class="navbar-brand" asp-area="" asp-action="index" asp-controller="home">
+                <div class="logo">
+                    <img src="~/assets/images/Jar2.1.png" alt="Logo" />
+                </div>
+            </a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <button class="navbar-toggler ml-auto mr-0" style="padding: 0 0 0 0 !important;border-radius: 5rem" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"aria-label="Toggle navigation">
+                @if (image != null)
+                {
+                    <img class="header__avatar" style="width:40px;height:40px;object-fit:cover; border-radius:30px"
+                                src="data:image/*;base64,@(Convert.ToBase64String(image.Content))">
+                }
+                else
+                {
+                    <img class="header__avatar" id="profilePicture" src="~/assets/images/Portrait_Placeholder.png"
+                            object-fit:cover" src="">
+                }
+                </button>
+            }
+            else
+            {
+                <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"aria-label="Toggle navigation">
+                    <i class="fas fa-bars tm-nav-icon"></i>
+                </button>
+            }
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <partial name="_LoginPartial"/>
+            </div>
+        </div>
+    </nav>
+</header>

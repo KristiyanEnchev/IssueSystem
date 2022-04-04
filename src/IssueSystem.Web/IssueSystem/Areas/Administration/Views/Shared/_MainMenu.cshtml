@@ -1,0 +1,56 @@
+﻿@{
+}
+<nav class="mt-2">
+  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <li class="nav-item">
+      <a class="nav-link" asp-controller="User" asp-action="Index">
+        <i class="fa fa-solid fa-address-card"></i>
+        <p>
+          Users
+        </p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" asp-controller="Department" asp-action="Index">
+        <i class="fas fa-warehouse"></i>
+        <p>
+          Departments
+        </p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" asp-controller="Project" asp-action="Index">
+        <i class="fa fa-solid fa-clipboard-list"></i>
+        <p>
+          Projects
+        </p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" asp-controller="Ticket" asp-action="Index">
+        <i class="fa fa-ticket"></i>
+        <p>
+          Tickets
+        </p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" asp-controller="Comment" asp-action="Index">
+        <i class="fa fa-solid fa-comment"></i>
+        <p>
+          Comments
+        </p>
+      </a>
+    </li>
+    <li class="nav-header text-center"><strong>-- Create --</strong></li>
+    <li class="nav-item">
+      <a asp-area="Administration" asp-controller="Home" asp-action="CreateRole" class="nav-link"><p>CreateRole</p></a>
+    </li>
+    <li class="nav-item">
+      <a asp-area="Administration" asp-controller="Home" asp-action="CreateDepartment" class="nav-link"><p>CreateDepartment</p></a>
+    </li>
+    <li class="nav-item">
+      <a asp-area="Administration" asp-controller="Home" asp-action="CreateProject" class="nav-link"><p>CreateProject</p></a>
+    </li>
+  </ul>
+</nav>

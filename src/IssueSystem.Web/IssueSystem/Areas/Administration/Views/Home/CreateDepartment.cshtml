@@ -1,0 +1,39 @@
+﻿@using IssueSystem.Models.Admin.User
+@model DepartmentEditModel
+@{
+
+}
+
+<div class="login-box">
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+      <a asp-area="Administration" asp-controller="Home" asp-action="Index" class="h1"><b>Create</b>New Department</a>
+    </div>
+    <div class="card-body">
+      <p class="login-box-msg">You are only one step a way from creating new Department</p>
+      <form id="account" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="input-group mb-3">
+          <input asp-for="@Model.DepartmentName" class="form-control validate" placeholder="Department Name" aria-required="true" />
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+          <span asp-validation-for="@Model.DepartmentName" class="text-danger"></span>
+
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary btn-block">Create Department</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

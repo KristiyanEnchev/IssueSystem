@@ -1,0 +1,66 @@
+﻿@model ChangeDepartmentViewModel
+
+@{
+    var items = (List<SelectListItem>)ViewBag.DepartmentNames;
+}
+
+
+<section class="page-title">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Manage Employee Department</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="page-title">
+    <div class="page-title-img bg-img" style="background-color: #1884e9;">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <div class="form-floating">
+                                <h3 style="color: #ffff;">Employee: @Html.DisplayFor(m => m.Name)</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row justify-content-md-center">
+  <div class="col col-lg-8">
+    <div class="form-wrapper">
+      <div class="search-form"></div>
+      <form class="text-center" id="roles" method="post">
+        <input asp-for="UserId" type="hidden" name="UserId" value="@Model.UserId" />
+        <input asp-for="Name" type="hidden" name="Name" value="@Model.Name" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-floating">
+          <div class="">
+            <label>Departments</label>
+            <select asp-for="DepartmentName" asp-items="@items" id="selectpicker"
+              class="form-control form-select selectPicker show-tick selectpicker">
+
+            </select>
+          </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="align-items-center justify-content-center">
+          <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

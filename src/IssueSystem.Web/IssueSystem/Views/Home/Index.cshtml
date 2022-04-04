@@ -1,0 +1,51 @@
+﻿@{
+}
+
+<div class="wrapper">
+	@if (User.Identity.IsAuthenticated)
+	{
+
+	}
+	else
+	{
+		 <div class="row tm-content-row">
+			<div class="row tm-content-row">
+
+				<div class="tm-block-col tm-col-avatar">
+					<div class="tm-bg-primary-dark tm-block tm-block-avatar">
+						<h2 class="tm-block-title" style="text-align: center;">Wellcome To Bug Jar</h2>
+						<div class="tm-avatar-container">
+							 <a asp-area="Identity" asp-page="/Account/Login">
+								<div class="form-group">
+									<img id="photo" src="~/assets/images/Index-avatar.png">
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="tm-block-col tm-col-account-settings">
+					<div class="tm-bg-primary-dark tm-block tm-block-settings">
+						<h2 class="tm-block-title text-center">Simple Issues Tracking system (Bug Tracker)</h2>
+						<div class="row">
+							<figure class="text-center">
+							  <blockquote class="blockquote">
+
+								<h3 class="tm-block-title text-center"> Created for entertanment pourposess  and to represents the skills acuired during my studies of 
+									<strong style="color:#F5A623"> C# Web Development</strong> in Softuni</h3>
+
+							  </blockquote>
+								<h2 class="tm-block-title" style="text-align: center;">Some Features</h2>
+
+							  <figcaption style="color: #fff2a8;" class="blockquote-footer">
+								Need to write the features that i have inplimented <cite title="Source Title">If I am able to finish the project :D</cite>
+							  </figcaption>
+
+							</figure>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+</div>

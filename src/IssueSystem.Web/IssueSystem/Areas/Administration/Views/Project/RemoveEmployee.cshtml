@@ -1,0 +1,94 @@
+﻿@model IEnumerable<EmployeeViewModel>
+@{
+}
+
+<section class="page-title mt-5">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">All Employees In Project</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (@Model == null || @Model.Count() <= 0)
+{
+         <section class="page-title">
+            <div class="page-title-img bg-img" style="background-color: #1884e9;">
+                <div class="container">
+                    <div class="row align-items-center justify-content-center height100px">
+                        <div class="col-lg-8">
+                            <div class="page-title-content">
+                                <div class="title-border">
+                                    <div class="form-floating">
+                                        <h3 style="color: #ffff;">There is no employees currently that you can remove</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+}
+else
+{
+    <div class="card-body p-0">
+    <table class="table table-striped projects">
+        <thead>
+            <tr>
+                <th style="width: 40%">Employee Name</th>
+                <th style="width: 30%">Profile Picture</th>
+                <th style="width: 8%" class="text-center">Email</th>
+                <th style="width: 20%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in @Model)
+            {
+                <form id="edit" method="post">
+                    <tr>
+                        <td>
+                            <a>@employee.FirstName  @employee.LastName</a>
+                            <br>
+                            <small>Employee since: </small>
+                            <small> @employee.CreatedOn</small>
+                        </td>
+                        <td>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    @if (employee.ProfilePicture != null)
+                                    {
+                                    <img class="header__avatar table-avatar"
+                                        style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                                        src="data:image/*;base64,@(Convert.ToBase64String(employee.ProfilePicture.Content))">
+                                    }
+                                    else
+                                    {
+                                    <img class="header__avatar table-avatar" id="profilePicture"
+                                        src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                                    }
+                                </li>
+                            </ul>
+                        </td>
+                        <td class="project-state">
+                            <span class="badge badge-success">@employee.Email</span>
+                        </td>
+                        <td class="project-actions text-right">
+                            <button type="submit" class="btn btn-primary btn-sm" asp-area="administration" asp-action="RemoveEmployeeFromProject"
+                                asp-controller="Project" asp-route-id="@employee.UserId"><i class="fas fa-folder"></i>Remove</button>
+                        </td>
+                    </tr>
+                </form>
+            }
+        </tbody>
+    </table>
+</div>
+}

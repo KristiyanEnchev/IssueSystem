@@ -1,0 +1,50 @@
+﻿@model ProjectEditViewModel
+@{
+    var items = (List<SelectListItem>)ViewBag.DepartmentNames;
+}
+<div class="login-box">
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a asp-area="Administration" asp-controller="Home" asp-action="Index" class="h1"><b>Create</b>New Project</a>
+        </div>
+        <div class="card-body">
+            <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="input-group mb-3">
+                    <input asp-for="@Model.ProjectName" class="form-control validate" placeholder="Project Name"
+                        aria-required="true" />
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <span asp-validation-for="@Model.ProjectName" class="text-danger"></span>
+
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <div class="text-center">
+                                <label>Departments</label>
+                                <select asp-for="DepartmentName" id="selectpicker" asp-items="@items" class="form-control selectpicker">
+                                </select>
+                            </div>
+                        </div>
+                        </br>
+                        </br>
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-block">Create Project</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

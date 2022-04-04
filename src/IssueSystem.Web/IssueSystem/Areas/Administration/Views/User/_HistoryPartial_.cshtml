@@ -1,0 +1,278 @@
+﻿@model HistoryModel
+@{
+}
+
+<section class="page-title mt-5">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Employee Last 5 Projects</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (@Model.ProjectsData == null || @Model.ProjectsData.Count <= 0)
+{
+         <section class="page-title">
+            <div class="page-title-img bg-img" style="background-color: #1884e9;">
+                <div class="container">
+                    <div class="row align-items-center justify-content-center height100px">
+                        <div class="col-lg-8">
+                            <div class="page-title-content">
+                                <div class="title-border">
+                                    <div class="form-floating">
+                                        <h3 style="color: #ffff;">Employee have not beet working on any projects</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+}
+else
+{
+    <div class="card-body p-0">
+    <table class="table table-striped projects">
+        <thead>
+            <tr>
+                <th style="width: 1%">#</th>
+                <th style="width: 20%">Project Name</th>
+                <th style="width: 30%">Team Members</th>
+                <th style="width: 8%" class="text-center">Status</th>
+                <th style="width: 20%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var project in @Model.ProjectsData)
+            {
+                <input type="hidden" name="Id" value="@project.ProjectId" />
+                <tr>
+                    <td>#</td>
+                    <td>
+                        <a>@project.ProjectName</a>
+                        <br>
+                        <small>Created @project.CreatedOn</small>
+                    </td>
+                    <td>
+                        <ul class="list-inline">
+                            @foreach (var avatar in project.EmployeeImages)
+                            {
+                            <li class="list-inline-item">
+                                @if (avatar.Content != null)
+                                {
+                                <img class="header__avatar"
+                                    style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                                    src="data:image/*;base64,@(Convert.ToBase64String(avatar.Content))">
+                                }
+                                else
+                                {
+                                <img class="header__avatar table-avatar" id="profilePicture"
+                                    src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                                }
+                            </li>
+                            }
+                        </ul>
+                    </td>
+                    <td class="project-state">
+                        <span class="badge badge-success">@project.Status</span>
+                    </td>
+                    <td class="project-actions text-right">
+                        <a class="btn btn-info btn-sm" asp-area="administration" asp-action="edit" asp-controller="project"
+                            asp-route-id="@project.ProjectId"><i class="fas fa-pencil-alt"></i>Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}
+
+<section class="page-title mt-5">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Employee Last 10 Created Tickets</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (@Model.CreatedTicketsData == null || @Model.CreatedTicketsData.Count <= 0)
+{
+         <section class="page-title">
+            <div class="page-title-img bg-img" style="background-color: #1884e9;">
+                <div class="container">
+                    <div class="row align-items-center justify-content-center height100px">
+                        <div class="col-lg-8">
+                            <div class="page-title-content">
+                                <div class="title-border">
+                                    <div class="form-floating">
+                                        <h3 style="color: #ffff;">Employee have not created any tickets</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+}
+else
+{
+     <div class="card-body p-0">
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th style="width: 1%">#</th>
+                    <th style="width: 20%">Ticket <Title></Title></th>
+                    <th style="width: 30%">Category</th>
+                    <th style="width: 30%">Priority</th>
+                    <th style="width: 30%">Coments</th>
+                    <th style="width: 8%" class="text-center">Status</th>
+                    <th style="width: 20%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach (var ticket in @Model.CreatedTicketsData)
+                    {
+                    <input type="hidden" name="Id" value="@ticket.TicketId" />
+                        <tr>
+                            <td>#</td>
+                            <td>
+                                <a>@ticket.Title</a>
+                                <br>
+                                <small>Created @ticket.CreatedOn</small>
+                            </td>
+                            <td>
+                                <a>@ticket.Title</a>
+                            </td>
+                            <td>
+                                <a>@ticket.TicketCategory</a>
+                            </td>
+                            <td>
+                                <a>@ticket.TicketPriority</a>
+                            </td>
+                            <td>
+                                <a>@ticket.CommentsCount</a>
+                            </td>
+                            <td class="project-state">
+                                <span class="badge badge-success">@ticket.CurrentStatus</span>
+                            </td>
+                            <td class="project-actions text-right">
+                                <a class="btn btn-primary btn-sm" asp-area="administration" asp-action="Details"
+                                    asp-controller="project" asp-route-id="@ticket.TicketId"><i class="fas fa-folder"></i>View</a>
+                                <a class="btn btn-info btn-sm" asp-area="administration" asp-action="edit" asp-controller="project"
+                                    asp-route-id="@ticket.TicketId"><i class="fas fa-pencil-alt"></i>Edit</a>
+                            </td>
+                        </tr>
+                    }
+            </tbody>
+        </table>
+     </div>
+}
+
+
+<section class="page-title mt-5">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Employee Last 10 Accepted Tickets</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (@Model.AcceptedTicketsData == null || @Model.AcceptedTicketsData.Count <= 0)
+{
+         <section class="page-title">
+            <div class="page-title-img bg-img" style="background-color: #1884e9;">
+                <div class="container">
+                    <div class="row align-items-center justify-content-center height100px">
+                        <div class="col-lg-8">
+                            <div class="page-title-content">
+                                <div class="title-border">
+                                    <div class="form-floating">
+                                        <h3 style="color: #ffff;">Employee have not accepted any tickets</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+}
+else
+{
+     <div class="card-body p-0">
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th style="width: 1%">#</th>
+                    <th style="width: 20%">Ticket <Title></Title></th>
+                    <th style="width: 30%">Category</th>
+                    <th style="width: 30%">Priority</th>
+                    <th style="width: 30%">Coments</th>
+                    <th style="width: 8%" class="text-center">Status</th>
+                    <th style="width: 20%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach (var ticket in @Model.AcceptedTicketsData)
+                    {
+                    <input type="hidden" name="Id" value="@ticket.TicketId" />
+                        <tr>
+                            <td>#</td>
+                            <td>
+                                <a>@ticket.Title</a>
+                                <br>
+                                <small>Created @ticket.CreatedOn</small>
+                            </td>
+                            <td>
+                                <a>@ticket.Title</a>
+                            </td>
+                            <td>
+                                <a>@ticket.TicketCategory</a>
+                            </td>
+                            <td>
+                                <a>@ticket.TicketPriority</a>
+                            </td>
+                            <td>
+                                <a>@ticket.CommentsCount</a>
+                            </td>
+                            <td class="project-state">
+                                <span class="badge badge-success">@ticket.CurrentStatus</span>
+                            </td>
+                            <td class="project-actions text-right">
+                                <a class="btn btn-primary btn-sm" asp-area="administration" asp-action="Details"
+                                    asp-controller="project" asp-route-id="@ticket.TicketId"><i class="fas fa-folder"></i>View</a>
+                                <a class="btn btn-info btn-sm" asp-area="administration" asp-action="edit" asp-controller="project"
+                                    asp-route-id="@ticket.TicketId"><i class="fas fa-pencil-alt"></i>Edit</a>
+                            </td>
+                        </tr>
+                    }
+            </tbody>
+        </table>
+     </div>
+}

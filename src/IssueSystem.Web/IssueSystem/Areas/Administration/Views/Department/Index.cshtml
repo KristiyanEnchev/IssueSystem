@@ -1,0 +1,58 @@
+﻿@using IssueSystem.Models.Admin.Department
+@model IEnumerable<DepartmnetViewModel>
+@{
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Deparments</h3>
+                <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-default">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Name</th>
+                            <th style="width: 10%">Employees</th>
+                            <th style="width: 10%">Projects</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var department in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a>@department.DepartmentName</a>
+                                    <br>
+                                    <small>Created @department.CreatedOn</small>
+                                    
+                                </td>
+                                <td >@department.EmployeesCount</td>
+                                <td>@department.ProjectsCount</td>
+
+                                <td style="text-align: right">
+                                   <a class="btn btn-primary btn-sm" asp-area="administration" asp-action="edit" asp-controller="department" asp-route-id="@department.DepartmentId">
+                                       <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Edit</a>
+                                   <button class="btn btn-danger btn-sm" asp-area="Administration" asp-action="Delete" asp-controller="Department" asp-route-id="@department.DepartmentId">
+                                       <i style="padding-right:0.5rem;" class="fas fa-trash disabled" area-disabled="true" ></i>Delete</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

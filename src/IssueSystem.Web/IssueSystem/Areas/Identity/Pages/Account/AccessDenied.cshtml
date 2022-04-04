@@ -1,0 +1,32 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Access denied";
+}
+ <div class="container tm-mb-big">
+      <div class="row">
+        <div class="col-12 mx-auto tm-login-col">
+          <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+            <div class="row">
+              <div class="col-12 text-center">
+                <h2 class="tm-block-title mb-4">Restricted ! </h2>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-12">
+                <h3 class="text-center text-danger">You do not have access to this resource.</h3>
+                  <img src="/assets/images/policeman-no-background.png" style="width: 300px; height: 280px;" alt="Ops ... You did somthing wrong"
+                    class="mx-auto d-block img-fluid notFound" />
+              </div>
+            </div>
+            <div class="row">
+          <div class="col-12 text-center pt-3">
+            <h2 class="text-center text-light">You can get back to our </h2>
+            <a class="mt-5 btn btn-primary btn-block text-uppercase" href="~/../Home/Index"> Home Page
+            </a>
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
