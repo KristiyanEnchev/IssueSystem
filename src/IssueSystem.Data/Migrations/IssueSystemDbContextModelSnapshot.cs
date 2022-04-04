@@ -437,7 +437,6 @@ namespace IssueSystem.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PriorityType")
-                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.HasKey("PriorityId");
@@ -463,9 +462,8 @@ namespace IssueSystem.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("StatusName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("StatusType")
+                        .HasColumnType("int");
 
                     b.Property<string>("TicketId")
                         .IsRequired()

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IssueSystem.Data.Migrations
 {
     [DbContext(typeof(IssueSystemDbContext))]
-    [Migration("20220401165658_Add Relation Beatween Prject and Tickets ")]
-    partial class AddRelationBeatweenPrjectandTickets
+    [Migration("20220404163938_Add entities")]
+    partial class Addentities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -439,7 +439,6 @@ namespace IssueSystem.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PriorityType")
-                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.HasKey("PriorityId");
@@ -465,9 +464,8 @@ namespace IssueSystem.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("StatusName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("StatusType")
+                        .HasColumnType("int");
 
                     b.Property<string>("TicketId")
                         .IsRequired()

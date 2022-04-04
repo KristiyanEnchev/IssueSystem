@@ -11,13 +11,10 @@
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Category is required")]
-        public TicketCategory TicketCategory { get; set; }
+        public string TicketCategory { get; set; }
 
         [Required(ErrorMessage = "Priority is required")]
-        public TicketPriority TicketPriority { get; set; }
-
-        [Required(ErrorMessage = "Priority is required")]
-        public TicketStatus CurrentStatus { get; set; }
+        public string TicketPriority { get; set; }
 
         [StringLength(TicketDescriptionMaxLength)]
         [Required(ErrorMessage = "Description is required")]

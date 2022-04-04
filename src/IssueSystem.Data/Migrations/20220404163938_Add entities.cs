@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IssueSystem.Data.Migrations
 {
-    public partial class FixImageRelation : Migration
+    public partial class Addentities : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -69,7 +69,7 @@ namespace IssueSystem.Data.Migrations
                 columns: table => new
                 {
                     PriorityId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PriorityType = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    PriorityType = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -338,6 +338,7 @@ namespace IssueSystem.Data.Migrations
                     TicketCategoryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TicketPriorityId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ImageId = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -367,6 +368,13 @@ namespace IssueSystem.Data.Migrations
                         principalSchema: "Identity",
                         principalTable: "Images",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalSchema: "Identity",
+                        principalTable: "Projects",
+                        principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Tickets_TicketCategories_TicketCategoryId",
@@ -423,7 +431,7 @@ namespace IssueSystem.Data.Migrations
                 columns: table => new
                 {
                     StatusId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    StatusName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StatusType = table.Column<int>(type: "int", nullable: false),
                     TicketId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -566,6 +574,12 @@ namespace IssueSystem.Data.Migrations
                 column: "ImageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tickets_ProjectId",
+                schema: "Identity",
+                table: "Tickets",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tickets_TicketCategoryId",
                 schema: "Identity",
                 table: "Tickets",
@@ -643,10 +657,6 @@ namespace IssueSystem.Data.Migrations
                 schema: "Identity");
 
             migrationBuilder.DropTable(
-                name: "Projects",
-                schema: "Identity");
-
-            migrationBuilder.DropTable(
                 name: "Tickets",
                 schema: "Identity");
 
@@ -656,6 +666,10 @@ namespace IssueSystem.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Images",
+                schema: "Identity");
+
+            migrationBuilder.DropTable(
+                name: "Projects",
                 schema: "Identity");
 
             migrationBuilder.DropTable(

@@ -1,0 +1,67 @@
+﻿@model CreateTicketViewModel
+@{
+    var priorities = (List<SelectListItem>)ViewBag.Priorities;
+    var categories = (List<SelectListItem>)ViewBag.Categories;
+}
+
+<section class="page-title">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Create A Ticket</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row justify-content-md-center">
+    <div class="col col-lg-8">
+        <div class="form-wrapper">
+                    <form method="post" class="">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-floating text-center">
+                            <label asp-for="Title" class="form-label"></label>
+                            <input asp-for="Title" class="form-control validate" aria-required="true" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating">
+                            <div class="text-center">
+                                <label>Category</label>
+                                <select asp-for="TicketCategory" id="selectpicker" asp-items="@categories"
+                                    class="form-control selectpicker">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-floating">
+                            <div class="text-center">
+                                <label>Priority</label>
+                                <select asp-for="TicketPriority" id="selectpicker" asp-items="@priorities"
+                                    class="form-control selectpicker">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-floating text-center">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" type="text" class="form-control" rows="5"
+                                id="MessageInputField" autofocus></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-block">Create Ticket</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

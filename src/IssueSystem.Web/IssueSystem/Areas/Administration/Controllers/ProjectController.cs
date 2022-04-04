@@ -10,6 +10,8 @@
     using IssueSystem.Models.Admin.Project;
     using IssueSystem.Services.Contracts.Ticket;
     using IssueSystem.Models.Tickets;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using IssueSystem.Infrastructure.Extensions;
 
     public class ProjectController : BaseController
     {
@@ -181,8 +183,26 @@
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> CreateTicket(string projectId)
+        public async Task<IActionResult> CreateTicket(string id)
         {
+            var priorities = await _ticketService.GetTicketPriorities();
+            var categories = await _ticketService.GetTicketCategories();
+
+            ViewBag.Categories = categories
+            .Select(r => new SelectListItem()
+            {
+                Text = r.CategoryName,
+                Value = r.CategoryName,
+            }).ToList();
+
+            ViewBag.Priorities = priorities
+            .Select(r => new SelectListItem()
+            {
+                Text = r.PriorityType.ToString(),
+                Value = r.PriorityType.ToString(),
+            }).ToList();
+
+            TempData["ProjectId"] = id;
 
             return View();
         }
@@ -190,6 +210,11 @@
         [HttpPost]
         public async Task<IActionResult> CreateTicket(CreateTicketViewModel model) 
         {
+            string userId = this.User.GetId();
+
+            model.CreatorId = userId;
+            model.ProjectId = TempData["ProjectId"]?.ToString();
+
             await _ticketService.CreateTicket(model);
 
             TempData[MessageConstant.SuccessMessage] = $"The ticket {model.Title} have been created";

@@ -84,9 +84,11 @@
                             asp-route-id="@project.ProjectId">
                                 <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Edit</a>
 
-                            <button class="btn btn-danger btn-sm" asp-area="Administration" asp-action="Delete" asp-controller="Department"
+                           <a class="btn btn-info btn-sm" asp-area="administration" asp-action="CreateTicket" asp-controller="Project"
+                            asp-route-id="@project.ProjectId"><i class="fas fa-pencil-alt"></i>CreateTicket</a>
+@*                            <button class="btn btn-danger btn-sm" asp-area="Administration" asp-action="Delete" asp-controller="Department"
                             asp-route-id="@project.ProjectId">
-                                <i style="padding-right:0.5rem;" class="fas fa-trash disabled" area-disabled="true" ></i>Delete</button>
+                                <i style="padding-right:0.5rem;" class="fas fa-trash disabled" area-disabled="true" ></i>Delete</button>*@
 
                         </td>
                     </tr>

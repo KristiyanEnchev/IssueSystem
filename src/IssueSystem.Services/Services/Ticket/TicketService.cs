@@ -20,21 +20,27 @@
         public async Task CreateTicket(CreateTicketViewModel model) 
         {
             var creator = await Data.Employees
-                .FirstOrDefaultAsync(x => x.Id == model.CreatorId);
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            var category = await Data.TicketCategories
+                .FirstOrDefaultAsync(x => x.CategoryName == model.TicketCategory);
+
+            var priority = await Data.TicketPriorities
+                .FirstOrDefaultAsync(x => x.PriorityType.ToString() == model.TicketPriority);
 
             var ticket = new Ticket
             {
                 Title = model.Title,
                 CreatorId = model.CreatorId,
                 TicketCreator = creator,
-                TicketCategory = model.TicketCategory,
-                TicketCategoryId = model.TicketCategory.TicketCategoryId,
-                TicketPriority = model.TicketPriority,
-                TicketPriorityId = model.TicketPriority.PriorityId,
+                TicketCategory = category,
+                TicketCategoryId = category.TicketCategoryId,
+                TicketPriority = priority,
+                TicketPriorityId = priority.PriorityId,
                 Description = model.Description,
             };
 
-            TicketStatus status = model.CurrentStatus;
+            TicketStatus status = new TicketStatus();
 
             ticket.TicketStatuses.Add(status);
 
@@ -43,6 +49,15 @@
             Data.Tickets.Add(ticket);
 
             await Data.SaveChangesAsync();
+        }
+
+        public async Task<List<TicketCategory>> GetTicketCategories() 
+        {
+            return await Data.TicketCategories.AsNoTracking().ToListAsync();
+        }
+        public async Task<List<TicketPriority>> GetTicketPriorities()
+        {
+            return await Data.TicketPriorities.AsNoTracking().ToListAsync();
         }
     }
 }

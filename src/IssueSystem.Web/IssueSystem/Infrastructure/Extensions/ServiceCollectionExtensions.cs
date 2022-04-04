@@ -19,6 +19,8 @@
             services.AddDbContext<IssueSystemDbContext>(options =>
                 options.UseSqlServer(connectionString))
                 .AddTransient<IInitialData, SeedProjects>()
+                .AddTransient<IInitialData, SeedTicketCategories>()
+                .AddTransient<IInitialData, SeedTicketPriorities>()
                 .AddTransient<IRoleSeeder, RoleSeeder>()
                 .AddTransient<IInitialData, SeedEmployees>()
                 .AddTransient<IInitialData, SeedDepartments>()

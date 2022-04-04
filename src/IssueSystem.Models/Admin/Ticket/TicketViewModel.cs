@@ -24,7 +24,6 @@
         public virtual void Mapping(Profile mapper) 
         {
             mapper.CreateMap<Ticket, TicketViewModel>()
-                .ForMember(x => x.CurrentStatus, y => y.MapFrom(x => x.TicketStatuses))
                 .ForMember(x => x.CommentsCount, y => y.MapFrom(x => x.Comments.Count))
                 .ForPath(x => x.CommentsCount, y => y.MapFrom(x => x.Comments.Count));
         }
