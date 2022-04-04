@@ -1,14 +1,28 @@
-﻿@using IssueSystem.Models.Admin.User
-@model IEnumerable<UserListViewModel>
+﻿@model IEnumerable<TicketViewModel>
 @{
-
 }
+
+<section class="page-title">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Tickets Daily Info</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Application Users</h3>
+                <h3 class="card-title">Tickets</h3>
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
                         <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -22,28 +36,133 @@
             </div>
 
             <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Email</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var user in Model)
+            @if (Model.Count() > 0)
+            {
+            <table class="table table-hover text-nowrap">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>ProjectName</th>
+                        <th>Comments</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var ticket in Model.OrderBy(x => x.ProjectId))
+                {
+                    <tr>
+                        <td>@ticket.Title
+                            <br>
+                            <small>Created @ticket.CreatedOn</small>
+                        </td>
+                        <td>@ticket.ProjectName</td>
+                        <td>@ticket.CommentsCount</td>
+                        @if (ticket.CurrentStatus.ToString() == "InProgress")
                         {
-                            <tr>
-                                <td>@user.Name</td>
-                                <td>@user.Email</td>
-                                <td>
-                                    <a asp-area="administration" asp-action="edit" asp-controller="user" asp-route-id="@user.UserId" class="btn btn-block btn-outline-info btn-xs">Edit</a>
-                                    <a asp-area="administration" asp-action="roles" asp-controller="user" asp-route-id="@user.UserId" class="btn btn-block btn-outline-warning btn-xs">Roles</a>
-                                </td>
-                            </tr>
+                            <td class="project-state">
+                                <span class="badge badge-info">@ticket.CurrentStatus</span>
+                            </td>
                         }
-                    </tbody>
-                </table>
+                        else if (ticket.CurrentStatus.ToString() == "Success")
+                        {
+                            <td class="project-state">
+                                <span class="badge badge-success">@ticket.CurrentStatus</span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="project-state">
+                                <span class="badge badge-danger">@ticket.CurrentStatus</span>
+                            </td>
+                        }
+                        <td style="text-align: right">
+                            <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Edit" asp-controller="Ticket"
+                            asp-route-id="@ticket.TicketId">
+                                <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Edit</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                 <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Creator</th>
+                        <th>Acceptant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ticket in Model.OrderBy(x => x.ProjectId))
+                    {
+                        <tr>
+                            <td>@ticket.TicketCategory</td>
+                            <td>@ticket.TicketPriority</td>
+                            <td>
+                                @if (ticket.CreatorAvatar.Content != null)
+                                {
+                                <img class="header__avatar"
+                                    style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                                    src="data:image/*;base64,@(Convert.ToBase64String(ticket.CreatorAvatar.Content))">
+                                }
+                                else
+                                {
+                                <img class="header__avatar table-avatar some-avatar" id="profilePicture"
+                                    src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                                }
+                             </td>
+                             <td>
+                                @if (ticket.AcceptantAvatar.Content != null)
+                                {
+                                <img class="header__avatar"
+                                    style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                                    src="data:image/*;base64,@(Convert.ToBase64String(ticket.AcceptantAvatar.Content))">
+                                }
+                                else
+                                {
+                                <img class="header__avatar table-avatar some-avatar" id="profilePicture"
+                                    src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                                }
+                             </td>
+                             <td>
+                                <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Edit" asp-controller="Project"
+                                   asp-route-id="@ticket.ProjectId"><i style="padding-right:0.5rem;" class="fas fa-folder"></i>Project</a>
+                             </td>
+                        </tr>
+                    <tr colstan="4">@ticket.Description</tr>
+                    }
+                </tbody>
+            </table>
+            }
+            else
+            {
+                <section class="page-title">
+                    <div class="page-title-img bg-img" style="background-color: #1884e9;">
+                        <div class="container">
+                            <div class="row align-items-center justify-content-center height100px">
+                                <div class="col-lg-8">
+                                    <div class="page-title-content">
+                                        <div class="title-border">
+                                            <div class="form-floating">
+                                                <h3 style="color: #ffff;">There is no Tickets yet</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                    <div class="col-12 justify-content-center pad text-center">
+                        <h3 class="text-center" style="color: #000000;">You Can Create One</h3>
+                            <div class="row align-items-center justify-content-center height100px">
+                                <div class="col-4 justify-content-center pad text-center">
+                                    <a type="submit" asp-area="Administration" asp-action="CreateTicket" asp-controller="Home"
+                                    class="btn btn-primary btn-block">Create Ticket</a>
+                                </div>
+                           </div>
+                    </div>
+            }
             </div>
         </div>
     </div>
