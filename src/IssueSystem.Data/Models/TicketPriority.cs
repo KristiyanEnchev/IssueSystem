@@ -8,8 +8,6 @@
     using IssueSystem.Data.Contracts;
     using IssueSystem.Data.Models.Enumeration;
     
-    using static ModelConstants.TicketPriority;
-
     [Index(nameof(PriorityType), IsUnique = true)]
     public class TicketPriority : BaseEntity
     {
@@ -23,10 +21,9 @@
         [Required]
         public string PriorityId { get; set; }
 
-        [StringLength(PriorityTypeMaxLenght)]
         [Required(ErrorMessage = "Priority is required")]
         [DefaultValue(PriorityType.Medium)]
-        public PriorityType PriorityType { get; set; }
+        public PriorityType PriorityType { get; set; } = PriorityType.Medium;
 
         public virtual ICollection<Ticket> Tickets { get; set; }
     }

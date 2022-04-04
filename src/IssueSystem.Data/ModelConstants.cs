@@ -28,12 +28,9 @@
         public class Ticket 
         {
             public const int TicketTitleMaxLenght = 100;
+            public const int TicketDescriptionMaxLength = 1000;
         }
 
-        public class TicketPriority 
-        {
-            public const int PriorityTypeMaxLenght = 50;
-        }
         public class TicketCategory 
         {
             public const int CategoryNameMaxLenght = 50;
@@ -49,8 +46,6 @@
             public const int ImageNameMinLenght = 1000;
 
             public const int ImageExtensionMaxLenght = 10;
-
-
         }
     }
 }

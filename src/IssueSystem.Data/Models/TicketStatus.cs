@@ -20,7 +20,7 @@
 
         [Required]
         [DefaultValue(StatusType.Open)]
-        public string StatusName { get; set; }
+        public StatusType StatusType { get; set; } = StatusType.Open;
 
 
         [Required]

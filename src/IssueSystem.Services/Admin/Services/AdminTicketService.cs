@@ -8,20 +8,15 @@
     using IssueSystem.Models.Admin.Ticket;
     using IssueSystem.Services.Admin.Contracts;
     using IssueSystem.Services.Services;
-    using IssueSystem.Services.Contracts.File;
     using IssueSystem.Models.Image;
 
     public class AdminTicketService : BaseService<Ticket>, IAdminTicketService
     {
-        private readonly IFileService _fileService;
-
         public AdminTicketService(
             IssueSystemDbContext data,
-            IMapper mapper,
-            IFileService fileService)
+            IMapper mapper)
             : base(data, mapper)
         {
-            _fileService = fileService;
         }
 
         public async Task<List<TicketViewModel>> GetTicketsInfo()

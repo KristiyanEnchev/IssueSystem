@@ -8,6 +8,8 @@
     using IssueSystem.Common;
     using IssueSystem.Services.Contracts.Project;
     using IssueSystem.Models.Admin.Project;
+    using IssueSystem.Services.Contracts.Ticket;
+    using IssueSystem.Models.Tickets;
 
     public class ProjectController : BaseController
     {
@@ -19,15 +21,19 @@
 
         private readonly IUserService _userService;
 
+        private readonly ITicketService _ticketService;
+
         public ProjectController(UserManager<Employee> userManager,
             IAdminProjectService adminProjectService,
             IProjectService projectService,
-            IUserService userService)
+            IUserService userService,
+            ITicketService ticketService)
         {
             _userManager = userManager;
             _adminProjectService = adminProjectService;
             _projectService = projectService;
             _userService = userService;
+            _ticketService = ticketService;
         }
 
         /// Get Projects from the Service(working with database)
@@ -173,6 +179,22 @@
             TempData[MessageConstant.SuccessMessage] = "You successfuly removed the employee from the project";
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> CreateTicket(string projectId)
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTicket(CreateTicketViewModel model) 
+        {
+            await _ticketService.CreateTicket(model);
+
+            TempData[MessageConstant.SuccessMessage] = $"The ticket {model.Title} have been created";
+
+            return View();
         }
 
         /// This method flags the project as deleted 
