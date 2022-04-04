@@ -8,14 +8,13 @@
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+		<PackageReference Include="SendGrid" Version="9.27.0" />
 	</ItemGroup>
 	
   <ItemGroup>
     <ProjectReference Include="..\IssueSystem.Data\IssueSystem.Data.csproj" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <Folder Include="Identity\" />
+    <ProjectReference Include="..\IssueSystem.Models\IssueSystem.Models.csproj" />
   </ItemGroup>
 
 </Project>

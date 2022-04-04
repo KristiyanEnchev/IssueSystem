@@ -1,11 +1,14 @@
 ﻿namespace IssueSystem.Data.Models
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    using IssueSystem.Data.Contracts;
+
     using static Data.ModelConstants.Comment;
 
-    public class Comment
+    public class Comment : BaseEntity, IDeletableEntity
     {
         [Key]
         [Required]
@@ -21,5 +24,7 @@
         [ForeignKey(nameof(Ticket))]
         public string TicketId { get; set; }
         public virtual Ticket Ticket { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
     }
 }

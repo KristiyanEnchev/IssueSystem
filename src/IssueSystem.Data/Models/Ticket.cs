@@ -2,12 +2,12 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    
+
     using IssueSystem.Data.Contracts;
-    
+
     using static ModelConstants.Ticket;
 
-    public class Ticket : BaseEntity
+    public class Ticket : BaseEntity, IDeletableEntity
     {
         public Ticket()
         {
@@ -47,9 +47,16 @@
         public int? ImageId { get; set; }
         public virtual Image Image { get; set; }
 
+        [ForeignKey(nameof(Project))]
+        public string ProjectId { get; set; }
+        public virtual Project Project { get; set; }
+
         [Required]
         public string Description { get; set; }
         public virtual ICollection<TicketStatus> TicketStatuses { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
     }
 }

@@ -9,7 +9,7 @@
 
     using static ModelConstants.Employee;
 
-    public class Employee : IdentityUser, IBaseEntity
+    public class Employee : IdentityUser, IBaseEntity, IDeletableEntity
     {
         public Employee()
         {
@@ -23,20 +23,17 @@
 
         [StringLength(EmployeeFirstMaxLenght)]
         [Required(ErrorMessage = "First name is required")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [StringLength(EmployeeLastMaxLenght)]
         [Required(ErrorMessage = "Last name is required")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
-        [ForeignKey(nameof(ProfilePicture))]
-        public int? ProfilePictureId { get; set; }
-        public virtual Image ProfilePicture { get; set; }
+        public virtual Image? ProfilePicture { get; set; }
 
-        [Required]
         [ForeignKey(nameof(Department))]
-        public string DepartmentId { get; set; }
-        public virtual Department Department { get; set; }
+        public string? DepartmentId { get; set; }
+        public virtual Department? Department { get; set; }
 
         public virtual ICollection<Ticket> CreatedTickets { get; set; }
         public virtual ICollection<Ticket> AcceptedTickets { get; set; }
@@ -46,5 +43,7 @@
 
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
     }
 }

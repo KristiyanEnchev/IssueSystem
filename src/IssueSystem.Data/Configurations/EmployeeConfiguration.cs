@@ -30,6 +30,11 @@
                     .WithOne(t => t.Employee)
                     .HasForeignKey(e => e.EmployeeId)
                     .OnDelete(DeleteBehavior.Restrict);
+
+            //employee.HasOne(x => x.ProfilePicture)
+            //        .WithOne(x => x.EmployeePicture)
+            //        .HasForeignKey<Image>(x => x.EmployeePicture)
+            //        .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

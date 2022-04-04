@@ -3,13 +3,13 @@
     using System.ComponentModel.DataAnnotations;
 
     using Microsoft.EntityFrameworkCore;
-    
+
     using IssueSystem.Data.Contracts;
-    
+
     using static ModelConstants.Departmenet;
 
     [Index(nameof(DepartmentName), IsUnique = true)]
-    public class Department : BaseEntity
+    public class Department : BaseEntity, IDeletableEntity
     {
         public Department()
         {
@@ -28,5 +28,7 @@
 
         public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
     }
 }

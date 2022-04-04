@@ -43,5 +43,14 @@
         {
             public const int CommentMaxLenght = 1000;
         }
+        public class Image
+        {
+            public const int ImageNameMaxLenght = 1000;
+            public const int ImageNameMinLenght = 1000;
+
+            public const int ImageExtensionMaxLenght = 10;
+
+
+        }
     }
 }
