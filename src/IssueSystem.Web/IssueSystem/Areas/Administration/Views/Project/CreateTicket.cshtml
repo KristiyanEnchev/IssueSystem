@@ -2,8 +2,9 @@
 @{
     //var priorities = (List<SelectListItem>)ViewBag.Priorities;
     //var categories = (List<SelectListItem>)ViewBag.Categories;
-    var priorities = (List<SelectListItem>)ViewBag.TicketCategories;
-    var categories = (List<SelectListItem>)ViewBag.TicketPriorities;
+    var categories = (List<SelectListItem>)ViewBag.TicketCategories;
+    var priorities = (List<SelectListItem>)ViewBag.TicketPriorities;
+    
 }
 
 <section class="page-title">
@@ -25,7 +26,7 @@
 <div class="row justify-content-md-center">
     <div class="col col-lg-8">
         <div class="form-wrapper">
-            <form method="post" class="">
+            <form method="post" class="" enctype="multipart/form-data">
                     <input asp-for="CreatorId" type="hidden" name="CreatorId" value="@Model.CreatorId" />
                     <input asp-for="ProjectId" type="hidden" name="ProjectId" value="@Model.ProjectId" />      
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -37,7 +38,7 @@
                 <div class="form-floating">
                     <div class="text-center">
                         <label>Category</label>
-                        <select asp-for="TicketCategoryId" id="selectpicker" asp-items="@priorities"
+                        <select asp-for="TicketCategoryId" id="selectpicker" asp-items="@categories"
                             class="form-control selectpicker">
                         </select>
                     </div>
@@ -45,7 +46,7 @@
                 <div class="form-floating">
                     <div class="text-center">
                         <label>Priority</label>
-                        <select asp-for="TicketPriorityId" id="selectpicker" asp-items="@categories"
+                        <select asp-for="TicketPriorityId" id="selectpicker" asp-items="@priorities"
                             class="form-control selectpicker">
                         </select>
                     </div>

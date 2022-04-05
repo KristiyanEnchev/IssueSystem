@@ -223,11 +223,18 @@
         [HttpPost]
         public async Task<IActionResult> CreateTicket(CreateTicketViewModel model) 
         {
+            if (!ModelState.IsValid)
+            {
+                TempData[MessageConstant.ErrorMessage] = $"The Ticket with title: {model.Title} have not been created, please try again";
+
+                return View(model);
+            }
+
             var isCreated = await _ticketService.CreateTicket(model);
 
             if (!isCreated) 
             {
-                TempData[MessageConstant.ErrorMessage] = "You ware not abe to add the ticket";
+                TempData[MessageConstant.ErrorMessage] = "You were not able to add the ticket";
 
                 return View(model);
             }

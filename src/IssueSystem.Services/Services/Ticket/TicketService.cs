@@ -7,7 +7,6 @@
     using IssueSystem.Data.Models;
     using IssueSystem.Models.Tickets;
     using IssueSystem.Services.Contracts.Ticket;
-    using IssueSystem.Data.Models.Enumeration;
 
     public class TicketService : BaseService<Ticket>, ITicketService
     {
@@ -32,14 +31,11 @@
                     TicketId = ticket.TicketId,
                 };
 
+                ticket.TicketCreator = await GetTicketCreatorById(model.CreatorId);
+
+                ticket.TicketCreator.TicketStatuses.Add(status);
+
                 Data.Attach(ticket);
-
-                var employeeStatusList = await Data.Employees
-                    .Where(x => x.Id == model.CreatorId)
-                    .Select(x => x.TicketStatuses)
-                    .FirstOrDefaultAsync();
-
-                employeeStatusList.Add(status);
 
                 ticket.TicketStatuses.Add(status);
                 
@@ -59,9 +55,35 @@
         {
             return await Data.TicketCategories.AsNoTracking().ToListAsync();
         }
+
+        public async Task<TicketCategory> GetTicketCategoryById(string id)
+        {
+            return await Data.TicketCategories.FirstOrDefaultAsync(x => x.TicketCategoryId == id);
+        }
+
         public async Task<List<TicketPriority>> GetTicketPriorities()
         {
             return await Data.TicketPriorities.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<TicketPriority> GetTicketPriorityById(string id)
+        {
+            return await Data.TicketPriorities.FirstOrDefaultAsync(x => x.PriorityId == id);
+        }
+
+        public async Task<Project> GetTicketProjectById(string id)
+        {
+            return await Data.Projects.FirstOrDefaultAsync(x => x.ProjectId == id);
+        }
+
+        public async Task<Employee> GetTicketCreatorById(string id)
+        {
+            return await Data.Users.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<Employee> GetTicketAcceptantById(string id)
+        {
+            return await Data.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

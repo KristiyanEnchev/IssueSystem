@@ -6,5 +6,7 @@
     public interface IAdminTicketService : ITransientService
     {
         Task<List<TicketViewModel>> GetTicketsInfo();
+        Task<List<TicketIndexModel>> GetTicketsdailyInfo();
+        Task<TicketViewModel> GetTicketDetails(string ticketId);
     }
 }

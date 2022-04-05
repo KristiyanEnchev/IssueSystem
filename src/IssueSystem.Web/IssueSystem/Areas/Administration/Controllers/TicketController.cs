@@ -14,7 +14,14 @@
 
         public async Task<IActionResult> Index()
         {
-            var model = await _adminTicketSerice.GetTicketsInfo();
+            var model = await _adminTicketSerice.GetTicketsdailyInfo();
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            var model = await _adminTicketSerice.GetTicketDetails(id);
 
             return View(model);
         }

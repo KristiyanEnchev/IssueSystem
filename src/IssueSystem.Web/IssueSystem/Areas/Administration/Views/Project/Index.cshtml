@@ -9,7 +9,8 @@
                 <h3 class="card-title">Projects</h3>
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
-                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                        <input type="text" name="table_search" class="form-control float-right"
+                            placeholder="Search">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-default">
                                 <i class="fas fa-search"></i>
@@ -20,85 +21,81 @@
             </div>
 
             <div class="card-body table-responsive p-0">
-            @if (Model.Count() > 0)
-            {
-            <table class="table table-hover text-nowrap">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Department</th>
-                        <th>Employees</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach (var project in Model)
+                @if (Model.Count() > 0)
                 {
-                    <tr>
-                        <td>@project.ProjectName
-                            <br>
-                            <small>Created @project.CreatedOn</small>
-                        </td>
-                        <td>@project.DepartmentName</td>
-                        <td>
-                            <ul class="list-inline">
-                                @foreach (var avatar in project.EmployeesInProject)
-                                {
-                                <li class="list-inline-item">
-                                    @if (avatar.Content != null)
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Employees</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var project in Model)
+                        {
+                        <tr>
+                            <td>@project.ProjectName
+                                <br>
+                                <small>Created @project.CreatedOn</small>
+                            </td>
+                            <td>@project.DepartmentName</td>
+                            <td>
+                                <ul class="list-inline">
+                                    @foreach (var avatar in project.EmployeesInProject)
                                     {
-                                    <img class="header__avatar"
-                                        style="width:40px;height:40px; object-fit:cover; border-radius:30px"
-                                        src="data:image/*;base64,@(Convert.ToBase64String(avatar.Content))">
+                                    <li class="list-inline-item">
+                                        @if (avatar.Content != null)
+                                        {
+                                        <img class="header__avatar"
+                                            style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                                            src="data:image/*;base64,@(Convert.ToBase64String(avatar.Content))">
+                                        }
+                                        else
+                                        {
+                                        <img class="header__avatar table-avatar some-avatar" id="profilePicture"
+                                            src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                                        }
+                                    </li>
                                     }
-                                    else
-                                    {
-                                    <img class="header__avatar table-avatar some-avatar" id="profilePicture"
-                                        src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
-                                    }
-                                </li>
-                                }
-                            </ul>
-                        </td>
+                                </ul>
+                            </td>
                             @if (project.Status.ToString() == "InProgress")
                             {
-                                <td class="project-state">
-                                    <span class="badge badge-info">@project.Status</span>
-                                </td>
+                            <td class="project-state">
+                                <span class="badge badge-info">@project.Status</span>
+                            </td>
                             }
                             else if (project.Status.ToString() == "Success")
                             {
-                                <td class="project-state">
-                                    <span class="badge badge-success">@project.Status</span>
-                                </td>
+                            <td class="project-state">
+                                <span class="badge badge-success">@project.Status</span>
+                            </td>
                             }
                             else
                             {
-                                <td class="project-state">
-                                    <span class="badge badge-danger">@project.Status</span>
-                                </td>
+                            <td class="project-state">
+                                <span class="badge badge-danger">@project.Status</span>
+                            </td>
                             }
-                        <td style="text-align: right">
+                            <td style="text-align: right">
 
-                            <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Edit" asp-controller="Project"
-                            asp-route-id="@project.ProjectId">
-                                <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Edit</a>
+                                <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Edit"
+                                    asp-controller="Project" asp-route-id="@project.ProjectId">
+                                    <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Edit</a>
 
-                           <a class="btn btn-info btn-sm" asp-area="administration" asp-action="CreateTicket" asp-controller="Project"
-                            asp-route-id="@project.ProjectId"><i class="fas fa-pencil-alt"></i>CreateTicket</a>
-@*                            <button class="btn btn-danger btn-sm" asp-area="Administration" asp-action="Delete" asp-controller="Department"
-                            asp-route-id="@project.ProjectId">
-                                <i style="padding-right:0.5rem;" class="fas fa-trash disabled" area-disabled="true" ></i>Delete</button>*@
-
-                        </td>
-                    </tr>
+                                <a class="btn btn-info btn-sm" asp-area="administration" asp-action="CreateTicket"
+                                    asp-controller="Project" asp-route-id="@project.ProjectId"><i
+                                        class="fas fa-pencil-alt"></i>CreateTicket</a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
                 }
-                </tbody>
-            </table>
-            }
-            else
-            {
-
+                else
+                {
                 <section class="page-title">
                     <div class="page-title-img bg-img" style="background-color: #1884e9;">
                         <div class="container">
@@ -116,16 +113,16 @@
                         </div>
                     </div>
                 </section>
-                    <div class="col-12 justify-content-center pad text-center">
-                        <h3 class="text-center" style="color: #black;">You Can Create One</h3>
-                            <div class="row align-items-center justify-content-center height100px">
-                                <div class="col-4 justify-content-center pad text-center">
-                                    <a type="submit" asp-area="Administration" asp-action="CreateProject" asp-controller="Home"
-                                    class="btn btn-primary btn-block">Create Project</a>
-                                </div>
-                                </div>
+                <div class="col-12 justify-content-center pad text-center">
+                    <h3 class="text-center" style="color: #000;">You Can Create One</h3>
+                    <div class="row align-items-center justify-content-center height100px">
+                        <div class="col-4 justify-content-center pad text-center">
+                            <a type="submit" asp-area="Administration" asp-action="CreateProject"
+                                asp-controller="Home" class="btn btn-primary btn-block">Create Project</a>
+                        </div>
                     </div>
-            }
+                </div>
+                }
             </div>
         </div>
     </div>

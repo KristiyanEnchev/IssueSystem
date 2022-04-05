@@ -9,5 +9,11 @@
         Task<bool> CreateTicket(CreateTicketViewModel model);
         Task<List<TicketCategory>> GetTicketCategories();
         Task<List<TicketPriority>> GetTicketPriorities();
+        Task<TicketCategory> GetTicketCategoryById(string id);
+        Task<TicketPriority> GetTicketPriorityById(string id);
+        Task<Project> GetTicketProjectById(string id);
+        Task<Employee> GetTicketCreatorById(string id);
+        Task<Employee> GetTicketAcceptantById(string id);
+
     }
 }

@@ -1,0 +1,94 @@
+﻿@model TicketViewModel
+@{
+}
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Details -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="mb-3 d-flex justify-content-between">
+
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.Title</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@Model.CreatedOn</h6>
+                            <p class="card-text">@Model.Description</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>ProjectName</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th style="width: 1%">Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@Model.Title
+                                    <br>
+                                    <small>Created @Model.CreatedOn</small>
+                                </td>
+                                <td>@Model.ProjectName</td>
+                                <td>@Model.TicketPriority</td>
+                                @if (Model.CurrentStatus == "Open")
+                                {
+                                <td class="project-state">
+                                    <span class="badge badge-info">@Model.CurrentStatus</span>
+                                </td>
+                                }
+                                else
+                                {
+                                <td class="project-state">
+                                    <span class="badge badge-danger">@Model.CurrentStatus</span>
+                                </td>
+                                }
+                                <td class="text-center">@Model.CommentsCount</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                @if (@Model.CreatorAvatar != null)
+                {
+                <img class="header__avatar" style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                    src="data:image/*;base64,@(Convert.ToBase64String(@Model.CreatorAvatar.Content))">
+                }
+                else
+                {
+                <img class="header__avatar some-avatar" id="profilePicture"
+                    src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                }
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-body">
+                @if (@Model.AcceptantAvatar != null)
+                {
+                <img class="header__avatar" style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                    src="data:image/*;base64,@(Convert.ToBase64String(@Model.AcceptantAvatar.Content))">
+                }
+                else
+                {
+                <img class="header__avatar some-avatar" id="profilePicture"
+                    src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                }
+            </div>
+        </div>
+    </div>
+</div>
