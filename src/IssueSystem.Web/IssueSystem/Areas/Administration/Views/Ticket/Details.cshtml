@@ -2,93 +2,113 @@
 @{
 }
 
-<div class="row">
-    <div class="col-lg-8">
-        <!-- Details -->
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="mb-3 d-flex justify-content-between">
-
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">@Model.Title</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">@Model.CreatedOn</h6>
-                            <p class="card-text">@Model.Description</p>
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Ticket Detail</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Comments</span>
+                                    <span
+                                        class="info-box-number text-center text-muted mb-0">@Model.CommentsCount</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Priority</span>
+                                    @if (@Model.TicketPriority == "Low")
+                                    {
+                                    <span
+                                        class="info-box-number text-center mb-0 badge badge-info">@Model.TicketPriority</span>
+                                    }
+                                    else if (@Model.TicketPriority == "Medium")
+                                    {
+                                    <span
+                                        class="info-box-number text-center mb-0 badge badge-success">@Model.TicketPriority</span>
+                                    }
+                                    else
+                                    {
+                                    <span
+                                        class="info-box-number text-center mb-0 badge badge-danger">@Model.TicketPriority</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Category</span>
+                                    <span
+                                        class="info-box-number text-center text-muted mb-0">@Model.TicketCategory</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <h4>Created From</h4>
+                            <div class="post">
+                                <div class="user-block">
+                                    @if (@Model.CreatorAvatar != null)
+                                    {
+                                    <img class="header__avatar"
+                                        style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                                        src="data:image/*;base64,@(Convert.ToBase64String(@Model.CreatorAvatar.Content))">
+                                    }
+                                    else
+                                    {
+                                    <img class="header__avatar some-avatar" id="profilePicture"
+                                        src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                                    }
+                                    <span class="username">
+                                        <a asp-area="Administration" asp-action="Edit" asp-controller="User"
+                                            asp-route-id="@Model.CreatorId">@Model.CreatorName</a>
+                                    </span>
+                                    <span class="description">Ticket Created on:</span>
+                                    <span class="description">@Model.CreatedOn</span>
+                                </div>
+                                 <h6 class="text-black-50 text-center">Ticket Description</h6>
+                            </div>
+                            <div class="post clearfix">
+                                <p>@Model.Description</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="row">
-                    <table class="table table-hover text-nowrap">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>ProjectName</th>
-                                <th>Priority</th>
-                                <th>Status</th>
-                                <th style="width: 1%">Comments</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>@Model.Title
-                                    <br>
-                                    <small>Created @Model.CreatedOn</small>
-                                </td>
-                                <td>@Model.ProjectName</td>
-                                <td>@Model.TicketPriority</td>
-                                @if (Model.CurrentStatus == "Open")
-                                {
-                                <td class="project-state">
-                                    <span class="badge badge-info">@Model.CurrentStatus</span>
-                                </td>
-                                }
-                                else
-                                {
-                                <td class="project-state">
-                                    <span class="badge badge-danger">@Model.CurrentStatus</span>
-                                </td>
-                                }
-                                <td class="text-center">@Model.CommentsCount</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                    <h1 class="text-center">Project</h1>
+                    <h3 class="text-primary text-center"><i class="fa fa-solid fa-address-card" style="padding: 0.5rem"></i>@Model.ProjectName</h3>
+                    <h6 class="text-black-50 text-center">Project Description</h6>
+                    <p class="text-muted text-center">@Model.ProjectDescription</p>
+                    <br>
+                    <div class="text-muted">
+                        @if (@Model.CurrentStatus == "Open")
+                        {
+                            <span class="badge badge-info">@Model.CurrentStatus</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">@Model.CurrentStatus</span>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
-        <div class="card mb-4">
-            <div class="card-body">
-                @if (@Model.CreatorAvatar != null)
-                {
-                <img class="header__avatar" style="width:40px;height:40px; object-fit:cover; border-radius:30px"
-                    src="data:image/*;base64,@(Convert.ToBase64String(@Model.CreatorAvatar.Content))">
-                }
-                else
-                {
-                <img class="header__avatar some-avatar" id="profilePicture"
-                    src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
-                }
-            </div>
-        </div>
-        <div class="card mb-4">
-            <div class="card-body">
-                @if (@Model.AcceptantAvatar != null)
-                {
-                <img class="header__avatar" style="width:40px;height:40px; object-fit:cover; border-radius:30px"
-                    src="data:image/*;base64,@(Convert.ToBase64String(@Model.AcceptantAvatar.Content))">
-                }
-                else
-                {
-                <img class="header__avatar some-avatar" id="profilePicture"
-                    src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
-                }
-            </div>
-        </div>
-    </div>
-</div>
+</section>

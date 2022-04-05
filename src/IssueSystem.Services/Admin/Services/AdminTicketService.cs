@@ -46,6 +46,12 @@
                 var project = await _ticketService
                     .GetTicketProjectById(ticket.ProjectId);
 
+                var creator = await _ticketService
+                    .GetTicketCreatorById(ticket.CreatorId);
+
+                var acceptant = await _ticketService
+                    .GetTicketCreatorById(ticket.AcceptantId);
+
                 model.TicketId = ticket.TicketId;
                 model.Title = ticket.Title;
                 model.TicketCategory = category.CategoryName;
@@ -54,7 +60,13 @@
                 model.CommentsCount = ticket.Comments.Count;
                 model.ProjectId = ticket.ProjectId;
                 model.ProjectName = project.ProjectName;
-
+                model.Description = ticket.Description;
+                model.ProjectDescription = project.Description;
+                model.CreatorName = creator.FirstName + " " + creator.LastName;
+                if (acceptant != null)
+                {
+                    model.AcceptantName = acceptant.FirstName + " " + acceptant.LastName;
+                }
                 model.CurrentStatus = ticket.TicketStatuses
                .OrderBy(x => x.CreatedOn)
                .Select(x => x.StatusType)

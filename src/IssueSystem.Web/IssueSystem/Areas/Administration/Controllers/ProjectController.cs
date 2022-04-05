@@ -198,25 +198,6 @@
             ViewBag.TicketCategories = this._dropDownService.GetCategories();
             ViewBag.TicketPriorities = this._dropDownService.GetPriorities();
 
-            //var priorities = await _ticketService.GetTicketPriorities();
-            //var categories = await _ticketService.GetTicketCategories();
-
-            //ViewBag.Categories = categories
-            //.Select(r => new SelectListItem()
-            //{
-            //    Text = r.CategoryName,
-            //    Value = r.CategoryName,
-            //}).ToList();
-
-            //ViewBag.Priorities = priorities
-            //.Select(r => new SelectListItem()
-            //{
-            //    Text = r.PriorityType.ToString(),
-            //    Value = r.PriorityType.ToString(),
-            //}).ToList();
-
-            //TempData["ProjectId"] = id;
-
             return View(createTicketViewModel);
         }
 

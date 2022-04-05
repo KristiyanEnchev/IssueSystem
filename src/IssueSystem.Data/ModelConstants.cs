@@ -10,6 +10,7 @@
         public class Project
         {
             public const int ProjectNameMaxLenght = 50;
+            public const int ProjectdescriptionMaxLenght = 1000;
         }
 
         public class Employee

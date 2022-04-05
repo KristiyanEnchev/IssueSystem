@@ -1,4 +1,4 @@
-﻿@model ProjectEditViewModel
+﻿@model ProjectModel
 @{
     var items = (List<SelectListItem>)ViewBag.DepartmentNames;
 }
@@ -30,6 +30,12 @@
                                 <select asp-for="DepartmentName" id="selectpicker" asp-items="@items" class="form-control selectpicker">
                                 </select>
                             </div>
+                        </div>
+                       <div class="form-floating text-center">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" type="text" class="form-control" rows="5"
+                                id="MessageInputField" autofocus></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                         <br/>
                         <br/>

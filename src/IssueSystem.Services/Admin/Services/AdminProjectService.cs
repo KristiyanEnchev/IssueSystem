@@ -10,7 +10,6 @@
     using IssueSystem.Models.Admin.Project;
     using IssueSystem.Models.Admin.User;
     using IssueSystem.Models.Admin.Ticket;
-    using IssueSystem.Models.Image;
     using IssueSystem.Services.Contracts.Project;
     using IssueSystem.Services.Contracts.File;
 
@@ -52,6 +51,7 @@
                     ProjectName = model.ProjectName,
                     Departament = department,
                     DepartmentId = department.DepartmentId,
+                    Description = model.Description,
                     EmployeeProjects = new HashSet<EmployeeProject>(),
                     Tickets = new HashSet<Ticket>(),
                 };

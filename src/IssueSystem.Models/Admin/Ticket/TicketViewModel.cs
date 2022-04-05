@@ -13,10 +13,13 @@
         public string TicketCategory { get; set; }
         public string TicketPriority { get; set; }
         public string CreatorId { get; set; }
+        public string CreatorName { get; set; }
         public virtual ResponseImageViewModel? CreatorAvatar { get; set; }
         public string AcceptantId { get; set; }
+        public string AcceptantName { get; set; }
         public virtual ResponseImageViewModel? AcceptantAvatar { get; set; }
         public string Description { get; set; }
+        public string ProjectDescription { get; set; }
         public string CurrentStatus { get; set; }
         public DateTime CreatedOn { get; set; }
         public int CommentsCount { get; set; }

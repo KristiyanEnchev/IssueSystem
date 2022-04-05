@@ -29,6 +29,10 @@
         [Required(ErrorMessage = "Project name is required")]
         public string ProjectName { get; set; }
 
+        [StringLength(ProjectdescriptionMaxLenght)]
+        [Required(ErrorMessage = "Project description is required")]
+        public string Description { get; set; }
+
         public ProjectStatus Status { get; set; } = ProjectStatus.InProgress;
 
         [ForeignKey(nameof(Department))]

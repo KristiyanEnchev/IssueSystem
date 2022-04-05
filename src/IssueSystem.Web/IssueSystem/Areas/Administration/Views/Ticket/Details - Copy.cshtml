@@ -1,0 +1,130 @@
+﻿@model TicketViewModel
+@{
+}
+
+<section class="page-title">
+  <div class="page-title-img bg-img bg-overlay-darken">
+    <div class="container">
+      <div class="row align-items-center justify-content-center height100px">
+        <div class="col-lg-8">
+          <div class="page-title-content">
+            <div class="title-border">
+              <h1 class="text-white text-uppercase font-weight-bold">Ticket Detail Section</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card mb-4 form-wrapper" style="margin: 0 0">
+      <div class="card-body">
+        <div class="mb-3 d-flex justify-content-between">
+          @*<div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h2 class="card-title"><strong><ins>@Model.Title</ins></strong></h2>
+                  <br>
+                  <small>Created: @Model.CreatedOn</small>
+                </div>
+              </div>
+
+            </div>
+          </div>*@
+
+             <div class="content first-content text-center">
+              <div class="container-fluid">
+@*                  <div class="col-md-3">
+                      <div class="author-image"><img src="img/author_image.png" alt="Author Image"></div>
+                  </div>*@
+                  <div class="col-md-12">
+                      <h2><strong><ins>@Model.Title</ins></strong></h2>
+                      <small>Created: @Model.CreatedOn</small>
+                      <p>Please take a look at <strong><a rel="nofollow" href="https://www.toocss.com">Too CSS</a></strong> to see free template collections for you. Lorem ipsum <em>dolor sit amet</em>, consectetur adipiscing elit. <em>Sed vehicula blandit augue,</em> eu maximus odio tempus vitae.</p>
+                  </div>
+              </div>
+            </div>
+
+@*          <div class="">
+            <p class="text-left"> @Model.Description</p>
+          </div>*@
+
+        </div>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row">
+@*          <table class="table table-responseve table-hover text-nowrap">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>ProjectName</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th style="width: 1%">Comments</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>@Model.Title
+                  <br>
+                  <small>Created @Model.CreatedOn</small>
+                </td>
+                <td>@Model.ProjectName</td>
+                <td>@Model.TicketPriority</td>
+                @if (Model.CurrentStatus == "Open")
+                {
+                <td class="project-state">
+                  <span class="badge badge-info">@Model.CurrentStatus</span>
+                </td>
+                }
+                else
+                {
+                <td class="project-state">
+                  <span class="badge badge-danger">@Model.CurrentStatus</span>
+                </td>
+                }
+                <td class="text-center">@Model.CommentsCount</td>
+              </tr>
+            </tbody>
+          </table>*@
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card mb-4">
+      <div class="card-body">
+        @if (@Model.CreatorAvatar != null)
+        {
+        <img class="header__avatar" style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+          src="data:image/*;base64,@(Convert.ToBase64String(@Model.CreatorAvatar.Content))">
+        }
+        else
+        {
+        <img class="header__avatar some-avatar" id="profilePicture" src="~/assets/images/Portrait_Placeholder.png"
+          object-fit:cover" src="">
+        }
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-body">
+        @if (@Model.AcceptantAvatar != null)
+        {
+        <img class="header__avatar" style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+          src="data:image/*;base64,@(Convert.ToBase64String(@Model.AcceptantAvatar.Content))">
+        }
+        else
+        {
+        <img class="header__avatar some-avatar" id="profilePicture" src="~/assets/images/Portrait_Placeholder.png"
+          object-fit:cover" src="">
+        }
+      </div>
+    </div>
+  </div>
+</div>
