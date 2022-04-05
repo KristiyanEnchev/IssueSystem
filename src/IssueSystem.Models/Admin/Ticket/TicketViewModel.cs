@@ -10,12 +10,14 @@
     {
         public string TicketId { get; set; }
         public string Title { get; set; }
-        public virtual TicketCategory TicketCategory { get; set; }
-        public virtual TicketPriority TicketPriority { get; set; }
-        public virtual ResponseImageViewModel CreatorAvatar { get; set; }
-        public virtual ResponseImageViewModel AcceptantAvatar { get; set; }
+        public string TicketCategory { get; set; }
+        public string TicketPriority { get; set; }
+        public string CreatorId { get; set; }
+        public virtual ResponseImageViewModel? CreatorAvatar { get; set; }
+        public string AcceptantId { get; set; }
+        public virtual ResponseImageViewModel? AcceptantAvatar { get; set; }
         public string Description { get; set; }
-        public TicketStatus CurrentStatus { get; set; }
+        public string CurrentStatus { get; set; }
         public DateTime CreatedOn { get; set; }
         public int CommentsCount { get; set; }
         public string ProjectId { get; set; }

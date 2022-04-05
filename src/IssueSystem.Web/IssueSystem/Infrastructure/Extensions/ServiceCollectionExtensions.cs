@@ -8,7 +8,7 @@
     using IssueSystem.Services.Common;
     using IssueSystem.Data.Contracts;
     using IssueSystem.Data.DataSeed;
-    using IssueSystem.Services.SendGrid;
+    using IssueSystem.Services.HelpersServices.SendGrid;
     using IssueSystem.Infrastructure.Filters;
 
     public static class ServiceCollectionExtensions

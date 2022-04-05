@@ -17,12 +17,15 @@
     public class IndexModel : PageModel
     {
         private readonly UserManager<Employee> _userManager;
+
         private readonly IFileService _fileService;
+
         private readonly IUserPersonalService _userService;
 
         public IndexModel(
             UserManager<Employee> userManager,
-            IFileService fileService, IUserPersonalService userService)
+            IFileService fileService,
+            IUserPersonalService userService)
         {
             _userManager = userManager;
             _fileService = fileService;

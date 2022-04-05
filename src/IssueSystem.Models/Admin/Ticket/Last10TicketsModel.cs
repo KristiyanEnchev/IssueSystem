@@ -1,0 +1,33 @@
+﻿namespace IssueSystem.Models.Admin.Ticket
+{
+    using AutoMapper;
+
+    using IssueSystem.Common.Mapper.Contracts;
+    using IssueSystem.Data.Models;
+
+    public class Last10TicketsModel : IMapFrom<Ticket>
+    {
+        public string TicketId { get; set; }
+        public string Title { get; set; }
+        public string TicketCategory { get; set; }
+        public string TicketPriority { get; set; }
+        public string Description { get; set; }
+        public string CurrentStatus { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public int CommentsCount { get; set; }
+        public string ProjectName { get; set; }
+
+        public virtual void Mapping(Profile mapper)
+        {
+            mapper.CreateMap<Ticket, Last10TicketsModel>()
+                .ForMember(x => x.CommentsCount, y => y.MapFrom(x => x.Comments.Count))
+                .ForPath(x => x.CommentsCount, y => y.MapFrom(x => x.Comments.Count))
+                .ForMember(x => x.TicketCategory, y => y.MapFrom(x => x.TicketCategory.CategoryName))
+                .ForPath(x => x.TicketCategory, y => y.MapFrom(x => x.TicketCategory.CategoryName))
+                .ForMember(x => x.TicketPriority, y => y.MapFrom(x => x.TicketPriority.PriorityType.ToString()))
+                .ForPath(x => x.TicketPriority, y => y.MapFrom(x => x.TicketPriority.PriorityType.ToString()))
+                .ForMember(x => x.ProjectName, y => y.MapFrom(x => x.Project.ProjectName))
+                .ForPath(x => x.CurrentStatus, y => y.MapFrom(x => x.Project.ProjectName));
+        }
+    }
+}

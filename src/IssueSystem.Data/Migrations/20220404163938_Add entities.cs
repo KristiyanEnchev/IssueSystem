@@ -334,7 +334,7 @@ namespace IssueSystem.Data.Migrations
                     TicketId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AcceptantId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AcceptantId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     TicketCategoryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TicketPriorityId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ImageId = table.Column<int>(type: "int", nullable: false),

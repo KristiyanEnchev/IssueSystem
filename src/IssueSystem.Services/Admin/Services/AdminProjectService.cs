@@ -50,7 +50,7 @@
                 var project = new Project
                 {
                     ProjectName = model.ProjectName,
-                    Departament= department,
+                    Departament = department,
                     DepartmentId = department.DepartmentId,
                     EmployeeProjects = new HashSet<EmployeeProject>(),
                     Tickets = new HashSet<Ticket>(),
@@ -129,7 +129,7 @@
             return result;
         }
 
-        public async Task<bool> AddEmployeeToProject(string projectId, string employeeId) 
+        public async Task<bool> AddEmployeeToProject(string projectId, string employeeId)
         {
             var result = false;
 
@@ -137,7 +137,7 @@
 
             var employee = await _userService.GetUserById(employeeId);
 
-            if (employee != null && project != null) 
+            if (employee != null && project != null)
             {
                 var employeeProject = new EmployeeProject
                 {
@@ -213,26 +213,35 @@
 
         public async Task<List<TicketViewModel>> GetLast20TicketsForProject(string projectId)
         {
-            var tickets = await Mapper.ProjectTo<TicketViewModel>
-                (Data.Tickets
-                 .Where(x => x.ProjectId == projectId)
-                 .OrderBy(x => x.CreatedOn)
-                 .Take(20))
-                 .ToListAsync();
+            var tickets = await Data.Tickets
+                .Select(x => new TicketViewModel
+                {
+                    TicketId = x.TicketId,
+                    Title = x.Title,
+                    TicketCategory = x.TicketCategory.CategoryName,
+                    TicketPriority = x.TicketPriority.PriorityType.ToString(),
+                    CreatedOn = x.CreatedOn,
+                    CommentsCount = x.Comments.Count,
+                    ProjectId = x.ProjectId,
+                    ProjectName = x.Project.ProjectName,
+                    CurrentStatus = x.TicketStatuses
+                    .OrderBy(x => x.CreatedOn)
+                    .Select(x => x.StatusType)
+                    .FirstOrDefault()
+                    .ToString(),
+
+                    Description = x.Description,
+                    CreatorId = x.CreatorId,
+                    AcceptantId = x.AcceptantId,
+                })
+                .OrderBy(x => x.CreatedOn)
+                .Take(20)
+                .ToListAsync();
 
             foreach (var ticket in tickets)
             {
-                 ticket.AcceptantAvatar = await Mapper.ProjectTo<ResponseImageViewModel>
-                    (Data.Tickets
-                    .Where(x => x.ProjectId == projectId)
-                    .Select(x => x.TicketAcceptant.ProfilePicture))
-                    .FirstOrDefaultAsync();
-
-                ticket.CreatorAvatar = await Mapper.ProjectTo<ResponseImageViewModel>(
-                    Data.Tickets
-                    .Where(x => x.ProjectId == projectId)
-                    .Select(x => x.TicketCreator.ProfilePicture))
-                    .FirstOrDefaultAsync();
+                ticket.CreatorAvatar = await _fileService.GetImage(ticket.CreatorId);
+                ticket.AcceptantAvatar = await _fileService.GetImage(ticket.AcceptantId);
             }
 
             return tickets;

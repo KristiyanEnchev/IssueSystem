@@ -10,8 +10,8 @@
     using IssueSystem.Models.Admin.Project;
     using IssueSystem.Services.Contracts.Ticket;
     using IssueSystem.Models.Tickets;
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using IssueSystem.Infrastructure.Extensions;
+    using IssueSystem.Services.HelpersServices.DropDown;
 
     public class ProjectController : BaseController
     {
@@ -25,17 +25,21 @@
 
         private readonly ITicketService _ticketService;
 
+        private readonly IDropDownService _dropDownService;
+
         public ProjectController(UserManager<Employee> userManager,
             IAdminProjectService adminProjectService,
             IProjectService projectService,
             IUserService userService,
-            ITicketService ticketService)
+            ITicketService ticketService,
+            IDropDownService dropDownService)
         {
             _userManager = userManager;
             _adminProjectService = adminProjectService;
             _projectService = projectService;
             _userService = userService;
             _ticketService = ticketService;
+            _dropDownService = dropDownService;
         }
 
         /// Get Projects from the Service(working with database)
@@ -185,41 +189,52 @@
 
         public async Task<IActionResult> CreateTicket(string id)
         {
-            var priorities = await _ticketService.GetTicketPriorities();
-            var categories = await _ticketService.GetTicketCategories();
-
-            ViewBag.Categories = categories
-            .Select(r => new SelectListItem()
+            var createTicketViewModel = new CreateTicketViewModel
             {
-                Text = r.CategoryName,
-                Value = r.CategoryName,
-            }).ToList();
+                ProjectId = id,
+                CreatorId = this.User.GetId(),
+            };
 
-            ViewBag.Priorities = priorities
-            .Select(r => new SelectListItem()
-            {
-                Text = r.PriorityType.ToString(),
-                Value = r.PriorityType.ToString(),
-            }).ToList();
+            ViewBag.TicketCategories = this._dropDownService.GetCategories();
+            ViewBag.TicketPriorities = this._dropDownService.GetPriorities();
 
-            TempData["ProjectId"] = id;
+            //var priorities = await _ticketService.GetTicketPriorities();
+            //var categories = await _ticketService.GetTicketCategories();
 
-            return View();
+            //ViewBag.Categories = categories
+            //.Select(r => new SelectListItem()
+            //{
+            //    Text = r.CategoryName,
+            //    Value = r.CategoryName,
+            //}).ToList();
+
+            //ViewBag.Priorities = priorities
+            //.Select(r => new SelectListItem()
+            //{
+            //    Text = r.PriorityType.ToString(),
+            //    Value = r.PriorityType.ToString(),
+            //}).ToList();
+
+            //TempData["ProjectId"] = id;
+
+            return View(createTicketViewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateTicket(CreateTicketViewModel model) 
         {
-            string userId = this.User.GetId();
+            var isCreated = await _ticketService.CreateTicket(model);
 
-            model.CreatorId = userId;
-            model.ProjectId = TempData["ProjectId"]?.ToString();
+            if (!isCreated) 
+            {
+                TempData[MessageConstant.ErrorMessage] = "You ware not abe to add the ticket";
 
-            await _ticketService.CreateTicket(model);
+                return View(model);
+            }
 
             TempData[MessageConstant.SuccessMessage] = $"The ticket {model.Title} have been created";
 
-            return View();
+            return RedirectToAction("Index", "Ticket");
         }
 
         /// This method flags the project as deleted 

@@ -10,7 +10,7 @@
     public interface IUserService : ITransientService
     {
         Task<List<TicketViewModel>> GetEmployeeLast10AcceptedTickets(string employeeId);
-        Task<List<TicketViewModel>> GetEmployeeLast10CreatedTickets(string employeeId);
+        Task<List<Last10TicketsModel>> GetEmployeeLast10CreatedTickets(string employeeId);
         Task<List<EmployeeProjectViewModel>> GetEmployeeLast5Projects(string employeeId);
         Task<bool> UpdateUser(UserEditViewModel model);
         Task<IEnumerable<UserListViewModel>> GetUsers();

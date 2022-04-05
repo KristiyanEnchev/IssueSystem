@@ -18,10 +18,15 @@
     public class LoginModel : PageModel
     {
         private readonly SignInManager<Employee> _signInManager;
+
         private readonly UserManager<Employee> _userManager;
+
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<Employee> signInManager, ILogger<LoginModel> logger, UserManager<Employee> userManager)
+        public LoginModel(
+            SignInManager<Employee> signInManager,
+            ILogger<LoginModel> logger,
+            UserManager<Employee> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -126,6 +131,7 @@
                     _logger.LogInformation("User logged in.");
 
                     var user = await _userManager.FindByEmailAsync(Input.Email);
+                    await _userManager.AddToRoleAsync(user, IssueSystemRoles.EmployeeRoleName);
 
                     if (await _userManager.IsInRoleAsync(user, IssueSystemRoles.AdministratorRoleName))
                     {

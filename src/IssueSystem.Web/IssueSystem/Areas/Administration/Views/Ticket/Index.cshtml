@@ -38,67 +38,59 @@
             <div class="card-body table-responsive p-0">
             @if (Model.Count() > 0)
             {
-            <table class="table table-hover text-nowrap">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>ProjectName</th>
-                        <th>Comments</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach (var ticket in Model.OrderBy(x => x.ProjectId))
-                {
-                    <tr>
-                        <td>@ticket.Title
-                            <br>
-                            <small>Created @ticket.CreatedOn</small>
-                        </td>
-                        <td>@ticket.ProjectName</td>
-                        <td>@ticket.CommentsCount</td>
-                        @if (ticket.CurrentStatus.ToString() == "InProgress")
-                        {
-                            <td class="project-state">
-                                <span class="badge badge-info">@ticket.CurrentStatus</span>
-                            </td>
-                        }
-                        else if (ticket.CurrentStatus.ToString() == "Success")
-                        {
-                            <td class="project-state">
-                                <span class="badge badge-success">@ticket.CurrentStatus</span>
-                            </td>
-                        }
-                        else
-                        {
-                            <td class="project-state">
-                                <span class="badge badge-danger">@ticket.CurrentStatus</span>
-                            </td>
-                        }
-                        <td style="text-align: right">
-                            <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Edit" asp-controller="Ticket"
-                            asp-route-id="@ticket.TicketId">
-                                <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Edit</a>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-                 <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th>Priority</th>
-                        <th>Creator</th>
-                        <th>Acceptant</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var ticket in Model.OrderBy(x => x.ProjectId))
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>ProjectName</th>
+                            <th>Comments</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                     <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Priority</th>
+                            <th>Creator</th>
+                            <th>Acceptant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var ticket in @Model)
                     {
+                        <tr>
+                            <td>@ticket.Title
+                                <br>
+                                <small>Created @ticket.CreatedOn</small>
+                            </td>
+                            <td>@ticket.ProjectName</td>
+                            <td>@ticket.CommentsCount</td>
+                            @if (ticket.CurrentStatus.ToString() == "Open")
+                            {
+                                <td class="project-state">
+                                    <span class="badge badge-info">@ticket.CurrentStatus</span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="project-state">
+                                    <span class="badge badge-danger">@ticket.CurrentStatus</span>
+                                </td>
+                            }
+                            <td style="text-align: right">
+                                <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Edit" asp-controller="Ticket"
+                                asp-route-id="@ticket.TicketId">
+                                    <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Edit</a>
+                            </td>
+                        </tr>
+
                         <tr>
                             <td>@ticket.TicketCategory</td>
                             <td>@ticket.TicketPriority</td>
                             <td>
-                                @if (ticket.CreatorAvatar.Content != null)
+                                @if (ticket.CreatorAvatar != null)
                                 {
                                 <img class="header__avatar"
                                     style="width:40px;height:40px; object-fit:cover; border-radius:30px"
@@ -109,9 +101,9 @@
                                 <img class="header__avatar table-avatar some-avatar" id="profilePicture"
                                     src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
                                 }
-                             </td>
-                             <td>
-                                @if (ticket.AcceptantAvatar.Content != null)
+                                </td>
+                                <td>
+                                @if (ticket.AcceptantAvatar != null)
                                 {
                                 <img class="header__avatar"
                                     style="width:40px;height:40px; object-fit:cover; border-radius:30px"
@@ -122,16 +114,16 @@
                                 <img class="header__avatar table-avatar some-avatar" id="profilePicture"
                                     src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
                                 }
-                             </td>
-                             <td>
+                                </td>
+                                <td>
                                 <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Edit" asp-controller="Project"
-                                   asp-route-id="@ticket.ProjectId"><i style="padding-right:0.5rem;" class="fas fa-folder"></i>Project</a>
-                             </td>
+                                    asp-route-id="@ticket.ProjectId"><i style="padding-right:0.5rem;" class="fas fa-folder"></i>Project</a>
+                                </td>
+                        <tr colstan="4">@ticket.Description</tr>
                         </tr>
-                    <tr colstan="4">@ticket.Description</tr>
                     }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
             }
             else
             {

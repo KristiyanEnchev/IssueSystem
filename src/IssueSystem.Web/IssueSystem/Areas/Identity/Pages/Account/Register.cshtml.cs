@@ -19,7 +19,7 @@
     using Microsoft.Extensions.Logging;
 
     using IssueSystem.Data.Models;
-    using IssueSystem.Services.SendGrid;
+    using IssueSystem.Services.HelpersServices.SendGrid;
     using IssueSystem.Common;
 
     public class RegisterModel : PageModel

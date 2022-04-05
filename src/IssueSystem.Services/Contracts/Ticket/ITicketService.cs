@@ -6,7 +6,7 @@
 
     public interface ITicketService : ITransientService
     {
-        Task CreateTicket(CreateTicketViewModel model);
+        Task<bool> CreateTicket(CreateTicketViewModel model);
         Task<List<TicketCategory>> GetTicketCategories();
         Task<List<TicketPriority>> GetTicketPriorities();
     }

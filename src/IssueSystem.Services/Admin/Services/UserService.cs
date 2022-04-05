@@ -156,7 +156,6 @@
             return result;
         }
 
-
         public async Task<IEnumerable<EmployeeViewModel>> GetUsersForProject(string projectId)
         {
             var employees = await Mapper.ProjectTo<EmployeeViewModel>
@@ -241,27 +240,47 @@
             return projects;
         }
 
-        public async Task<List<TicketViewModel>> GetEmployeeLast10CreatedTickets(string employeeId)
+        public async Task<List<Last10TicketsModel>> GetEmployeeLast10CreatedTickets(string employeeId)
         {
-            var tickets = await Data.Tickets
+            var tickets = await Mapper.ProjectTo<Last10TicketsModel>(Data.Tickets
                 .Where(x => x.CreatorId == employeeId)
                 .OrderBy(x => x.CreatedOn)
-                .Take(10)
-                .Select(x => new TicketViewModel
-                {
-                    TicketId = x.TicketId,
-                    Title = x.Title,
-                    CurrentStatus = x.TicketStatuses.OrderBy(x => x.CreatedOn).First(),
-                    TicketCategory = x.TicketCategory,
-                    TicketPriority = x.TicketPriority,
-                    Description = x.Description,
-                    CommentsCount = x.Comments.Count,
-                    CreatedOn = x.CreatedOn,
-                }).ToListAsync();
+                .Take(10)).ToListAsync();
+
+            foreach (var ticket in tickets)
+            {
+                var statuses = await Data.Tickets
+                    .Where(x => x.TicketId == ticket.TicketId)
+                    .Select(x => x.TicketStatuses)
+                    .FirstOrDefaultAsync();
+
+                var first = statuses.OrderBy(x => x.CreatedOn)
+                    .FirstOrDefault();
+
+                var status = first.StatusType.ToString();
+
+                ticket.CurrentStatus = status;
+            }
+
+            //var tickets = await Data.Tickets
+            //    .Where(x => x.CreatorId == employeeId)
+            //    .OrderBy(x => x.CreatedOn)
+            //    .Take(10)
+            //    .Select(x => new TicketViewModel
+            //    {
+            //        TicketId = x.TicketId,
+            //        Title = x.Title,
+            //        CurrentStatus = x.TicketStatuses.OrderBy(x => x.CreatedOn).First(),
+            //        TicketCategory = x.TicketCategory,
+            //        TicketPriority = x.TicketPriority,
+            //        Description = x.Description,
+            //        CommentsCount = x.Comments.Count,
+            //        CreatedOn = x.CreatedOn,
+            //    }).ToListAsync();
 
             if (tickets == null)
             {
-                return new List<TicketViewModel>();
+                return new List<Last10TicketsModel>();
             }
 
             return tickets;
@@ -277,9 +296,9 @@
                 {
                     TicketId = x.TicketId,
                     Title = x.Title,
-                    CurrentStatus = x.TicketStatuses.OrderBy(x => x.CreatedOn).First(),
-                    TicketCategory = x.TicketCategory,
-                    TicketPriority = x.TicketPriority,
+                    CurrentStatus = x.TicketStatuses.OrderBy(x => x.CreatedOn).Select(x => x.StatusType).FirstOrDefault().ToString(),
+                    TicketCategory = x.TicketCategory.CategoryName,
+                    TicketPriority = x.TicketPriority.PriorityType.ToString(),
                     Description = x.Description,
                     CommentsCount = x.Comments.Count,
                     CreatedOn = x.CreatedOn,

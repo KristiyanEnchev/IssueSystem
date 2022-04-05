@@ -6,6 +6,8 @@ namespace IssueSystem
 
     using IssueSystem.Infrastructure.Extensions;
     using IssueSystem.Infrastructure.Middleware;
+    using IssueSystem.Services.HelpersServices.DropDown;
+    using IssueSystem.Services.HelpersServices.Cache;
 
     public class Program
     {
@@ -19,6 +21,9 @@ namespace IssueSystem
                 .AddAutoMapper(Assembly.GetExecutingAssembly())
                 .AddApplicationServices()
                 .AddControllers();
+
+            builder.Services.AddTransient<IDropDownService, DropDownService>();
+            builder.Services.AddTransient<ICacheService, InMemoryCach>();
 
             var app = builder.Build();
             app

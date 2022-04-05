@@ -39,7 +39,7 @@
         {
             this.db.Database.Migrate();
 
-            AddAdministrator();
+            this.AddAdministrator();
 
             foreach (var initialDataProvider in this.initialDataProviders)
             {
@@ -55,6 +55,7 @@
             }
 
             this.roleSeeder.CreateEmployeeRole();
+
             this.roleSeeder.CreateManagerRole();
 
             this.db.SaveChanges();
@@ -109,8 +110,6 @@
 
             return result == 0 || result == 1;
         }
-
-
 
         private DbSet<TEntity> GetSet<TEntity>()
             where TEntity : class

@@ -28,7 +28,8 @@
             var image = new ResponseImageViewModel();
             bool isPictureExist = false;
 
-            var data = await Data.Images.FirstOrDefaultAsync(x => x.EmployeeId == userId);
+            var data = await Data.Images
+                .FirstOrDefaultAsync(x => x.EmployeeId == userId);
 
             if (data != null)
             {
@@ -58,11 +59,14 @@
         {
             bool result = false;
 
-            var data = await Data.Images.FirstOrDefaultAsync(x => x.EmployeeId == employeeId && x.Content == model.Content);
+            var data = await Data.Images
+                .FirstOrDefaultAsync(x => x.EmployeeId == employeeId && x.Content == model.Content);
 
-            var personImage = await _userManager.FindByIdAsync(employeeId);
+            var personImage = await _userManager
+                .FindByIdAsync(employeeId);
 
-            var imageToUpdate = await Data.Images.FirstOrDefaultAsync(x => x.EmployeeId == personImage.Id);
+            var imageToUpdate = await Data.Images
+                .FirstOrDefaultAsync(x => x.EmployeeId == personImage.Id);
 
             if (data == null)
             {
@@ -83,7 +87,8 @@
         {
             bool result = false;
 
-            var data = await Data.Images.FirstOrDefaultAsync(x => x.EmployeeId == userId);
+            var data = await Data.Images
+                .FirstOrDefaultAsync(x => x.EmployeeId == userId);
 
             if (data != null)
             {

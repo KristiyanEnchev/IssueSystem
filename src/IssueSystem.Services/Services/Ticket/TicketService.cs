@@ -7,6 +7,7 @@
     using IssueSystem.Data.Models;
     using IssueSystem.Models.Tickets;
     using IssueSystem.Services.Contracts.Ticket;
+    using IssueSystem.Data.Models.Enumeration;
 
     public class TicketService : BaseService<Ticket>, ITicketService
     {
@@ -17,41 +18,44 @@
         {
         }
 
-        public async Task CreateTicket(CreateTicketViewModel model) 
+        public async Task<bool> CreateTicket(CreateTicketViewModel model)
         {
-            var creator = await Data.Employees
-                .FirstOrDefaultAsync(x => x.Id == userId);
+            var result = false;
 
-            var category = await Data.TicketCategories
-                .FirstOrDefaultAsync(x => x.CategoryName == model.TicketCategory);
+            var ticket = Mapper.Map<Ticket>(model);
 
-            var priority = await Data.TicketPriorities
-                .FirstOrDefaultAsync(x => x.PriorityType.ToString() == model.TicketPriority);
-
-            var ticket = new Ticket
+            if (ticket != null)
             {
-                Title = model.Title,
-                CreatorId = model.CreatorId,
-                TicketCreator = creator,
-                TicketCategory = category,
-                TicketCategoryId = category.TicketCategoryId,
-                TicketPriority = priority,
-                TicketPriorityId = priority.PriorityId,
-                Description = model.Description,
-            };
+                TicketStatus status = new TicketStatus 
+                {
+                    EmployeeId = model.CreatorId,
+                    TicketId = ticket.TicketId,
+                };
 
-            TicketStatus status = new TicketStatus();
+                Data.Attach(ticket);
 
-            ticket.TicketStatuses.Add(status);
+                var employeeStatusList = await Data.Employees
+                    .Where(x => x.Id == model.CreatorId)
+                    .Select(x => x.TicketStatuses)
+                    .FirstOrDefaultAsync();
 
-            Data.Attach(ticket);
+                employeeStatusList.Add(status);
 
-            Data.Tickets.Add(ticket);
+                ticket.TicketStatuses.Add(status);
+                
+                Data.TicketStatuses.Add(status);
 
-            await Data.SaveChangesAsync();
+                Data.Tickets.Add(ticket);
+
+                await Data.SaveChangesAsync();
+
+                result = true;
+            }
+
+            return result;
         }
 
-        public async Task<List<TicketCategory>> GetTicketCategories() 
+        public async Task<List<TicketCategory>> GetTicketCategories()
         {
             return await Data.TicketCategories.AsNoTracking().ToListAsync();
         }

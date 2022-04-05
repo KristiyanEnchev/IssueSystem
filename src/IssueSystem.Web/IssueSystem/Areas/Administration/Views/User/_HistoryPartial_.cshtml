@@ -136,12 +136,11 @@ else
      <div class="card-body p-0">
         <table class="table table-striped projects">
             <thead>
-                <tr>
-                    <th style="width: 1%">#</th>
+                <tr class="text-center">
                     <th style="width: 20%">Ticket <Title></Title></th>
                     <th style="width: 30%">Category</th>
-                    <th style="width: 30%">Priority</th>
-                    <th style="width: 30%">Coments</th>
+                    <th style="width: 10%">Priority</th>
+                    <th style="width: 1%">Coments</th>
                     <th style="width: 8%" class="text-center">Status</th>
                     <th style="width: 20%"></th>
                 </tr>
@@ -150,15 +149,11 @@ else
                     @foreach (var ticket in @Model.CreatedTicketsData)
                     {
                     <input type="hidden" name="Id" value="@ticket.TicketId" />
-                        <tr>
-                            <td>#</td>
+                        <tr class="text-center">
                             <td>
                                 <a>@ticket.Title</a>
                                 <br>
                                 <small>Created @ticket.CreatedOn</small>
-                            </td>
-                            <td>
-                                <a>@ticket.Title</a>
                             </td>
                             <td>
                                 <a>@ticket.TicketCategory</a>
@@ -173,10 +168,8 @@ else
                                 <span class="badge badge-success">@ticket.CurrentStatus</span>
                             </td>
                             <td class="project-actions text-right">
-                                <a class="btn btn-primary btn-sm" asp-area="administration" asp-action="Details"
-                                    asp-controller="project" asp-route-id="@ticket.TicketId"><i class="fas fa-folder"></i>View</a>
-                                <a class="btn btn-info btn-sm" asp-area="administration" asp-action="edit" asp-controller="project"
-                                    asp-route-id="@ticket.TicketId"><i class="fas fa-pencil-alt"></i>Edit</a>
+                                <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Edit"
+                                    asp-controller="Ticket" asp-route-id="@ticket.TicketId"><i class="fas fa-folder"></i>View</a>
                             </td>
                         </tr>
                     }

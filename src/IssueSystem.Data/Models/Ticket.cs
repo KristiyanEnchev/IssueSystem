@@ -31,7 +31,7 @@
 
         [ForeignKey(nameof(TicketAcceptant))]
         public string? AcceptantId { get; set; }
-        public virtual Employee TicketAcceptant { get; set; }
+        public virtual Employee? TicketAcceptant { get; set; }
 
         [Required]
         [ForeignKey(nameof(TicketCategory))]
@@ -45,7 +45,7 @@
 
         [ForeignKey(nameof(Image))]
         public int? ImageId { get; set; }
-        public virtual Image Image { get; set; }
+        public virtual Image? Image { get; set; }
 
         [ForeignKey(nameof(Project))]
         public string ProjectId { get; set; }

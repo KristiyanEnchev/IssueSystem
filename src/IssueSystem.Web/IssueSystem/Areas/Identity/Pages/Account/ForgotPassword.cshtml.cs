@@ -16,7 +16,7 @@
 
     using IssueSystem.Common;
     using IssueSystem.Data.Models;
-    using IssueSystem.Services.SendGrid;
+    using IssueSystem.Services.HelpersServices.SendGrid;
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<Employee> _userManager;

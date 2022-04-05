@@ -4,6 +4,7 @@ using IssueSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IssueSystem.Data.Migrations
 {
     [DbContext(typeof(IssueSystemDbContext))]
-    partial class IssueSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220404203240_Cange Nullable")]
+    partial class CangeNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -357,6 +359,7 @@ namespace IssueSystem.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ImageId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
@@ -674,7 +677,9 @@ namespace IssueSystem.Data.Migrations
 
                     b.HasOne("IssueSystem.Data.Models.Image", "Image")
                         .WithMany()
-                        .HasForeignKey("ImageId");
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("IssueSystem.Data.Models.Project", "Project")
                         .WithMany("Tickets")
