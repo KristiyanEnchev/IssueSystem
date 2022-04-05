@@ -1,7 +1,10 @@
 ﻿namespace IssueSystem.Areas.Administration.Controllers
 {
-    using IssueSystem.Services.Admin.Contracts;
     using Microsoft.AspNetCore.Mvc;
+
+    using IssueSystem.Infrastructure.Extensions;
+    using IssueSystem.Services.Admin.Contracts;
+    using IssueSystem.Common;
 
     public class TicketController : BaseController
     {
@@ -24,6 +27,20 @@
             var model = await _adminTicketSerice.GetTicketDetails(id);
 
             return View(model);
+        }
+
+        public async Task<IActionResult> CloseTicket(string id)
+        {
+            var isClosed = await _adminTicketSerice.CloseTicket(id, this.User.GetId());
+
+            if (!isClosed)
+            {
+                TempData[MessageConstant.ErrorMessage] = "Ticket was not closed, please try again";
+            }
+
+            TempData[MessageConstant.SuccessMessage] = "Ticket was closed";
+
+            return RedirectToAction("Details", "Ticket", new { id });
         }
     }
 }

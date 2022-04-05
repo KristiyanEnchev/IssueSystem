@@ -85,5 +85,10 @@
         {
             return await Data.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task<Ticket> GetTicketById(string id)
+        {
+            return await Data.Tickets.FirstOrDefaultAsync(x => x.TicketId == id);
+        }
     }
 }

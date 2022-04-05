@@ -18,7 +18,7 @@
         Task<Employee> GetUserById(string id);
         Task<HistoryModel> GetUserRecentHistory(string id);
         Task<ChangeDepartmentViewModel> GetUserDepartmentDataForedit(string userId);
-        Task<IEnumerable<EmployeeViewModel>> GetUsersForProject(string projectId);
+        Task<IEnumerable<EmployeeViewModel>> GetUsersForProject(string projectId , string departmentName);
         Task<IEnumerable<EmployeeViewModel>> GetUsersForRemove(string projectId);
     }
 }
