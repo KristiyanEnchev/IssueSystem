@@ -156,13 +156,13 @@
             return result;
         }
 
-        public async Task<IEnumerable<EmployeeViewModel>> GetUsersForProject(string projectId, string departmentName)
+        public async Task<IEnumerable<EmployeeViewModel>> GetUsersForProject(string projectId)
         {
             var employees = await Mapper.ProjectTo<EmployeeViewModel>
                 (Data.Employees
                 .Include(x => x.EmployeeProjects)
                 .ThenInclude(x => x.Project)
-                .Where(x => x.EmployeeProjects.All(x => x.ProjectId != projectId) && x.Department.DepartmentName == departmentName)
+                .Where(x => x.EmployeeProjects.All(x => x.ProjectId != projectId))
                 .OrderBy(x => x.FirstName)
                 .ThenBy(x => x.LastName))
                 .ToListAsync();

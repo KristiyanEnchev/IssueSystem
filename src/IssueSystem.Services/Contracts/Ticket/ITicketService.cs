@@ -14,7 +14,6 @@
         Task<Project> GetTicketProjectById(string id);
         Task<Employee> GetTicketCreatorById(string id);
         Task<Employee> GetTicketAcceptantById(string id);
-        Task<Ticket> GetTicketById(string id);
 
     }
 }

@@ -83,96 +83,29 @@
                                     <span class="description">Ticket Created on:</span>
                                     <span class="description">@Model.CreatedOn</span>
                                 </div>
-                                <h6 class="text-black-50 text-center">Ticket Description</h6>
+                                 <h6 class="text-black-50 text-center">Ticket Description</h6>
                             </div>
                             <div class="post clearfix">
                                 <p>@Model.Description</p>
-                            </div>
-                            <div class="post clearfix">
-                                @if (@Model.AcceptantName != null)
-                                {
-                                    @if (@Model.CreatorAvatar != null)
-                                    {
-                                    <img class="header__avatar"
-                                        style="width:40px;height:40px; object-fit:cover; border-radius:30px"
-                                        src="data:image/*;base64,@(Convert.ToBase64String(@Model.CreatorAvatar.Content))">
-                                    }
-                                    else
-                                    {
-                                    <img class="header__avatar some-avatar" id="profilePicture"
-                                        src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
-                                    }
-                                    <span class="username">
-                                        <a asp-area="Administration" asp-action="Edit" asp-controller="User"
-                                            asp-route-id="@Model.CreatorId">@Model.CreatorName</a>
-                                    </span>
-                                    <span class="description">Ticket Created on:</span>
-                                    <span class="description">@Model.CreatedOn</span>
-                                }
-                                else
-                                {
-                                    <section class="page-title">
-                                        <div class="page-title-img bg-img bg-overlay-darken">
-                                            <div class="container">
-                                                <div class="row align-items-center justify-content-center height100px">
-                                                    <div class="col-lg-8">
-                                                        <div class="page-title-content">
-                                                            <div class="title-border">
-                                                                <h3 class="text-white text-uppercase font-weight-bold">No
-                                                                    one have been assigned Yet</h3>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                }
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
                     <h1 class="text-center">Project</h1>
-                    <h3 class="text-primary text-center"><i class="fa fa-solid fa-address-card"
-                            style="padding: 0.5rem"></i>@Model.ProjectName</h3>
+                    <h3 class="text-primary text-center"><i class="fa fa-solid fa-address-card" style="padding: 0.5rem"></i>@Model.ProjectName</h3>
                     <h6 class="text-black-50 text-center">Project Description</h6>
                     <p class="text-muted text-center">@Model.ProjectDescription</p>
                     <br>
                     <div class="text-muted">
-                        <div class="row">
-                            <div class="col-6 col-sm-6">
-                                <div class="info-box bg-light">
-                                    <div class="info-box-content">
-                                        @if (@Model.CurrentStatus == "Open")
-                                        {
-                                        <span class="info-box-text text-center text-muted">Status</span>
-                                        <span class="badge badge-info">@Model.CurrentStatus</span>
-                                        }
-                                        else
-                                        {
-                                        <span class="info-box-text text-center text-muted">Status</span>
-                                        <span class="badge badge-danger">@Model.CurrentStatus</span>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6 col-sm-6">
-                                <div class="info-box bg-light">
-                                    <div class="info-box-content text-center">
-                                        @if (@Model.CurrentStatus == "Open")
-                                        {
-                                            <a class="btn btn-primary btn-block"
-                                            asp-area="Administration" asp-controller="Ticket" asp-action="CloseTicket" asp-route-id="@Model.TicketId">Close Ticket</a>
-                                        }
-                                        else
-                                        {
-                                            <a class="btn btn-primary btn-block disabled" area-disabled="true">Open Ticket</a>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @if (@Model.CurrentStatus == "Open")
+                        {
+                            <span class="badge badge-info">@Model.CurrentStatus</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">@Model.CurrentStatus</span>
+                        }
                     </div>
                 </div>
             </div>

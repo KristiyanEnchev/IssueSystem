@@ -71,8 +71,6 @@
 
             ViewBag.History = modelPartial;
 
-            TempData["DepartmentName"] = project.DepartmentName;
-
             return View(project);
         }
 
@@ -110,9 +108,7 @@
         /// sets the project id to temData 
         public async Task<IActionResult> AddEmployee(string id) 
         {
-            var departmentName = TempData["DepartmentName"]?.ToString();
-
-            var model = await _userService.GetUsersForProject(id , departmentName);
+            var model = await _userService.GetUsersForProject(id);
 
             if (model == null)
             {

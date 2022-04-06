@@ -10,7 +10,6 @@
     using IssueSystem.Services.Services;
     using IssueSystem.Services.Contracts.File;
     using IssueSystem.Services.Contracts.Ticket;
-    using IssueSystem.Data.Models.Enumeration;
 
     public class AdminTicketService : BaseService<Ticket>, IAdminTicketService
     {
@@ -18,60 +17,15 @@
 
         private readonly ITicketService _ticketService;
 
-        private readonly IUserService _userService;
-
         public AdminTicketService(
             IssueSystemDbContext data,
             IMapper mapper,
             IFileService fileService,
-            ITicketService ticketService,
-            IUserService userService)
+            ITicketService ticketService)
             : base(data, mapper)
         {
             _fileService = fileService;
             _ticketService = ticketService;
-            _userService = userService;
-        }
-
-        public async Task<bool> CloseTicket(string ticketId, string userId)
-        {
-            var result = false;
-
-            var ticket = await _ticketService.GetTicketById(ticketId);
-
-            var statuses = ticket.TicketStatuses.ToList();
-
-            var user = await _userService.GetUserById(userId);
-
-            if (ticket != null && user != null)
-            {
-                var ticketStatus = new TicketStatus
-                {
-                    Employee = user,
-                    EmployeeId = user.Id,
-                    StatusType = StatusType.Closed,
-                    TicketId = ticketId,
-                    Ticket = ticket,
-                };
-
-                ticket.TicketStatuses.Add(ticketStatus);
-
-                user.TicketStatuses.Add(ticketStatus);
-
-                Data.Update(ticket);
-
-                Data.Update(user);
-
-                Data.Update(ticketStatus);
-
-                await Data.TicketStatuses.AddAsync(ticketStatus);
-
-                await Data.SaveChangesAsync();
-
-                result = true;
-            }
-
-            return result;
         }
 
         public async Task<TicketViewModel> GetTicketDetails(string ticketId)
@@ -114,7 +68,7 @@
                     model.AcceptantName = acceptant.FirstName + " " + acceptant.LastName;
                 }
                 model.CurrentStatus = ticket.TicketStatuses
-               .OrderByDescending(x => x.CreatedOn)
+               .OrderBy(x => x.CreatedOn)
                .Select(x => x.StatusType)
                .FirstOrDefault()
                .ToString();
@@ -167,7 +121,7 @@
         public async Task<List<TicketIndexModel>> GetTicketsdailyInfo()
         {
             var tickets = await Data.Tickets
-                //.Where(x => x.CreatedOn.Date == DateTime.Now.Date)
+                .Where(x => x.CreatedOn.Date == DateTime.Now.Date)
                 .Select(x => new TicketIndexModel
                 {
                     TicketId = x.TicketId,

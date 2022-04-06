@@ -9,7 +9,7 @@
                 <div class="col-lg-8">
                     <div class="page-title-content">
                         <div class="title-border">
-                            <h1 class="text-white text-uppercase font-weight-bold">Tickets Daily Info</h1>
+                            <h1 class="text-white text-uppercase font-weight-bold">Tickets Daily Infoe</h1>
                             <h4 class="text-white text-uppercase font-weight-bold">@DateTime.Now.Year / @DateTime.Now.Day /@DateTime.Now.Month</h4>
                         </div>
                     </div>
@@ -37,101 +37,82 @@
             </div>
 
             <div class="card-body table-responsive p-0">
-                @if (Model.Count() > 0)
-                {
-                    <table class="table table-hover text-nowrap">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>ProjectName</th>
-                                <th>Priority</th>
-                                <th>Status</th>
-                                <th style="width: 1%">Comments</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+            @if (Model.Count() > 0)
+            {
+               <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>ProjectName</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th style="width: 1%">Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                            @foreach (var ticket in @Model)
+                        @foreach (var ticket in @Model)
+                    {
+                        <tr>
+                            <td>@ticket.Title
+                                <br>
+                                <small>Created @ticket.CreatedOn</small>
+                            </td>
+                            <td>@ticket.ProjectName</td>
+                            <td>@ticket.TicketPriority</td>
+                            @if (ticket.CurrentStatus == "Open")
                             {
-                                <tr>
-                                    <td>
-                                        @ticket.Title
-                                        <br>
-                                        <small>Created @ticket.CreatedOn</small>
-                                    </td>
-                                    <td>@ticket.ProjectName</td>
-                                    @if (@ticket.TicketPriority == "Low")
-                                    {
-                                        <td>
-                                            <span class="info-box-number text-center mb-0 badge badge-info">@ticket.TicketPriority</span>
-                                        </td>
-                                    }
-                                    else if (@ticket.TicketPriority == "Medium")
-                                    {
-                                        <td>
-                                            <span class="info-box-number text-center mb-0 badge badge-success">@ticket.TicketPriority</span>
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td>
-                                            <span class="info-box-number text-center mb-0 badge badge-danger">@ticket.TicketPriority</span>
-                                        </td>
-                                    }
-                                    @if (ticket.CurrentStatus == "Open")
-                                    {
-                                        <td class="project-state">
-                                            <span class="badge badge-info">@ticket.CurrentStatus</span>
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td class="project-state">
-                                            <span class="badge badge-danger">@ticket.CurrentStatus</span>
-                                        </td>
-                                    }
-                                    <td class="text-center">@ticket.CommentsCount</td>
-                                    <td style="text-align: right">
-                                        <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Details" asp-controller="Ticket"
-                                   asp-route-id="@ticket.TicketId">
-                                            <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Details
-                                        </a>
-                                    </td>
-                                </tr>
+                                <td class="project-state">
+                                    <span class="badge badge-info">@ticket.CurrentStatus</span>
+                                </td>
                             }
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    <section class="page-title">
-                        <div class="page-title-img bg-img" style="background-color: #1884e9;">
-                            <div class="container">
-                                <div class="row align-items-center justify-content-center height100px">
-                                    <div class="col-lg-8">
-                                        <div class="page-title-content">
-                                            <div class="title-border">
-                                                <div class="form-floating">
-                                                    <h3 style="color: #ffff;">There is no Tickets yet</h3>
-                                                </div>
+                            else
+                            {
+                                <td class="project-state">
+                                    <span class="badge badge-danger">@ticket.CurrentStatus</span>
+                                </td>
+                            }
+                            <td class="text-center">@ticket.CommentsCount</td>
+                            <td style="text-align: right">
+                                <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Details" asp-controller="Ticket"
+                                asp-route-id="@ticket.TicketId">
+                                    <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Details</a>
+                            </td>
+                        </tr>
+                      }
+                    </tbody>
+               </table>
+            }
+            else
+            {
+                <section class="page-title">
+                    <div class="page-title-img bg-img" style="background-color: #1884e9;">
+                        <div class="container">
+                            <div class="row align-items-center justify-content-center height100px">
+                                <div class="col-lg-8">
+                                    <div class="page-title-content">
+                                        <div class="title-border">
+                                            <div class="form-floating">
+                                                <h3 style="color: #ffff;">There is no Tickets yet</h3>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <div class="col-12 justify-content-center pad text-center">
-                        <h3 class="text-center" style="color: #000000;">You Can Create One</h3>
+                <div class="col-12 justify-content-center pad text-center">
+                    <h3 class="text-center" style="color: #000000;">You Can Create One</h3>
                         <div class="row align-items-center justify-content-center height100px">
                             <div class="col-4 justify-content-center pad text-center">
                                 <a type="submit" asp-area="Administration" asp-action="Index" asp-controller="Project"
-                               class="btn btn-primary btn-block">Create Ticket</a>
+                                class="btn btn-primary btn-block">Create Ticket</a>
                             </div>
                         </div>
-                    </div>
-                }
+                </div>
+            }
             </div>
         </div>
     </div>
