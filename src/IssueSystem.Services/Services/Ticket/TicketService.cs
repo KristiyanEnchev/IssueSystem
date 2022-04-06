@@ -23,25 +23,9 @@
 
             var ticket = Mapper.Map<Ticket>(model);
 
-            var creator = await GetTicketCreatorById(model.CreatorId);
-
             if (ticket != null)
             {
-                var status = await CreateStatus(creator, ticket);
-
-                Data.Attach(ticket);
-
-                //ticket.TicketCreator = creator;
-
-                //ticket.TicketStatuses.Add(status);
-
-                //creator.TicketStatuses.Add(status);
-
-                //creator.CreatedTickets.Add(ticket);
-
-                //await Data.Tickets.AddAsync(ticket);
-
-                //await Data.SaveChangesAsync();
+                var status = await CreateStatus(model.CreatorId, ticket);
 
                 result = true;
             }
@@ -52,13 +36,12 @@
             return result;
         }
 
-        public async Task<TicketStatus> CreateStatus(Employee creator, Ticket ticket) 
+        public async Task<TicketStatus> CreateStatus(string creatorId, Ticket ticket) 
         {
             TicketStatus status = new TicketStatus
             {
-                EmployeeId = creator.Id,
+                EmployeeId = creatorId,
                 TicketId = ticket.TicketId,
-                Employee = creator,
                 Ticket = ticket,
             };
 
@@ -68,6 +51,13 @@
 
             return status;
         }
+
+        //public async Task<TicketStatus> CloseStatus(string statusId ,string userId, Ticket ticket) 
+        //{
+        //    var status = await Data.TicketStatuses.FirstOrDefaultAsync(x => x.StatusId == statusId);
+
+        //    //status.StatusType.clo
+        //}
 
         public async Task<List<TicketCategory>> GetTicketCategories()
         {

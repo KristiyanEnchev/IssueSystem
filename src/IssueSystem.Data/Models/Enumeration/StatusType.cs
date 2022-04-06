@@ -3,6 +3,7 @@
     public enum StatusType
     {
         Open = 0,
-        Closed = 1,
+        Accepted = 1,
+        Closed = 2,
     }
 }
