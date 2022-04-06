@@ -31,20 +31,23 @@
 
                 Data.Attach(ticket);
 
-                ticket.TicketCreator = creator;
+                //ticket.TicketCreator = creator;
 
-                ticket.TicketStatuses.Add(status);
+                //ticket.TicketStatuses.Add(status);
 
-                creator.TicketStatuses.Add(status);
+                //creator.TicketStatuses.Add(status);
 
-                creator.CreatedTickets.Add(ticket);
-                
-                await Data.Tickets.AddAsync(ticket);
+                //creator.CreatedTickets.Add(ticket);
 
-                await Data.SaveChangesAsync();
+                //await Data.Tickets.AddAsync(ticket);
+
+                //await Data.SaveChangesAsync();
 
                 result = true;
             }
+
+            var ti = await GetTicketById(ticket.TicketId);
+
 
             return result;
         }
