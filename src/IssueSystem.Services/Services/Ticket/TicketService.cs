@@ -23,25 +23,23 @@
 
             var ticket = Mapper.Map<Ticket>(model);
 
+            var creator = await GetTicketCreatorById(model.CreatorId);
+
             if (ticket != null)
             {
-                TicketStatus status = new TicketStatus 
-                {
-                    EmployeeId = model.CreatorId,
-                    TicketId = ticket.TicketId,
-                };
-
-                ticket.TicketCreator = await GetTicketCreatorById(model.CreatorId);
-
-                ticket.TicketCreator.TicketStatuses.Add(status);
+                var status = await CreateStatus(creator, ticket);
 
                 Data.Attach(ticket);
 
-                ticket.TicketStatuses.Add(status);
-                
-                Data.TicketStatuses.Add(status);
+                ticket.TicketCreator = creator;
 
-                Data.Tickets.Add(ticket);
+                ticket.TicketStatuses.Add(status);
+
+                creator.TicketStatuses.Add(status);
+
+                creator.CreatedTickets.Add(ticket);
+                
+                await Data.Tickets.AddAsync(ticket);
 
                 await Data.SaveChangesAsync();
 
@@ -49,6 +47,23 @@
             }
 
             return result;
+        }
+
+        public async Task<TicketStatus> CreateStatus(Employee creator, Ticket ticket) 
+        {
+            TicketStatus status = new TicketStatus
+            {
+                EmployeeId = creator.Id,
+                TicketId = ticket.TicketId,
+                Employee = creator,
+                Ticket = ticket,
+            };
+
+            await Data.TicketStatuses.AddAsync(status);
+
+            await Data.SaveChangesAsync();
+
+            return status;
         }
 
         public async Task<List<TicketCategory>> GetTicketCategories()
@@ -84,6 +99,10 @@
         public async Task<Employee> GetTicketAcceptantById(string id)
         {
             return await Data.Users.FirstOrDefaultAsync(x => x.Id == id);
+        }
+        public async Task<Ticket> GetTicketById(string id)
+        {
+            return await Data.Tickets.FirstOrDefaultAsync(x => x.TicketId == id);
         }
     }
 }

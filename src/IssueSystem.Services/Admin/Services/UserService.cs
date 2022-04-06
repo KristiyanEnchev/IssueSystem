@@ -156,13 +156,13 @@
             return result;
         }
 
-        public async Task<IEnumerable<EmployeeViewModel>> GetUsersForProject(string projectId)
+        public async Task<IEnumerable<EmployeeViewModel>> GetUsersForProject(string projectId, string departmentName)
         {
             var employees = await Mapper.ProjectTo<EmployeeViewModel>
                 (Data.Employees
                 .Include(x => x.EmployeeProjects)
                 .ThenInclude(x => x.Project)
-                .Where(x => x.EmployeeProjects.All(x => x.ProjectId != projectId))
+                .Where(x => x.EmployeeProjects.All(x => x.ProjectId != projectId) && x.Department.DepartmentName == departmentName)
                 .OrderBy(x => x.FirstName)
                 .ThenBy(x => x.LastName))
                 .ToListAsync();
@@ -207,14 +207,6 @@
 
         public async Task<List<EmployeeProjectViewModel>> GetEmployeeLast5Projects(string employeeId)
         {
-            //var projects = await Mapper.ProjectTo<EmployeeProjectViewModel>
-            //    (Data.EmployeeProjects
-            //    .Include(x => x.Project)
-            //    .Where(x => x.EmployeeId == employeeId)
-            //    .OrderBy(x => x.Project.CreatedOn)
-            //    .Take(5))
-            //    .ToListAsync();
-
             var projects =
                 await Data.EmployeeProjects
                 .Include(x => x.Project)
@@ -261,22 +253,6 @@
 
                 ticket.CurrentStatus = status;
             }
-
-            //var tickets = await Data.Tickets
-            //    .Where(x => x.CreatorId == employeeId)
-            //    .OrderBy(x => x.CreatedOn)
-            //    .Take(10)
-            //    .Select(x => new TicketViewModel
-            //    {
-            //        TicketId = x.TicketId,
-            //        Title = x.Title,
-            //        CurrentStatus = x.TicketStatuses.OrderBy(x => x.CreatedOn).First(),
-            //        TicketCategory = x.TicketCategory,
-            //        TicketPriority = x.TicketPriority,
-            //        Description = x.Description,
-            //        CommentsCount = x.Comments.Count,
-            //        CreatedOn = x.CreatedOn,
-            //    }).ToListAsync();
 
             if (tickets == null)
             {

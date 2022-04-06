@@ -85,7 +85,6 @@ namespace IssueSystem.Data.Migrations
                 {
                     ProjectId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProjectName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 50, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     DepartmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),

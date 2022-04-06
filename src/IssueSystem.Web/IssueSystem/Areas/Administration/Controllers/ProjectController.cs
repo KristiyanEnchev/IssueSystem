@@ -108,7 +108,7 @@
         /// sets the project id to temData 
         public async Task<IActionResult> AddEmployee(string id) 
         {
-            var model = await _userService.GetUsersForProject(id);
+            var model = await _userService.GetUsersForProject(id, this.User.GetId());
 
             if (model == null)
             {
