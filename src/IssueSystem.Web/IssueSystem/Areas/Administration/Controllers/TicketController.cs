@@ -33,7 +33,7 @@
 
         public async Task<IActionResult> Details(string id)
         {
-            var model = await _adminTicketSerice.GetTicketDetails(id);
+            var model = await _ticketService.GetTicketDetails(id);
 
             return View(model);
         }

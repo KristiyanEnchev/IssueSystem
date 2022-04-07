@@ -16,6 +16,7 @@
     using IssueSystem.Models.Admin.Ticket;
     using IssueSystem.Models.Admin.Department;
     using IssueSystem.Services.Contracts.File;
+    using IssueSystem.Services.Contracts.Ticket;
 
     public class UserService : BaseService<Employee>, IUserService
     {
@@ -27,19 +28,23 @@
 
         private readonly IFileService _fileService;
 
+        private readonly ITicketService _ticketService;
+
         public UserService(
             IssueSystemDbContext data,
             IMapper mapper,
             UserManager<Employee> userManager,
             IProjectService projectService,
             IDepartmentService departmentService,
-            IFileService fileService)
+            IFileService fileService,
+            ITicketService ticketService)
             : base(data, mapper)
         {
             _userManager = userManager;
             _projectService = projectService;
             _departmentService = departmentService;
             _fileService = fileService;
+            _ticketService = ticketService;
         }
 
         public async Task<Employee> GetUserById(string id)
@@ -261,52 +266,22 @@
             var tickets = await Mapper.ProjectTo<Last10TicketsModel>(Data.Tickets
                 .Where(x => x.CreatorId == employeeId)
                 .OrderBy(x => x.CreatedOn)
-                .Take(10)).ToListAsync();
-
-            foreach (var ticket in tickets)
-            {
-                var statuses = await Data.Tickets
-                    .Where(x => x.TicketId == ticket.TicketId)
-                    .Select(x => x.TicketStatuses)
-                    .FirstOrDefaultAsync();
-
-                var first = statuses.OrderBy(x => x.CreatedOn)
-                    .FirstOrDefault();
-
-                var status = first.StatusType.ToString();
-
-                ticket.CurrentStatus = status;
-            }
-
-            if (tickets == null)
-            {
-                return new List<Last10TicketsModel>();
-            }
+                .Take(10))
+                .ToListAsync();
 
             return tickets;
         }
 
         public async Task<List<TicketViewModel>> GetEmployeeLast10AcceptedTickets(string employeeId)
         {
-            var tickets = await Data.Tickets
-                .Where(x => x.AcceptantId == employeeId)
-                .OrderBy(x => x.CreatedOn)
-                .Take(10)
-                .Select(x => new TicketViewModel
-                {
-                    TicketId = x.TicketId,
-                    Title = x.Title,
-                    CurrentStatus = x.TicketStatuses.OrderBy(x => x.CreatedOn).Select(x => x.StatusType).FirstOrDefault().ToString(),
-                    TicketCategory = x.TicketCategory.CategoryName,
-                    TicketPriority = x.TicketPriority.PriorityType.ToString(),
-                    Description = x.Description,
-                    CommentsCount = x.Comments.Count,
-                    CreatedOn = x.CreatedOn,
-                }).ToListAsync();
+            List<TicketViewModel> tickets = new List<TicketViewModel>();
 
-            if (tickets == null)
+            foreach (var ticket in Data.Tickets.Where(x => x.AcceptantId == employeeId))
             {
-                return new List<TicketViewModel>();
+                var model = await _ticketService
+                    .GetTicketDetails(ticket.TicketId);
+
+                tickets.Add(model);
             }
 
             return tickets;

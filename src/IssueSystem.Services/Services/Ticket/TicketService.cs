@@ -7,20 +7,24 @@
     using IssueSystem.Data.Models;
     using IssueSystem.Models.Tickets;
     using IssueSystem.Services.Contracts.Ticket;
+    using IssueSystem.Models.Admin.Ticket;
+    using IssueSystem.Services.Contracts.File;
 
     public class TicketService : BaseService<Ticket>, ITicketService
     {
         private readonly IStatusService _statusService;
 
-        //private readonly IUserService _userService;
+        private readonly IFileService _fileService;
 
         public TicketService(
             IssueSystemDbContext data,
             IMapper mapper,
-            IStatusService statusService)
+            IStatusService statusService,
+            IFileService fileService)
             : base(data, mapper)
         {
             _statusService = statusService;
+            _fileService = fileService;
         }
 
         public async Task<bool> CreateTicket(CreateTicketViewModel model)
@@ -61,14 +65,62 @@
             return result;
         }
 
-        public async Task AssigneTicket(string ticketId, string acceptantId)
+        public async Task<bool> AssigneTicket(string ticketId, string acceptantId)
         {
+            var result = false;
 
+            (bool opened, TicketStatus status) =
+                await _statusService.Accept(acceptantId, ticketId);
+
+            if (opened)
+            {
+                result = true;
+            }
+
+            return result;
         }
 
-        public async Task AcceptTicket(string ticketId, string acceptantId)
+        public async Task<bool> AcceptTicket(string ticketId, string acceptantId)
         {
+            var result = false;
 
+            (bool opened, TicketStatus status) =
+                await _statusService.Accept(acceptantId, ticketId);
+
+            if (opened)
+            {
+                result = true;
+            }
+
+            return result;
+        }
+
+        public async Task<TicketViewModel> GetTicketDetails(string ticketId)
+        {
+            var ticket = await Mapper.ProjectTo<TicketViewModel>
+                (Data.Tickets
+                .Include(x => x.TicketCreator)
+                .Include(x => x.TicketAcceptant)
+                .Include(x => x.TicketCategory)
+                .Include(x => x.TicketPriority)
+                .Include(x => x.TicketStatuses)
+                .Include(x => x.Project)
+                .Where(x => x.TicketId == ticketId))
+                .FirstOrDefaultAsync();
+
+            if (ticket != null)
+            {
+                ticket.CreatorAvatar = await _fileService
+                    .GetImage(ticket.CreatorId);
+
+                if (ticket.AcceptantName != null)
+                {
+                    ticket.AcceptantAvatar = await _fileService
+                        .GetImage(ticket.AcceptantId);
+                }
+            }
+
+            return ticket;
         }
 
         public async Task<List<TicketCategory>> GetTicketCategories()

@@ -47,6 +47,7 @@
                                 <th>Priority</th>
                                 <th>Status</th>
                                 <th style="width: 1%">Comments</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,7 +97,7 @@
                                             <span class="badge badge-danger">@ticket.CurrentStatus</span>
                                         </td>
                                     }
-                                    <td class="text-center">@ticket.CommentsCount</td>
+                                    <td class="">@ticket.CommentsCount</td>
                                     <td style="text-align: right">
                                         <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Details" asp-controller="Ticket"
                                             asp-route-id="@ticket.TicketId">

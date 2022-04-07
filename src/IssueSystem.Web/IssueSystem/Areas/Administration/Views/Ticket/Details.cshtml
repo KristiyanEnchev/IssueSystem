@@ -178,6 +178,11 @@
                                 </div>
                             </div>
                         </div>
+                        @if (@Model.CurrentStatus == "Open" || @Model.CurrentStatus == "Accepted")
+                        {
+                            <a class="btn btn-primary btn-block"
+                            asp-area="Administration" asp-controller="Ticket" asp-action="AssigneTicket" asp-route-id="@Model.ProjectId">Assigne Ticket</a>
+                        }
                     </div>
                 </div>
             </div>

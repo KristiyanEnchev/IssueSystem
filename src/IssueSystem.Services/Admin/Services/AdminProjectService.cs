@@ -167,30 +167,18 @@
         {
             var result = false;
 
-            var project = await _projectService.GetProjectById(projectId);
+            var employeeProject = await Data.EmployeeProjects
+                .FirstOrDefaultAsync(x => x.EmployeeId == employeeId && x.ProjectId == projectId);
 
-            var employee = await _userService.GetUserById(employeeId);
-
-            if (employee != null && project != null)
+            if (employeeProject != null)
             {
+                Data.Attach(employeeProject);
 
-                var employeeProject = await Data.EmployeeProjects
-                    .FirstOrDefaultAsync(x => x.EmployeeId == employee.Id && x.ProjectId == project.ProjectId);
+                Data.EmployeeProjects.Remove(employeeProject);
 
-                if (employeeProject != null)
-                {
-                    Data.Attach(employeeProject);
+                await Data.SaveChangesAsync();
 
-                    employee.EmployeeProjects.Remove(employeeProject);
-
-                    project.EmployeeProjects.Remove(employeeProject);
-
-                    Data.EmployeeProjects.Remove(employeeProject);
-
-                    await Data.SaveChangesAsync();
-
-                    result = true;
-                }
+                result = true;
             }
 
             return result;
@@ -225,7 +213,7 @@
                     ProjectId = x.ProjectId,
                     ProjectName = x.Project.ProjectName,
                     CurrentStatus = x.TicketStatuses
-                    .OrderBy(x => x.CreatedOn)
+                    .OrderByDescending(x => x.CreatedOn)
                     .Select(x => x.StatusType)
                     .FirstOrDefault()
                     .ToString(),

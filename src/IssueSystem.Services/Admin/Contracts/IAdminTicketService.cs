@@ -7,6 +7,5 @@
     {
         Task<List<TicketIndexModel>> GetTicketsInfo();
         Task<List<TicketIndexModel>> GetTicketsdailyInfo();
-        Task<TicketViewModel> GetTicketDetails(string ticketId);
     }
 }

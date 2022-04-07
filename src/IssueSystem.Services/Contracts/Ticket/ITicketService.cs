@@ -1,6 +1,7 @@
 ﻿namespace IssueSystem.Services.Contracts.Ticket
 {
     using IssueSystem.Data.Models;
+    using IssueSystem.Models.Admin.Ticket;
     using IssueSystem.Models.Tickets;
     using IssueSystem.Services.Common;
 
@@ -16,5 +17,8 @@
         Task<Employee> GetTicketAcceptantById(string id);
         Task<Ticket> GetTicketById(string id);
         Task<bool> CloseTicket(string ticketId, string userId);
+        Task<bool> AssigneTicket(string ticketId, string acceptantId);
+        Task<bool> AcceptTicket(string ticketId, string acceptantId);
+        Task<TicketViewModel> GetTicketDetails(string ticketId);
     }
 }

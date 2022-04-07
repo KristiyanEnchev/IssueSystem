@@ -27,7 +27,9 @@
                 .ForMember(x => x.TicketPriority, y => y.MapFrom(x => x.TicketPriority.PriorityType.ToString()))
                 .ForPath(x => x.TicketPriority, y => y.MapFrom(x => x.TicketPriority.PriorityType.ToString()))
                 .ForMember(x => x.ProjectName, y => y.MapFrom(x => x.Project.ProjectName))
-                .ForPath(x => x.CurrentStatus, y => y.MapFrom(x => x.Project.ProjectName));
+                .ForPath(x => x.ProjectName, y => y.MapFrom(x => x.Project.ProjectName))
+                .ForMember(x => x.CurrentStatus, y => y.MapFrom(s => s.TicketStatuses.OrderByDescending(x => x.CreatedOn).First().StatusType.ToString()))
+                .ForPath(x => x.CurrentStatus, y => y.MapFrom(s => s.TicketStatuses.OrderByDescending(x => x.CreatedOn).First().StatusType.ToString()));
         }
     }
 }
