@@ -39,7 +39,7 @@
 </section>
 
 <div class="row align-items-center justify-content-center">
-    <div class="col-5">
+    <div class="col-md-5 col-sm-10">
         <form class="text-center" id="roles" method="post">
             <input asp-for="UserId" type="hidden" name="UserId" value="@Model.UserId" />
             <input asp-for="Name" type="hidden" name="Name" value="@Model.Name" />
@@ -47,8 +47,8 @@
             <div class="form-floating">
                 <div class="">
                     <label>Employee Roles</label>
-                    <select asp-for="RoleNames" id="selectMultiple" asp-items="@items" class="form-control selectMultiple">
-                       
+                    <select asp-for="RoleNames" id="selectMultiple" asp-items="@items" class="form-control selectpicker">
+
                     </select>
                 </div>
             </div>
@@ -72,7 +72,3 @@
         </form>
     </div>
 </div>
-
-@section Scripts {
-    <partial name="_DropDownScrypt" />
-}

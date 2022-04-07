@@ -9,18 +9,23 @@
     using IssueSystem.Data.Models;
     using IssueSystem.Models.Image;
     using IssueSystem.Services.Contracts.File;
+    using IssueSystem.Services.HelpersServices.Cache;
 
     public class FileService : BaseService<Image>, IFileService
     {
 
         private readonly UserManager<Employee> _userManager;
 
+        private readonly ICacheService _cacheService;
+
         public FileService(IssueSystemDbContext data,
             IMapper mapper,
-            UserManager<Employee> userManager)
+            UserManager<Employee> userManager,
+            ICacheService cacheService)
             : base(data, mapper)
         {
             this._userManager = userManager;
+            _cacheService = cacheService;
         }
 
         public async Task<(bool isPictureExist, ResponseImageViewModel image)> GetUserImage(string userId)

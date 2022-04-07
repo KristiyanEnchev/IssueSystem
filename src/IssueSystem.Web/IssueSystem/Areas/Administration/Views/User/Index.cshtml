@@ -56,8 +56,11 @@
                                 <td data-label="Department">@user.Department</td>
                                 <td data-label="Role">@user.Role</td>
                                 <td>
-                                    <a asp-area="administration" asp-action="edit" asp-controller="user" asp-route-id="@user.UserId" class="btn btn-block btn-info btn-xs">Edit</a>
-                                    <a asp-area="administration" asp-action="roles" asp-controller="user" asp-route-id="@user.UserId" class="btn btn-block btn-warning btn-xs">Roles</a>
+                                    <a asp-area="administration" asp-action="edit" asp-controller="user" asp-route-id="@user.UserId"
+                                    class="btn btn-block btn-info btn-xs">Edit</a>
+
+                                    <a asp-area="administration" asp-action="roles" asp-controller="user" asp-route-id="@user.UserId"
+                                    class="btn btn-block btn-warning btn-xs">Roles</a>
                                 </td>
                             </tr>
                         }
