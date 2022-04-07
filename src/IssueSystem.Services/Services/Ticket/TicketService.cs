@@ -70,7 +70,7 @@
             var result = false;
 
             (bool opened, TicketStatus status) =
-                await _statusService.Accept(acceptantId, ticketId);
+                await _statusService.Accept(ticketId, acceptantId);
 
             if (opened)
             {

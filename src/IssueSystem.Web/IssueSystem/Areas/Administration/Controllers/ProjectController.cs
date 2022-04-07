@@ -191,6 +191,9 @@
             return RedirectToAction("Index");
         }
 
+        /// Create a model and assigne some data received from URl and ClaimsPrincipal
+        /// Check the cache for the dropdowns and returns them to the viewBag
+        /// pass the model to the view
         public async Task<IActionResult> CreateTicket(string id)
         {
             var createTicketViewModel = new CreateTicketViewModel
@@ -204,7 +207,10 @@
 
             return View(createTicketViewModel);
         }
-
+        ///checks the model state and return error if in not valid 
+        ///create ticket from the service(working with DB )
+        ///check if is created , return error message if not 
+        ///redirekt to main project page
         [HttpPost]
         public async Task<IActionResult> CreateTicket(CreateTicketViewModel model) 
         {

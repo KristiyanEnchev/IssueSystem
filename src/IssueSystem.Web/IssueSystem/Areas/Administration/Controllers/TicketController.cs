@@ -24,6 +24,8 @@
             _ticketService = ticketService;
         }
 
+        ///Get all tickets info from the service (woking with DB)
+        ///pass ticket model to the view
         public async Task<IActionResult> Index()
         {
             var model = await _adminTicketSerice.GetTicketsdailyInfo();
@@ -31,12 +33,25 @@
             return View(model);
         }
 
+        ///Gets full detail info for the ticket selected get the id from URl
+        ///pass project id thru temData 
         public async Task<IActionResult> Details(string id)
         {
             var model = await _ticketService.GetTicketDetails(id);
 
+            if (model == null)
+            {
+                TempData[MessageConstant.ErrorMessage] = "We did not get that please try again";
+            }
+
+            TempData["ProjectId"] = model.ProjectId;
+
             return View(model);
         }
+
+        ///change the status of the ticket to close from the service (working with DB)
+        ///check if is closed successfuly if not returns error message
+        ///
         public async Task<IActionResult> CloseTicket(string id)
         {
             var isClosed = await _ticketService.CloseTicket(id, this.User.GetId());
@@ -44,6 +59,8 @@
             if (!isClosed)
             {
                 TempData[MessageConstant.ErrorMessage] = "Ticket was not closed, please try again";
+
+                return RedirectToAction("Index");
             }
 
             TempData[MessageConstant.SuccessMessage] = "Ticket was closed";
@@ -51,9 +68,18 @@
             return RedirectToAction("Details", "Ticket", new { id });
         }
 
+        /// takes the projectId from the tempData
+        /// Gets all the users currently in the project
+        /// checks if the are any people currently assignet to the project
+        /// return error message if fail
+        /// sets ticketId to the temp data
+        /// pass users mode lto the view
+ 
         public async Task<IActionResult> AssigneTicket(string id)
         {
-            var model = await _userService.GetUsersInProject(id);
+            var projectId = TempData["ProjectId"]?.ToString();
+
+            var model = await _userService.GetUsersInProject(projectId);
 
             if (model == null)
             {
@@ -67,12 +93,27 @@
             return View(model);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> AssigneTicketToUser(string id)
-        //{
-        //    var ticketId = TempData["TicketId"]?.ToString();
+        /// gets the ticketId from the tempdata
+        ///Change the status of the ticket 
+        ///Insert a ticket in the acceptant collection 
+        ///check if succesful , return error if fail
+        [HttpPost]
+        public async Task<IActionResult> AssigneTicketToUser(string id)
+        {
+            var ticketId = TempData["TicketId"]?.ToString();
 
-        //    var assigned = _adminTicketSerice.AssigneTicket(ticketId, id);
-        //}
+            var assigned = await _ticketService.AssigneTicket(ticketId, id);
+
+            if (!assigned)
+            {
+                TempData[MessageConstant.ErrorMessage] = "You were not able to assign ticket to employee, Plese try again";
+
+                return RedirectToAction("Index");
+            }
+
+            TempData[MessageConstant.SuccessMessage] = "You succesfuly assigne the ticket to the user";
+
+            return RedirectToAction("Index");
+        }
     }
 }

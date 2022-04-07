@@ -188,12 +188,12 @@
         public async Task<IEnumerable<EmployeeViewModel>> GetUsersInProject(string projectId)
         {
             var employees = await Mapper.ProjectTo<EmployeeViewModel>
-                (Data.Employees
-                .Include(x => x.EmployeeProjects)
-                .ThenInclude(x => x.Project)
-                .Where(x => x.EmployeeProjects.All(x => x.ProjectId == projectId))
-                .OrderBy(x => x.FirstName)
-                .ThenBy(x => x.LastName))
+                (Data.EmployeeProjects
+                .Include(x => x.Project)
+                .Include(x => x.Employee)
+                .Where(x => x.ProjectId == projectId)
+                .OrderBy(x => x.Employee.FirstName)
+                .ThenBy(x => x.Employee.LastName))
                 .ToListAsync();
 
             if (employees != null)

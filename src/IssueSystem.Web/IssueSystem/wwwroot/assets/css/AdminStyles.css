@@ -593,8 +593,20 @@
     transition: 0.3s;
     margin: 0;
 }
-
 .btn:hover {
     background-color: transparent;
     color: #1884E9;
+}
+
+
+.nav-style {
+    color: #c9e0dc;
+}
+
+    .nav-style .btn {
+        border-color: #343a40;
+    }
+
+.navbar-light .navbar-nav .nav-link {
+    color: #c9e0dc;
 }

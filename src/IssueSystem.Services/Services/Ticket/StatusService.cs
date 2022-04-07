@@ -18,19 +18,23 @@
         {
         }
 
-        public async Task<(bool acceped, TicketStatus status)> Accept(string creatorId, string ticketId)
+        public async Task<(bool acceped, TicketStatus status)> Accept(string ticketId, string acceptantId)
         {
             var accepted = false;
 
             var acceptedStatus = new TicketStatus();
 
-            if (creatorId != null && ticketId != null)
+            var ticket = Data.Tickets.FirstOrDefault(x => x.TicketId == ticketId);
+
+            if (acceptantId != null && ticketId != null && ticket != null && ticket.AcceptantId != acceptantId)
             {
                 acceptedStatus.TicketId = ticketId;
-                acceptedStatus.EmployeeId = creatorId;
+                acceptedStatus.EmployeeId = acceptantId;
                 acceptedStatus.StatusType = StatusType.Accepted;
 
                 await Data.TicketStatuses.AddAsync(acceptedStatus);
+
+                ticket.AcceptantId = acceptantId;
 
                 await Data.SaveChangesAsync();
 
