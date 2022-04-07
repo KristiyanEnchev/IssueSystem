@@ -527,7 +527,7 @@
 }
 
 
-
+/*   Responsive table */
 
 .table {
     width: 100%;
@@ -542,7 +542,7 @@
     }
 
     .table th {
-        background-color: darkblue;
+        background-color: #6f42c1;
         color: #ffffff;
     }
 
@@ -550,7 +550,7 @@
         background-color: #f5f5f5;
     }
 
-@media(max-width: 500px) {
+@media(max-width: 790px) {
     .table thead {
         display: none;
     }
@@ -566,7 +566,6 @@
 
     .table td {
         text-align: right;
-        /*padding-left: 50%;*/
         text-align: right;
         position: relative;
     }
@@ -581,4 +580,21 @@
         font-weight: bold;
         text-align: left;
     }
+}
+
+.btn {
+    padding: 0.6rem 1.0rem;
+    border: 2px solid #fafafa;
+    font-size: 0.95rem;
+    line-height: 1;
+    border-radius: 25px;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 0;
+}
+
+.btn:hover {
+    background-color: transparent;
+    color: #1884E9;
 }

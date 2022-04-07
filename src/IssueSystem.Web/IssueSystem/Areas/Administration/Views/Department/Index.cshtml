@@ -1,6 +1,21 @@
 ﻿@model IEnumerable<DepartmnetViewModel>
 @{
 }
+<section class="page-title">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Departments</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <div class="row">
     <div class="col-12">
@@ -33,14 +48,14 @@
                         @foreach (var department in Model)
                         {
                             <tr class="text-center">
-                                <td>
+                                <td data-label="Deparment">
                                     <a>@department.DepartmentName</a>
                                     <br>
                                     <small>Created @department.CreatedOn</small>
                                     
                                 </td>
-                                <td >@department.EmployeesCount</td>
-                                <td>@department.ProjectsCount</td>
+                                <td data-label="Employees" >@department.EmployeesCount</td>
+                                <td data-label="Projects">@department.ProjectsCount</td>
 
                                 <td style="text-align: right">
                                    <a class="btn btn-primary btn-sm" asp-area="administration" asp-action="edit" asp-controller="department" asp-route-id="@department.DepartmentId">

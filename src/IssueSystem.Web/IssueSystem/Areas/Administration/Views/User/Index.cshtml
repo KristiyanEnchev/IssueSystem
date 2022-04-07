@@ -3,6 +3,22 @@
 
 }
 
+<section class="page-title">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Employees</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -21,7 +37,7 @@
             </div>
 
             <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+                <table class="table table-hover table-stript text-nowrap">
                     <thead>
                         <tr>
                             <th>User</th>
@@ -35,13 +51,13 @@
                         @foreach (var user in Model)
                         {
                             <tr>
-                                <td>@user.Name</td>
-                                <td>@user.Email</td>
-                                <td>@user.Department</td>
-                                <td>@user.Role</td>
+                                <td data-label="User">@user.Name</td>
+                                <td data-label="Email">@user.Email</td>
+                                <td data-label="Department">@user.Department</td>
+                                <td data-label="Role">@user.Role</td>
                                 <td>
-                                    <a asp-area="administration" asp-action="edit" asp-controller="user" asp-route-id="@user.UserId" class="btn btn-block btn-outline-info btn-xs">Edit</a>
-                                    <a asp-area="administration" asp-action="roles" asp-controller="user" asp-route-id="@user.UserId" class="btn btn-block btn-outline-warning btn-xs">Roles</a>
+                                    <a asp-area="administration" asp-action="edit" asp-controller="user" asp-route-id="@user.UserId" class="btn btn-block btn-info btn-xs">Edit</a>
+                                    <a asp-area="administration" asp-action="roles" asp-controller="user" asp-route-id="@user.UserId" class="btn btn-block btn-warning btn-xs">Roles</a>
                                 </td>
                             </tr>
                         }

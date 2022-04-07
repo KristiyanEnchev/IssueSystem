@@ -55,13 +55,13 @@ else
             {
                 <form id="edit" method="post">
                     <tr>
-                        <td>
+                        <td data-label="Name">
                             <a>@employee.FirstName  @employee.LastName</a>
                             <br>
                             <small>Employee since: </small>
                             <small> @employee.CreatedOn</small>
                         </td>
-                        <td>
+                        <td data-label="Avatar">
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     @if (employee.ProfilePicture != null)
@@ -78,7 +78,7 @@ else
                                 </li>
                             </ul>
                         </td>
-                        <td class="project-state">
+                        <td data-label="Email" class="project-state">
                             <span class="badge badge-success">@employee.Email</span>
                         </td>
                         <td class="project-actions text-right">

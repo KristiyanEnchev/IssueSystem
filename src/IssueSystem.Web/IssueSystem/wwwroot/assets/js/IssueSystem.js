@@ -62,3 +62,14 @@ if (profileImage) {
         uploadButton.click();
     }))
 }
+
+var btns = document.querySelectorAll(".btn-danger")
+
+
+$(window).on("load",function(){
+    btns.forEach(btn => {
+        btn.addEventListener("click", function (e) {
+            alert("This button is disabled from the developer");
+        })
+    })
+})
