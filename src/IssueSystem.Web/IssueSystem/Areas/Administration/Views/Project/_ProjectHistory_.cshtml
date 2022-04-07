@@ -54,7 +54,6 @@ else
         <tbody>
             @foreach (var employee in @Model.Employees)
             {
-                <input type="hidden" name="Id" value="@employee.UserId" />
                 <tr>
                     <td>#</td>
                     <td>
@@ -172,6 +171,8 @@ else
                         }
                     </td>
                     <td>
+                    @if (ticket.AcceptantId != null)
+                    {
                         @if (ticket.AcceptantAvatar != null)
                         {
                         <img class="header__avatar"
@@ -183,20 +184,40 @@ else
                         <img class="header__avatar some-avatar" id="profilePicture"
                             src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
                         }
+                    }
+                    else
+                    {
+                        <i class="fa fa-solid fa-user-xmark" ></i>
+                    }
                     </td>
-                    <td>
-                       <a>@ticket.TicketPriority</a>
-                    </td>
+                    @if (@ticket.TicketPriority == "Low")
+                    {
+                        <td>
+                            <span class="info-box-number text-center mb-0 badge badge-info">@ticket.TicketPriority</span>
+                        </td>
+                    }
+                    else if (@ticket.TicketPriority == "Medium")
+                    {
+                        <td>
+                            <span class="info-box-number text-center mb-0 badge badge-success">@ticket.TicketPriority</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <span class="info-box-number text-center mb-0 badge badge-danger">@ticket.TicketPriority</span>
+                        </td>
+                    }
                     <td>
                        <a>@ticket.TicketCategory</a>
                     </td>
-                    @if (ticket.CurrentStatus.ToString() == "InProgress")
+                    @if (ticket.CurrentStatus == "Open")
                     {
                         <td class="project-state">
                             <span class="badge badge-info">@ticket.CurrentStatus</span>
                         </td>
                     }
-                    else if (ticket.CurrentStatus.ToString() == "Success")
+                    else if (ticket.CurrentStatus == "Accepted")
                     {
                         <td class="project-state">
                             <span class="badge badge-success">@ticket.CurrentStatus</span>

@@ -10,11 +10,17 @@
 
     public class TicketService : BaseService<Ticket>, ITicketService
     {
+        private readonly IStatusService _statusService;
+
+        //private readonly IUserService _userService;
+
         public TicketService(
             IssueSystemDbContext data,
-            IMapper mapper)
+            IMapper mapper,
+            IStatusService statusService)
             : base(data, mapper)
         {
+            _statusService = statusService;
         }
 
         public async Task<bool> CreateTicket(CreateTicketViewModel model)
@@ -25,39 +31,45 @@
 
             if (ticket != null)
             {
-                var status = await CreateStatus(model.CreatorId, ticket);
+                await Data.Tickets.AddAsync(ticket);
 
-                result = true;
+                await Data.SaveChangesAsync();
+
+                (bool opened, TicketStatus status) =
+                    await _statusService.Open(model.CreatorId, ticket.TicketId);
+
+                if (opened)
+                {
+                    result = true;
+                }
             }
 
-            var ti = await GetTicketById(ticket.TicketId);
+            return result;
+        }
+        public async Task<bool> CloseTicket(string ticketId, string userId)
+        {
+            var result = false;
 
+            (bool opened, TicketStatus status) =
+                await _statusService.Close(userId, ticketId);
+
+            if (opened)
+            {
+                result = true;
+            }
 
             return result;
         }
 
-        public async Task<TicketStatus> CreateStatus(string creatorId, Ticket ticket) 
+        public async Task AssigneTicket(string ticketId, string acceptantId)
         {
-            TicketStatus status = new TicketStatus
-            {
-                EmployeeId = creatorId,
-                TicketId = ticket.TicketId,
-                Ticket = ticket,
-            };
 
-            await Data.TicketStatuses.AddAsync(status);
-
-            await Data.SaveChangesAsync();
-
-            return status;
         }
 
-        //public async Task<TicketStatus> CloseStatus(string statusId ,string userId, Ticket ticket) 
-        //{
-        //    var status = await Data.TicketStatuses.FirstOrDefaultAsync(x => x.StatusId == statusId);
+        public async Task AcceptTicket(string ticketId, string acceptantId)
+        {
 
-        //    //status.StatusType.clo
-        //}
+        }
 
         public async Task<List<TicketCategory>> GetTicketCategories()
         {

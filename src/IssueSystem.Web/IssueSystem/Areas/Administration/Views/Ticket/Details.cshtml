@@ -89,9 +89,9 @@
                                 <p>@Model.Description</p>
                             </div>
                             <div class="post clearfix">
-                                @if (@Model.AcceptantName != null)
+                                @if (@Model.AcceptantId != null)
                                 {
-                                    @if (@Model.CreatorAvatar != null)
+                                    @if (@Model.AcceptantAvatar != null)
                                     {
                                     <img class="header__avatar"
                                         style="width:40px;height:40px; object-fit:cover; border-radius:30px"
@@ -106,8 +106,8 @@
                                         <a asp-area="Administration" asp-action="Edit" asp-controller="User"
                                             asp-route-id="@Model.CreatorId">@Model.CreatorName</a>
                                     </span>
-                                    <span class="description">Ticket Created on:</span>
-                                    <span class="description">@Model.CreatedOn</span>
+                                    <span class="description">Ticket Accepted on:</span>
+                                    <span class="description">@Model.AcceptedOn</span>
                                 }
                                 else
                                 {
@@ -137,7 +137,7 @@
                     <h3 class="text-primary text-center"><i class="fa fa-solid fa-address-card"
                             style="padding: 0.5rem"></i>@Model.ProjectName</h3>
                     <h6 class="text-black-50 text-center">Project Description</h6>
-                    <p class="text-muted text-center">@Model.ProjectDescription</p>
+                    <p class="text-muted text-center">@Model.Description</p>
                     <br>
                     <div class="text-muted">
                         <div class="row">
@@ -146,13 +146,18 @@
                                     <div class="info-box-content">
                                         @if (@Model.CurrentStatus == "Open")
                                         {
-                                        <span class="info-box-text text-center text-muted">Status</span>
-                                        <span class="badge badge-info">@Model.CurrentStatus</span>
+                                            <span class="info-box-text text-center text-muted">Status</span>
+                                            <span class="badge badge-info">@Model.CurrentStatus</span>
+                                        }
+                                        else if (@Model.CurrentStatus == "Accepted")
+                                        {
+                                            <span class="info-box-text text-center text-muted">Status</span>
+                                            <span class="badge badge-success">@Model.CurrentStatus</span>
                                         }
                                         else
                                         {
-                                        <span class="info-box-text text-center text-muted">Status</span>
-                                        <span class="badge badge-danger">@Model.CurrentStatus</span>
+                                            <span class="info-box-text text-center text-muted">Status</span>
+                                            <span class="badge badge-danger">@Model.CurrentStatus</span>
                                         }
                                     </div>
                                 </div>
@@ -160,14 +165,14 @@
                             <div class="col-6 col-sm-6">
                                 <div class="info-box bg-light">
                                     <div class="info-box-content text-center">
-                                        @if (@Model.CurrentStatus == "Open")
+                                        @if (@Model.CurrentStatus == "Open" || @Model.CurrentStatus == "Accepted")
                                         {
                                             <a class="btn btn-primary btn-block"
                                             asp-area="Administration" asp-controller="Ticket" asp-action="CloseTicket" asp-route-id="@Model.TicketId">Close Ticket</a>
                                         }
                                         else
                                         {
-                                            <a class="btn btn-primary btn-block disabled" area-disabled="true">Open Ticket</a>
+                                            <a class="btn btn-danger btn-block disabled" area-disabled="true">Closed Ticket</a>
                                         }
                                     </div>
                                 </div>

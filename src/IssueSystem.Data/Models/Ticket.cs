@@ -53,6 +53,7 @@
 
         [Required]
         public string Description { get; set; }
+
         public virtual ICollection<TicketStatus> TicketStatuses { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
 

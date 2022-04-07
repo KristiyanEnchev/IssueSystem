@@ -15,5 +15,6 @@
         Task<Employee> GetTicketCreatorById(string id);
         Task<Employee> GetTicketAcceptantById(string id);
         Task<Ticket> GetTicketById(string id);
+        Task<bool> CloseTicket(string ticketId, string userId);
     }
 }

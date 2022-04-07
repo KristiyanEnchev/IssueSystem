@@ -180,6 +180,30 @@
             return employees;
         }
 
+        public async Task<IEnumerable<EmployeeViewModel>> GetUsersInProject(string projectId)
+        {
+            var employees = await Mapper.ProjectTo<EmployeeViewModel>
+                (Data.Employees
+                .Include(x => x.EmployeeProjects)
+                .ThenInclude(x => x.Project)
+                .Where(x => x.EmployeeProjects.All(x => x.ProjectId == projectId))
+                .OrderBy(x => x.FirstName)
+                .ThenBy(x => x.LastName))
+                .ToListAsync();
+
+            if (employees != null)
+            {
+                foreach (var employee in employees)
+                {
+                    var avatar = await _fileService.GetImage(employee.UserId);
+
+                    employee.ProfilePicture = avatar;
+                }
+            }
+
+            return employees;
+        }
+
         public async Task<IEnumerable<EmployeeViewModel>> GetUsersForRemove(string projectId)
         {
             var employees = await Mapper.ProjectTo<EmployeeViewModel>

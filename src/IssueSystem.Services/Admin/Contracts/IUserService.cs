@@ -20,5 +20,6 @@
         Task<ChangeDepartmentViewModel> GetUserDepartmentDataForedit(string userId);
         Task<IEnumerable<EmployeeViewModel>> GetUsersForProject(string projectId, string departmentName);
         Task<IEnumerable<EmployeeViewModel>> GetUsersForRemove(string projectId);
+        Task<IEnumerable<EmployeeViewModel>> GetUsersInProject(string projectId);
     }
 }

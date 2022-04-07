@@ -40,6 +40,7 @@
                         <label>Category</label>
                         <select asp-for="TicketCategoryId" id="selectpicker" asp-items="@categories"
                             class="form-control selectpicker">
+                            <option value="">-- Select Category --</option>
                         </select>
                     </div>
                 </div>
@@ -48,6 +49,7 @@
                         <label>Priority</label>
                         <select asp-for="TicketPriorityId" id="selectpicker" asp-items="@priorities"
                             class="form-control selectpicker">
+                            <option value="">-- Select Priority --</option>
                         </select>
                     </div>
                 </div>

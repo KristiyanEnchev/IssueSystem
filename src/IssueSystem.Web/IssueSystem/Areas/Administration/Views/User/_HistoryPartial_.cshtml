@@ -81,9 +81,24 @@ else
                             }
                         </ul>
                     </td>
-                    <td class="project-state">
-                        <span class="badge badge-success">@project.Status</span>
-                    </td>
+                    @if (project.Status.ToString() == "InProgress")
+                    {
+                        <td class="project-state">
+                            <span class="badge badge-info">@project.Status</span>
+                        </td>
+                    }
+                    else if (project.Status.ToString() == "Success")
+                    {
+                        <td class="project-state">
+                            <span class="badge badge-success">@project.Status</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="project-state">
+                            <span class="badge badge-danger">@project.Status</span>
+                        </td>
+                    }
                     <td class="project-actions text-right">
                         <a class="btn btn-info btn-sm" asp-area="administration" asp-action="edit" asp-controller="project"
                             asp-route-id="@project.ProjectId"><i class="fas fa-pencil-alt"></i>Edit</a>
@@ -146,33 +161,62 @@ else
                 </tr>
             </thead>
             <tbody>
-                    @foreach (var ticket in @Model.CreatedTicketsData)
+                @foreach (var ticket in @Model.CreatedTicketsData)
+                {
+                <tr class="text-center">
+                    <td>
+                        <a>@ticket.Title</a>
+                        <br>
+                        <small>Created @ticket.CreatedOn</small>
+                    </td>
+                    <td>
+                        <a>@ticket.TicketCategory</a>
+                    </td>
+                    @if (@ticket.TicketPriority == "Low")
                     {
-                    <input type="hidden" name="Id" value="@ticket.TicketId" />
-                        <tr class="text-center">
-                            <td>
-                                <a>@ticket.Title</a>
-                                <br>
-                                <small>Created @ticket.CreatedOn</small>
-                            </td>
-                            <td>
-                                <a>@ticket.TicketCategory</a>
-                            </td>
-                            <td>
-                                <a>@ticket.TicketPriority</a>
-                            </td>
-                            <td>
-                                <a>@ticket.CommentsCount</a>
-                            </td>
-                            <td class="project-state">
-                                <span class="badge badge-success">@ticket.CurrentStatus</span>
-                            </td>
-                            <td class="project-actions text-right">
-                                <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Edit"
-                                    asp-controller="Ticket" asp-route-id="@ticket.TicketId"><i class="fas fa-folder"></i>View</a>
-                            </td>
-                        </tr>
+                        <td>
+                            <span class="info-box-number text-center mb-0 badge badge-info">@ticket.TicketPriority</span>
+                        </td>
                     }
+                    else if (@ticket.TicketPriority == "Medium")
+                    {
+                        <td>
+                            <span class="info-box-number text-center mb-0 badge badge-success">@ticket.TicketPriority</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <span class="info-box-number text-center mb-0 badge badge-danger">@ticket.TicketPriority</span>
+                        </td>
+                    }
+                    @if (ticket.CurrentStatus == "Open")
+                    {
+                        <td class="project-state">
+                            <span class="badge badge-info">@ticket.CurrentStatus</span>
+                        </td>
+                    }
+                    else if (ticket.CurrentStatus == "Accepted")
+                    {
+                        <td class="project-state">
+                            <span class="badge badge-success">@ticket.CurrentStatus</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="project-state">
+                            <span class="badge badge-danger">@ticket.CurrentStatus</span>
+                        </td>
+                    }
+                    <td>
+                        <a>@ticket.CommentsCount</a>
+                    </td>
+                    <td class="project-actions text-right">
+                        <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Details"
+                            asp-controller="Ticket" asp-route-id="@ticket.TicketId"><i class="fas fa-folder"></i>Details</a>
+                    </td>
+                </tr>
+                }
             </tbody>
         </table>
      </div>
@@ -247,15 +291,45 @@ else
                             <td>
                                 <a>@ticket.TicketCategory</a>
                             </td>
-                            <td>
-                                <a>@ticket.TicketPriority</a>
-                            </td>
+                            @if (@ticket.TicketPriority == "Low")
+                            {
+                                <td>
+                                    <span class="info-box-number text-center mb-0 badge badge-info">@ticket.TicketPriority</span>
+                                </td>
+                            }
+                            else if (@ticket.TicketPriority == "Medium")
+                            {
+                                <td>
+                                    <span class="info-box-number text-center mb-0 badge badge-success">@ticket.TicketPriority</span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <span class="info-box-number text-center mb-0 badge badge-danger">@ticket.TicketPriority</span>
+                                </td>
+                            }
                             <td>
                                 <a>@ticket.CommentsCount</a>
                             </td>
-                            <td class="project-state">
-                                <span class="badge badge-success">@ticket.CurrentStatus</span>
-                            </td>
+                            @if (ticket.CurrentStatus == "Open")
+                            {
+                                <td class="project-state">
+                                    <span class="badge badge-info">@ticket.CurrentStatus</span>
+                                </td>
+                            }
+                            else if (ticket.CurrentStatus == "Accepted")
+                            {
+                                <td class="project-state">
+                                    <span class="badge badge-success">@ticket.CurrentStatus</span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="project-state">
+                                    <span class="badge badge-danger">@ticket.CurrentStatus</span>
+                                </td>
+                            }
                             <td class="project-actions text-right">
                                 <a class="btn btn-primary btn-sm" asp-area="administration" asp-action="Details"
                                     asp-controller="project" asp-route-id="@ticket.TicketId"><i class="fas fa-folder"></i>View</a>

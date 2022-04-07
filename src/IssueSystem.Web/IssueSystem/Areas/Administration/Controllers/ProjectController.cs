@@ -100,6 +100,8 @@
                 TempData[MessageConstant.ErrorMessage] = "There was some problem when updating the project";
             }
 
+            TempData["DepartmentId"] = viewModel.DepartmentName;
+
             return View(viewModel);
         }
 
@@ -108,7 +110,9 @@
         /// sets the project id to temData 
         public async Task<IActionResult> AddEmployee(string id) 
         {
-            var model = await _userService.GetUsersForProject(id, this.User.GetId());
+            var departmentName = TempData["DepartmentId"]?.ToString();
+
+            var model = await _userService.GetUsersForProject(id, departmentName);
 
             if (model == null)
             {
