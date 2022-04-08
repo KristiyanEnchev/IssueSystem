@@ -217,14 +217,13 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <partial name="~/Areas/Administration/Views/Comment/_PostCommentPartial_.cshtml" model="new CommentViewModel(@Model.TicketId, this.User.GetId())"/>
-    @*@Html.RenderPartial("~/Areas/Administration/Views/Comment/_PostCommentPartial_.cshtml", new CommentViewModel(@Model.TicketId, this.User.GetId()))*@
+    <partial name="~/Areas/Administration/Views/Comment/_PostCommentPartial_.cshtml" 
+    model="new CommentViewModel(@Model.TicketId, this.User.GetId())"/>
 }
 
 <div id="comments">
     @foreach (var comment in Model.Comments)
     {
         <partial name="~/Areas/Administration/Views/Comment/_CommentPartial_.cshtml" model="@comment"/>
-        @*@Html.RenderPartial("~/Areas/Administration/Views/Comment/_CommentPartial_.cshtml", comment)*@
     }
 </div>

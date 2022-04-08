@@ -65,7 +65,6 @@ if (profileImage) {
 
 var btns = document.querySelectorAll(".btn-danger")
 
-
 $(window).on("load",function(){
     btns.forEach(btn => {
         btn.addEventListener("click", function (e) {
@@ -73,3 +72,12 @@ $(window).on("load",function(){
         })
     })
 })
+
+
+var commentSubmmit = document.getElementById("commentSubmmit");
+
+if (commentSubmmit) {
+    commentSubmmit.addEventListener("click", function () {
+        document.getElementById("commentTextArea").value = "";
+    })
+}
