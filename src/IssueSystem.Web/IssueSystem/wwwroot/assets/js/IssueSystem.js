@@ -75,9 +75,10 @@ $(window).on("load",function(){
 
 
 var commentSubmmit = document.getElementById("commentSubmmit");
+var commentTextArea = document.getElementById("commentTextArea");
 
-if (commentSubmmit) {
-    commentSubmmit.addEventListener("click", function () {
-        document.getElementById("commentTextArea").value = "";
-    })
-}
+//if (commentSubmmit) {
+//    commentSubmmit.addEventListener("submit", function (e) {
+//        commentSubmmit.reset();
+//    })
+//}

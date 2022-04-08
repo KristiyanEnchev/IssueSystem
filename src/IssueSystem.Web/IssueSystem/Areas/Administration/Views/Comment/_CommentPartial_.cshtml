@@ -1,39 +1,33 @@
 ﻿@model CommentListViewModel
 @{
+    var time = @DateTime.UtcNow - @Model.CreatedOn;
+    var hours = time.Hours + " " + "Hours Ago";
 }
 
-<div class="container mt-3 d-flex justify-content-center">
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-8">
-            <div class="text-left">
-                <h6>@Model.CreatedOn</h6>
-            </div>
-                <div class="card p-3 mb-2">
-                    <div class="d-flex flex-row">
-                        @if (@Model.AuthorAvatar != null)
-                        {
-                            <img class="header__avatar"
-                            style="width:40px;height:40px; object-fit:cover; border-radius:30px"
-                            src="data:image/*;base64,@(Convert.ToBase64String(@Model.AuthorAvatar))">
-                        }
-                        else
-                        {
-                            <img class="header__avatar some-avatar" id="profilePicture"
-                            src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
-                        }
-                        <div class="d-flex flex-column ms-2">
-                            <h6 class="mb-1 text-primary">@Model.AuthorName</h6>
-                            <p class="comment-text">@Model.Content</p>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex flex-row gap-3 align-items-center">
-                        </div>
-                        <div class="d-flex flex-row"> <span class="text-muted fw-normal fs-10">@Model.CreatedOn</span> </div>
-                    </div>
-                </div>
+<div class="card p-3 mb-2">
+    <div class="d-flex flex-row">
+        @if (@Model.AuthorAvatar != null)
+        {
+            <img class="header__avatar"
+             style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+             src="data:image/*;base64,@(Convert.ToBase64String(@Model.AuthorAvatar))">
+        }
+        else
+        {
+            <img class="header__avatar some-avatar" id="profilePicture"
+             src="~/assets/images/Portrait_Placeholder.png" object-fit:cover">
+        }
+        <div class="col-8 d-flex flex-column ms-2">
+            <h6 class="mb-1 text-primary">@Model.AuthorName</h6>
+            <p class="comment-text">@Model.Content</p>
         </div>
     </div>
+    <div class="d-flex justify-content-between">
+        <div class="d-flex flex-row gap-3 align-items-center">
+        </div>
+        <div class="d-flex flex-row"> <span class="text-muted fw-normal fs-10"></span> @hours </div>
+    </div>
 </div>
+
 
 

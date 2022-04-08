@@ -2,20 +2,24 @@
 @{
 }
 
-<form asp-controller="Comment" asp-action="WriteComment" method="post" class="form-block" data-ajax="true" data-ajax-method="post"
-        data-ajax-update="#comments" data-ajax-mode="after" data-ajax-url="@Url.Action("WriteComment", "Comment")">
-    <input asp-for="@Model.AuthorId" type="hidden" name="AuthorId" />
-    <input asp-for="@Model.TicketId" type="hidden" name="TicketId" />
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="form-group">
-                <textarea id="commentTextArea" asp-for="@Model.Content" class="form-input" required="" placeholder="Write your comment"></textarea>
-            </div>
-        </div>
-        <input id="commentSubmmit" type="submit" value="Comment" class="btn btn-primary pull-right" />
-    </div>
-</form>
+<div class="col-sm-4 well">
+    <form id="commentSubmmit" asp-controller="Comment" asp-action="WriteComment" method="post" class="form-block" data-ajax="true" data-ajax-method="post"
+          data-ajax-update="#comments" data-ajax-mode="after" data-ajax-onSuccess="onSuccess" data-ajax-url="@Url.Action("WriteComment", "Comment")">
+        <input asp-for="@Model.AuthorId" type="hidden" name="AuthorId" />
+        <input asp-for="@Model.TicketId" type="hidden" name="TicketId" />
+        <textarea id="commentTextArea" asp-for="@Model.Content" class="form-input textarea" required="" placeholder="Write your comment"></textarea>
+        <h6 class="pull-right" id="count_message"></h6>
+        <button type="submit" class="btn btn-info">Comment</button>
+    </form>
+</div>
 
 @section Scripts {
+
+    <script> 
+        onSuccess = function(e){
+            e.preventDefault();
+            this.reset();
+        }
+    </script>
     <partial name="_ValidationScriptsPartial" />
 }

@@ -27,9 +27,6 @@
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
                 </button>
-                @*                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                    </button>*@
             </div>
         </div>
         <div class="card-body">
@@ -143,10 +140,6 @@
                                     </section>
                                 }
                             </div>
-                            <div class="post clearfix">
-                                <a class="btn btn-primary btn-block mb-2"
-                               asp-area="Administration" asp-controller="Comment" asp-action="WriteComment" asp-route-id="@Model.TicketId">Write Comment</a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -215,15 +208,32 @@
 </section>
 
 
-@if (User.Identity.IsAuthenticated)
-{
-    <partial name="~/Areas/Administration/Views/Comment/_PostCommentPartial_.cshtml" 
-    model="new CommentViewModel(@Model.TicketId, this.User.GetId())"/>
-}
-
-<div id="comments">
-    @foreach (var comment in Model.Comments)
-    {
-        <partial name="~/Areas/Administration/Views/Comment/_CommentPartial_.cshtml" model="@comment"/>
-    }
-</div>
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Comment Section - </h3><h5>@Model.CommentsCount : Comments</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 order-2 order-md-1">
+                    <div id="comments">
+                        <div class="container">
+                            <div class="text-left">
+                                
+                            </div>
+                            @foreach (var comment in Model.Comments)
+                            {
+                                <partial name="~/Areas/Administration/Views/Comment/_CommentPartial_.cshtml" model="@comment" />
+                            }
+                        </div>
+                    </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <partial name="~/Areas/Administration/Views/Comment/_PostCommentPartial_.cshtml"
+                             model="new CommentViewModel(@Model.TicketId, this.User.GetId())" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

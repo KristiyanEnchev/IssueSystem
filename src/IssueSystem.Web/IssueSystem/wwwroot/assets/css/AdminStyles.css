@@ -616,3 +616,35 @@ body {
 .navbar-light .navbar-nav .nav-link {
     color: #c9e0dc;
 }
+
+
+
+
+.textarea {
+    background-color: #dddddd;
+    color: #666666;
+    padding: 1em;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    outline: none;
+    font-family: "Heebo", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+    margin-right: 0px;
+    width: 300px;
+    height: 100px;
+    transition: all 0.2s;
+}
+
+    .textarea:hover {
+        cursor: pointer;
+        background-color: #eeeeee;
+    }
+
+    .textarea:focus {
+        cursor: text;
+        color: #333333;
+        background-color: white;
+        border-color: #333333;
+    }

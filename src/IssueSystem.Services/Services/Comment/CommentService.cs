@@ -47,6 +47,7 @@
                 (Data.Comments
                 .Include(x => x.Author)
                 .Where(x => x.TicketId == ticketId))
+                .OrderBy(x => x.CreatedOn)
                 .ToListAsync();
         }
     }
