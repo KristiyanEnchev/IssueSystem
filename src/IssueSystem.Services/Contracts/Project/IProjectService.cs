@@ -5,7 +5,7 @@
     using IssueSystem.Data.Models;
     using IssueSystem.Services.Common;
 
-    public interface IProjectService : ITransientService
+    public interface IProjectService : IScopedService
     {
         Task<List<ResponseImageViewModel>> GetProjectAvatars(string projectId);
         Task<IEnumerable<ProjectViewModel>> GetAllProjects();

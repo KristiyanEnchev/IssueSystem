@@ -2,10 +2,11 @@
 {
     using IssueSystem.Data.Models;
     using IssueSystem.Models.Admin.Ticket;
+    using IssueSystem.Models.Comment;
     using IssueSystem.Models.Tickets;
     using IssueSystem.Services.Common;
 
-    public interface ITicketService : ITransientService
+    public interface ITicketService : IScopedService
     {
         Task<bool> CreateTicket(CreateTicketViewModel model);
         Task<List<TicketCategory>> GetTicketCategories();
@@ -20,5 +21,6 @@
         Task<bool> AssigneTicket(string ticketId, string acceptantId);
         Task<bool> AcceptTicket(string ticketId, string acceptantId);
         Task<TicketViewModel> GetTicketDetails(string ticketId);
+        Task<CommentListViewModel> WriteComment(CommentViewModel commentModel);
     }
 }

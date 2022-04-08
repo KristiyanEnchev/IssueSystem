@@ -1,4 +1,5 @@
-﻿@model TicketViewModel
+﻿@using IssueSystem.Infrastructure.Extensions
+@model TicketViewModel
 @{
 }
 
@@ -26,9 +27,9 @@
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
                 </button>
-@*                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                @*                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
                     <i class="fas fa-times"></i>
-                </button>*@
+                    </button>*@
             </div>
         </div>
         <div class="card-body">
@@ -115,7 +116,7 @@
                                     }
                                     <span class="username">
                                         <a asp-area="Administration" asp-action="Edit" asp-controller="User"
-                                       asp-route-id="@Model.CreatorId">@Model.CreatorName</a>
+                                       asp-route-id="@Model.AcceptantId">@Model.AcceptantName</a>
                                     </span>
                                     <span class="description">Ticket Accepted on:</span>
                                     <span class="description">@Model.AcceptedOn</span>
@@ -141,6 +142,10 @@
                                         </div>
                                     </section>
                                 }
+                            </div>
+                            <div class="post clearfix">
+                                <a class="btn btn-primary btn-block mb-2"
+                               asp-area="Administration" asp-controller="Comment" asp-action="WriteComment" asp-route-id="@Model.TicketId">Write Comment</a>
                             </div>
                         </div>
                     </div>
@@ -184,7 +189,8 @@
                                             @if (@Model.CurrentStatus == "Open" || @Model.CurrentStatus == "Accepted")
                                             {
                                                 <a class="btn btn-primary btn-block"
-                                               asp-area="Administration" asp-controller="Ticket" asp-action="CloseTicket" asp-route-id="@Model.TicketId">Close Ticket</a>
+                                               asp-area="Administration" asp-controller="Ticket" asp-action="CloseTicket"
+                                               asp-route-id="@Model.TicketId">Close Ticket</a>
                                             }
                                             else
                                             {
@@ -197,7 +203,8 @@
                             @if (@Model.CurrentStatus == "Open" || @Model.CurrentStatus == "Accepted")
                             {
                                 <a class="btn btn-primary btn-block mb-2"
-                               asp-area="Administration" asp-controller="Ticket" asp-action="AssigneTicket" asp-route-id="@Model.TicketId">Assigne Ticket</a>
+                               asp-area="Administration" asp-controller="Ticket" asp-action="AssigneTicket"
+                               asp-route-id="@Model.TicketId">Assigne Ticket</a>
                             }
                         </div>
                     </div>
@@ -206,3 +213,18 @@
         </div>
     </div>
 </section>
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <partial name="~/Areas/Administration/Views/Comment/_PostCommentPartial_.cshtml" model="new CommentViewModel(@Model.TicketId, this.User.GetId())"/>
+    @*@Html.RenderPartial("~/Areas/Administration/Views/Comment/_PostCommentPartial_.cshtml", new CommentViewModel(@Model.TicketId, this.User.GetId()))*@
+}
+
+<div id="comments">
+    @foreach (var comment in Model.Comments)
+    {
+        <partial name="~/Areas/Administration/Views/Comment/_CommentPartial_.cshtml" model="@comment"/>
+        @*@Html.RenderPartial("~/Areas/Administration/Views/Comment/_CommentPartial_.cshtml", comment)*@
+    }
+</div>

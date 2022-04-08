@@ -9,6 +9,8 @@
     using IssueSystem.Services.Contracts.Ticket;
     using IssueSystem.Models.Admin.Ticket;
     using IssueSystem.Services.Contracts.File;
+    using IssueSystem.Services.Contracts.Comment;
+    using IssueSystem.Models.Comment;
 
     public class TicketService : BaseService<Ticket>, ITicketService
     {
@@ -16,15 +18,19 @@
 
         private readonly IFileService _fileService;
 
+        private readonly ICommentService _commentService;
+
         public TicketService(
             IssueSystemDbContext data,
             IMapper mapper,
             IStatusService statusService,
-            IFileService fileService)
+            IFileService fileService,
+            ICommentService commentService)
             : base(data, mapper)
         {
             _statusService = statusService;
             _fileService = fileService;
+            _commentService = commentService;
         }
 
         public async Task<bool> CreateTicket(CreateTicketViewModel model)
@@ -95,6 +101,33 @@
             return result;
         }
 
+        public async Task<CommentListViewModel> WriteComment(CommentViewModel commentModel)
+        {
+            var comment = await _commentService.WriteComment(commentModel);
+
+            var ticket = await GetTicketById(commentModel.TicketId);
+
+            var commentReturnModel = new CommentListViewModel();
+
+            if (comment != null && ticket != null)
+            {
+                ticket.Comments.Add(comment);
+
+                await Data.SaveChangesAsync();
+
+                commentReturnModel.AuthorName = comment.Author.FirstName + " " + comment.Author.LastName;
+                commentReturnModel.CommentId = comment.CommentId;
+                commentReturnModel.Content = comment.Content;
+                commentReturnModel.CreatedOn = comment.CreatedOn;
+                if (comment.Author.ProfilePicture != null)
+                {
+                    commentReturnModel.AuthorAvatar = comment.Author.ProfilePicture.Content;
+                }
+            }
+
+            return commentReturnModel;
+        }
+
         public async Task<TicketViewModel> GetTicketDetails(string ticketId)
         {
             var ticket = await Mapper.ProjectTo<TicketViewModel>
@@ -118,6 +151,8 @@
                     ticket.AcceptantAvatar = await _fileService
                         .GetImage(ticket.AcceptantId);
                 }
+
+                ticket.Comments = await _commentService.GetAllTicketComments(ticketId);
             }
 
             return ticket;

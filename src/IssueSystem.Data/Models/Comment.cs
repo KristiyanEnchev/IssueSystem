@@ -10,6 +10,11 @@
 
     public class Comment : BaseEntity, IDeletableEntity
     {
+        public Comment()
+        {
+            this.CommentId = Guid.NewGuid().ToString();
+        }
+
         [Key]
         [Required]
         public string CommentId { get; set; }

@@ -202,6 +202,7 @@
         public async Task<List<TicketViewModel>> GetLast20TicketsForProject(string projectId)
         {
             var tickets = await Data.Tickets
+                .Where(x => x.ProjectId == projectId)
                 .Select(x => new TicketViewModel
                 {
                     TicketId = x.TicketId,

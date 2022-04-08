@@ -1,0 +1,21 @@
+﻿@model CommentViewModel
+@{
+}
+
+<form asp-controller="Comment" asp-action="WriteComment" method="post" class="form-block" data-ajax="true" data-ajax-method="post"
+        data-ajax-update="#comments" data-ajax-mode="before" data-ajax-url="/Comment/WriteComment">
+    <input asp-for="@Model.AuthorId" type="hidden" name="AuthorId" />
+    <input asp-for="@Model.TicketId" type="hidden" name="TicketId" />
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <textarea asp-for="@Model.Content" class="form-input" required="" placeholder="Write your comment"></textarea>
+            </div>
+        </div>
+        <input type="submit" value="Comment" class="btn btn-primary pull-right" />
+    </div>
+</form>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

@@ -4,7 +4,7 @@
     using IssueSystem.Data.Models;
     using IssueSystem.Models.Admin.Department;
 
-    public interface IDepartmentService : ITransientService
+    public interface IDepartmentService : IScopedService
     {
         Task<List<Department>> GetDepartments();
         Task<DepartmnetViewModel> GetDepartmentById(string id);

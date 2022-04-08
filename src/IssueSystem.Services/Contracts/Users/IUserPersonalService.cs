@@ -4,7 +4,7 @@
     using IssueSystem.Models.User;
     using IssueSystem.Services.Common;
 
-    public interface IUserPersonalService : ITransientService
+    public interface IUserPersonalService : IScopedService
     {
         Task<bool> UpdateUserData(EditProfileDataModel model);
         Task<bool> UpdateUserProfilePicture(RequestImageViewModel model, string userId);

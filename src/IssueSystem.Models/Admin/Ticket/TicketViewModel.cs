@@ -4,6 +4,7 @@
 
     using IssueSystem.Common.Mapper.Contracts;
     using IssueSystem.Data.Models;
+    using IssueSystem.Models.Comment;
     using IssueSystem.Models.Image;
 
     public class TicketViewModel : IMapFrom<Ticket>
@@ -25,6 +26,8 @@
         public string ProjectId { get; set; }
         public string ProjectName { get; set; }
         public DateTime AcceptedOn { get; set; }
+
+        public ICollection<CommentListViewModel> Comments { get; set; }
 
         public virtual void Mapping(Profile mapper) 
         {

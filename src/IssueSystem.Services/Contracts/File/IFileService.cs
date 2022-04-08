@@ -4,7 +4,7 @@
     using IssueSystem.Models.Image;
     using IssueSystem.Services.Common;
 
-    public interface IFileService : ITransientService
+    public interface IFileService : IScopedService
     {
         Task<(bool isPictureExist, ResponseImageViewModel image)> GetUserImage(string userId);
         Task<ResponseImageViewModel> GetImage(string userId);
