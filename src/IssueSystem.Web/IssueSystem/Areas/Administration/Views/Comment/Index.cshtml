@@ -1,0 +1,109 @@
+﻿@model IEnumerable<CommentIndexModel>
+@{
+}
+
+<section class="page-title">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Last Comment for each project</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Comments</h3>
+            </div>
+
+            <div class="card-body table-responsive p-0">
+                @if (Model.Count() > 0)
+                {
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>ProjectName</th>
+                                <th>Ticket Title</th>
+                                <th>AuthorName</th>
+                                <th>AuthorAvatar</th>
+                                <th style="width: 1%">CreatedOn</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var comment in @Model)
+                            {
+                                <tr>
+                                    <td data-label="ProjectName">@comment.ProjectName</td>
+                                    <td data-label="TicketTitle">@comment.TicketTitle</td>
+                                    <td data-label="AuthorName">@comment.AuthorName</td>
+                                    <td data-label="AuthorAvatar">
+                                    @if (@comment.AuthorAvatar != null)
+                                    {
+                                        <img class="header__avatar"
+                                     style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                                     src="data:image/*;base64,@(Convert.ToBase64String(@comment.AuthorAvatar))">
+                                    }
+                                    else
+                                    {
+                                        <img class="header__avatar some-avatar" id="profilePicture"
+                                     src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                                    }
+                                    </td>
+                                    
+                                    <td data-label="CreatedOn" class="">@comment.CreatedOn</td>
+                                    <td style="text-align: right">
+                                        <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Details" asp-controller="Ticket"
+                                   asp-route-id="@comment.TicketId">
+                                            <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Details
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <section class="page-title">
+                        <div class="page-title-img bg-img" style="background-color: #1884e9;">
+                            <div class="container">
+                                <div class="row align-items-center justify-content-center height100px">
+                                    <div class="col-lg-8">
+                                        <div class="page-title-content">
+                                            <div class="title-border">
+                                                <div class="form-floating">
+                                                    <h3 style="color: #ffff;">There is no Comments yet</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="col-12 justify-content-center pad text-center">
+                        <h3 class="text-center" style="color: #000000;">You Can Create One</h3>
+                        <div class="row align-items-center justify-content-center height100px">
+                            <div class="col-4 justify-content-center pad text-center">
+                                <a type="submit" asp-area="Administration" asp-action="Index" asp-controller="Ticket"
+                               class="btn btn-primary btn-block">Tickets</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

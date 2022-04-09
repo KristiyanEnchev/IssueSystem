@@ -41,7 +41,7 @@
             return comment;
         }
 
-        public async Task<List<CommentListViewModel>> GetAllTicketComments(string ticketId) 
+        public async Task<List<CommentListViewModel>> GetAllTicketComments(string ticketId)
         {
             return await Mapper.ProjectTo<CommentListViewModel>
                 (Data.Comments
@@ -49,6 +49,48 @@
                 .Where(x => x.TicketId == ticketId))
                 .OrderBy(x => x.CreatedOn)
                 .ToListAsync();
+        }
+
+        public async Task<List<CommentIndexModel>> GetLastCommentForAllProject()
+        {
+            var list = new List<CommentIndexModel>();
+
+            foreach (var project in Data.Projects
+                .Include(x => x.Tickets)
+                .ThenInclude(x => x.Comments)
+                .Include(x => x.EmployeeProjects)
+                .ThenInclude(x => x.Employee))
+            {
+                foreach (var ticket in project.Tickets)
+                {
+                    var com = ticket.Comments.FirstOrDefault();
+
+                    if (com != null)
+                    {
+                        var comment = new CommentIndexModel
+                        {
+                            TicketId = com.TicketId,
+                            CreatedOn = com.CreatedOn,
+                            AuthorName = com.Author.FirstName + " " + com.Author.LastName,
+                            ProjectName = project.ProjectName,
+                            TicketTitle = ticket.Title,
+                        };
+
+                        if (com.Author.ProfilePicture != null)
+                        {
+                            comment.AuthorAvatar = com.Author.ProfilePicture.Content;
+
+                        }
+
+                        if (comment != null)
+                        {
+                            list.Add(comment);
+                        }
+                    }
+                }
+            }
+
+            return list;
         }
     }
 }

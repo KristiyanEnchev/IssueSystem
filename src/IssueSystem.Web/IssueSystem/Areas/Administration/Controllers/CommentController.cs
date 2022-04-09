@@ -1,6 +1,7 @@
 ﻿namespace IssueSystem.Areas.Administration.Controllers
 {
     using IssueSystem.Models.Comment;
+    using IssueSystem.Services.Contracts.Comment;
     using IssueSystem.Services.Contracts.Ticket;
     using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,21 @@
     {
         private readonly ITicketService _ticketService;
 
-        public CommentController(ITicketService ticketService)
+        private readonly ICommentService _commentService;
+
+        public CommentController(
+            ITicketService ticketService,
+            ICommentService commentService)
         {
             _ticketService = ticketService;
+            _commentService = commentService;
+        }
+
+        public async Task<IActionResult> Index() 
+        {
+            var model = await _commentService.GetLastCommentForAllProject();
+
+            return View(model);
         }
 
         [HttpPost]

@@ -41,6 +41,10 @@
 
             if (ticket != null)
             {
+                var project = await Data.Projects.FirstOrDefaultAsync(x => x.ProjectId == model.ProjectId);
+
+                project.Tickets.Add(ticket);
+
                 await Data.Tickets.AddAsync(ticket);
 
                 await Data.SaveChangesAsync();
