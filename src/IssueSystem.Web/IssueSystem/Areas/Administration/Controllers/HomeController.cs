@@ -108,7 +108,7 @@
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> CreateDepartment()
+        public IActionResult CreateDepartment()
         {
             return View();
         }

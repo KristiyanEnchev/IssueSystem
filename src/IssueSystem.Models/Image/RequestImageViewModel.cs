@@ -1,9 +1,11 @@
 ﻿namespace IssueSystem.Models.Image
 {
+    using IssueSystem.Common.Mapper.Contracts;
     using System.ComponentModel.DataAnnotations;
+    using IssueSystem.Data.Models;
     using static IssueSystem.Data.ModelConstants.Image;
 
-    public class RequestImageViewModel
+    public class RequestImageViewModel : IMapFrom<Image>
     {
         public int Id { get; set; }
 

@@ -32,7 +32,7 @@
                 }
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="~/Identity/Account/Manage">
+                    <a class="dropdown-item" asp-area="" asp-controller="Profile" asp-action="Index">
                         <i class="fa fa-solid fa-user"></i><strong> Profile </strong>
                     </a>
                     <form id="logout" class="form-inline" asp-area="Identity" asp-page="/Account/Logout"

@@ -1,12 +1,14 @@
 ﻿namespace IssueSystem.Services.Services.Users
 {
-    using Microsoft.AspNetCore.Identity;
     using AutoMapper;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
 
     using IssueSystem.Data;
     using IssueSystem.Data.Models;
-    using IssueSystem.Models.Image;
     using IssueSystem.Models.User;
+    using IssueSystem.Models.Image;
     using IssueSystem.Services.Contracts.File;
     using IssueSystem.Services.Contracts.Users;
 
@@ -27,9 +29,21 @@
             this._imageService = imageService;
         }
 
-        public async Task<bool> UpdateUserData(EditProfileDataModel model)
+        public async Task<ProfileViewModel> GetUserData(string userId)
+        {
+            var profile = await Mapper.ProjectTo<ProfileViewModel>
+                (Data.Employees
+                .Where(x => x.Id == userId))
+                .FirstOrDefaultAsync();
+
+            return profile;
+        }
+
+
+        public async Task<bool> UpdateUserData(ProfileViewModel model)
         {
             bool result = false;
+
             var user = await _userManager.FindByEmailAsync(model.Email);
 
             if (user != null)
@@ -38,7 +52,7 @@
                 user.LastName = model.LastName;
                 user.Email = model.Email;
 
-                this.Data.Employees.Update(user);
+                await _userManager.UpdateAsync(user);
 
                 await Data.SaveChangesAsync();
 
@@ -48,48 +62,44 @@
             return result;
         }
 
-        public async Task<bool> UpdateUserProfilePicture(RequestImageViewModel model, string userId)
+        public async Task<string> UpdateUserProfilePicture(IFormFile file, string userId)
         {
-            bool result = false;
+            var result = string.Empty;
 
-            (bool isImageUpdated, Image? data) = await _imageService.UpdateImage(model, userId);
+            var user = await _userManager.FindByIdAsync(userId);
 
-            if (isImageUpdated)
+            var userImage = await Data.Images.FirstOrDefaultAsync(x => x.EmployeeId == userId);
+
+            if (user != null)
             {
-                var user = await _userManager.FindByIdAsync(model.EmployeeId);
+                var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                var extension = Path.GetExtension(file.FileName);
 
-                user.ProfilePicture = data;
+                userImage.Name = fileName;
+                userImage.FileExtension = extension;
+                userImage.EmployeeId = userId;
+                userImage.EmployeePicture = user;
 
-                this.Data.Employees.Update(user);
-
-                await Data.SaveChangesAsync();
-
-                result = true;
-            }
-
-            return result;
-        }
-
-        public async Task<bool> UploadProfilePicture(RequestImageViewModel model)
-        {
-            bool result = false;
-
-            var image = await _imageService.UploadeImage(model);
-
-            if (image != null)
-            {
-                var user = await _userManager.FindByIdAsync(model.EmployeeId);
-
-                if (user != null)
+                using (var dataStream = new MemoryStream())
                 {
-                    user.ProfilePicture = image;
+                    await file.CopyToAsync(dataStream);
 
-                    await _userManager.UpdateAsync(user);
-
-                    await Data.SaveChangesAsync();
-
-                    result = true;
+                    ////if smaler than 2MB
+                    if (dataStream.Length < 2097152)
+                    {
+                        userImage.Content = dataStream.ToArray();
+                    }
+                    else
+                    {
+                        result = "Your picture is too big, should be less than 2 MB";
+                    }
                 }
+
+                Data.Images.Update(userImage);
+
+                await Data.SaveChangesAsync();
+
+                result = "Succesful update picture";
             }
 
             return result;

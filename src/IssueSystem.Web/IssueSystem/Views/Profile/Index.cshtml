@@ -1,16 +1,8 @@
-﻿@page
-@model IndexModel
+﻿@model ProfileViewModel
 @{
-    ViewData["Title"] = "Profile";
 }
-<div class="row text-center">
-    @if (Model.StatusMessage != null)
-    {
-        <partial name="_StatusMessage" for="StatusMessage"/>
-    }
-</div>
 
-    <div class="row tm-content-row">
+<div class="row tm-content-row">
         <div class="row tm-content-row">
             <form id="profile-form" method="post" enctype="multipart/form-data" class="tm-signup-form row">
 
@@ -21,26 +13,27 @@
                         <div class="tm-avatar-container">
                             <div class="form-group">
                                 <div class="profile-pic-div">
-                                    @if (Model.Profile.ProfilePicture != null)
+                                    @if (@Model.ProfilePicture != null)
                                     {
                                         <img class="profileImage" id="photo"
-                                            src="data:image/*;base64,@(Convert.ToBase64String(Model.Profile.ProfilePicture))">
+                                            src="data:image/*;base64,@(Convert.ToBase64String(@Model.ProfilePicture))">
                                     }
                                     else
                                     {
                                         <img src="~/assets/images/Portrait_Placeholder.png" id="photo" class="profileImage">    
                                     }
-                                    <input id="file" type="file" accept=".png,.jpg,.jpeg,.gif,.tif" asp-for="image.file"
+                                    <input id="file" type="file" accept=".png,.jpg,.jpeg,.gif,.tif" asp-for="@Model.ProfilePicture"
                                         class="btn btn-primary btn-block text-uppercase form-control"
                                         onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" />
                                     <label for="file" id="uploadBtn">Choose Photo</label>
-                                    <span asp-validation-for="image.file" class="text-danger"></span>
+                                    <span asp-validation-for="@Model.ProfilePicture" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-lg-12 pad text-center pictureButton">
-                        <button type="submit" class="btn btn-primary btn-block text-uppercase">Update Picture</button>
+                        <button asp-area="" asp-controller="Profile" asp-action="UpdateProfilePicture" 
+                        type="submit" class="btn btn-primary btn-block text-uppercase">Update Picture</button>
                     </div>
                 </div>
 
@@ -50,34 +43,34 @@
                         <div class="row">
                             <div class="form-group col-lg-6 pad">
                                 <label for="FirstName">First Name</label>
-                                <input asp-for="@Model.Profile.FirstName" id="lastname" class="form-control validate"
-                                    autocomplete="on" aria-required="true" value="@Model.Profile.FirstName" />
-                                <span asp-validation-for="@Model.Profile.FirstName" class="text-danger"></span>
+                                <input asp-for="@Model.FirstName" id="lastname" class="form-control validate"
+                                    autocomplete="on" aria-required="true" value="@Model.FirstName" />
+                                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
                             </div>
                             <div class="form-group col-lg-6 pad">
                                 <label for="LastName">Last Name</label>
-                                <input asp-for="@Model.Profile.LastName" id="lastname" class="form-control validate"
-                                    autocomplete="on" aria-required="true" value="@Model.Profile.LastName" />
-                                <span asp-validation-for="@Model.Profile.LastName" class="text-danger"></span>
+                                <input asp-for="@Model.LastName" id="lastname" class="form-control validate"
+                                    autocomplete="on" aria-required="true" value="@Model.LastName" />
+                                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
                             </div>
                             <div class="form-group col-lg-6 pad">
                                 <label for="email">Email</label>
-                                <input asp-for="@Model.Profile.Email" id="password" class="form-control validate"
-                                    autocomplete="email" aria-required="true" value="@Model.Profile.Email" />
-                                <span asp-validation-for="@Model.Profile.Email" class="text-danger"></span>
+                                <input asp-for="@Model.Email" id="password" class="form-control validate"
+                                    autocomplete="email" aria-required="true" value="@Model.Email" />
+                                <span asp-validation-for="@Model.Email" class="text-danger"></span>
                             </div>
                             <div class="form-group col-lg-6 pad">
                                 <label for="department">Department</label>
-                                <input asp-for="@Model.Profile.Department" id="department" class="form-control validate"
-                                    value="@Model.Profile.Department" readonly />
+                                <input asp-for="@Model.Department" id="department" class="form-control validate"
+                                    value="@Model.Department" readonly />
                             </div>
                             <div class="form-group col-lg-6 pad text-center">
-                                <button type="submit" class="btn btn-primary btn-block text-uppercase">Update Your
-                                    Profile</button>
+                                <button asp-area="" asp-controller="Profile" asp-action="UpdateUserData" 
+                                type="submit" class="btn btn-primary btn-block text-uppercase">Update Your Profile</button>
                             </div>
                             <div class="form-group col-lg-6 pad text-center">
-                                <a class="btn btn-primary btn-block text-uppercase" asp-page="./ChangePassword">Change
-                                    Password</a>
+                                <a class="btn btn-primary btn-block text-uppercase" 
+                                asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Change Password</a>
                             </div>
                         </div>
                     </div>
