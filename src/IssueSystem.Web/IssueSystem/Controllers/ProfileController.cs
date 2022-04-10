@@ -6,21 +6,16 @@
     using IssueSystem.Models.User;
     using IssueSystem.Infrastructure.Extensions;
     using IssueSystem.Services.Contracts.Users;
-    using IssueSystem.Services.Contracts.File;
-    using IssueSystem.Models.Image;
 
     public class ProfileController : BaseController
     {
         private readonly IUserPersonalService _userService;
 
-        private readonly IFileService _fileService;
 
         public ProfileController(
-            IUserPersonalService userService,
-            IFileService fileService)
+            IUserPersonalService userService)
         {
             _userService = userService;
-            _fileService = fileService;
         }
 
         public async Task<IActionResult> Index()
@@ -82,18 +77,6 @@
             TempData[MessageConstant.SuccessMessage] = result;
 
             return RedirectToAction("Index");
-        }
-
-        public IActionResult GetImage ()
-        {
-            var model = new ResponseImageViewModel();
-
-            if (this.User.Identity.IsAuthenticated)
-            {
-                model = _fileService.GetImageRequest(this.User.GetId());
-            }
-
-            return PartialView("_ImagePartial_", model);
         }
     }
 }

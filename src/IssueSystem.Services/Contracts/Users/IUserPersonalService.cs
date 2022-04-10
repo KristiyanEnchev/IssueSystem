@@ -12,5 +12,6 @@
         Task<bool> UpdateUserData(ProfileViewModel model);
         Task<string> UpdateUserProfilePicture(IFormFile file, string userId);
         Task<bool> RemoveImage(RequestImageViewModel model);
+        Task<string> GetDepartmentId(string userId);
     }
 }

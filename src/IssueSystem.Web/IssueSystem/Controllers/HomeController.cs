@@ -3,9 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using IssueSystem.Models;
-    using IssueSystem.Models.Image;
     using IssueSystem.Services.Contracts.File;
-    using IssueSystem.Infrastructure.Extensions;
 
     public class HomeController : BaseController
     {

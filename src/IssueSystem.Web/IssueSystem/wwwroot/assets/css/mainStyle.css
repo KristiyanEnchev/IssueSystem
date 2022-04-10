@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif
+}
 
 body {
     margin: 0;
@@ -387,6 +392,11 @@ ul {
     box-shadow: none !important;
 }
 
+.myBtn {
+    background-color: #FFCA28;
+    border-color: #FFCA28;
+}
+
 .btn {
     border-radius: 5rem;
 }
@@ -404,9 +414,7 @@ h1 {
 }
 
 
-
 /* More from My styles */
-
 
 button:hover, a:hover {
     transform: scale(1.1);
@@ -423,8 +431,8 @@ button:hover, a:hover {
 
 .wrapper {
     padding: 5rem 0rem 0rem 0rem;
-/*    min-height: 100%;
-    position: relative;*/
+    /*min-height: 100%;*/
+    /*position: relative;*/
 }
 footer {
     background-color: transparent !important;
@@ -438,7 +446,6 @@ footer {
 }
 
 body {
-    /*background-image: url('http://demos.creative-tim.com/paper-kit-2/assets/img/clouds.png');*/
     background-image: url(/assets/images/clouds1.png);
     background-color: #26292E;
 }
@@ -466,4 +473,100 @@ body {
         -webkit-transform: translate3d(-50%, 0, 0);
         transform: translate3d(-50%, 0, 0);
     }
+}
+
+#myMeny {
+    justify-content:inherit;
+    padding: 5% 5%
+}
+
+.navbar-nav {
+    padding-left: 50%;
+}
+.menuMain > li {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .table td, .table th {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        text-align: center;
+        font-size: 16px;
+    }
+
+/*    .table th {
+        background-color: #6f42c1;
+        color: #ffffff;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #f5f5f5;
+    }*/
+
+@media(max-width: 790px) {
+    .table thead {
+        display: none;
+    }
+
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+
+        .table tr {
+            margin-bottom: 15px;
+        }
+
+        .table td {
+            text-align: right;
+            text-align: right;
+            position: relative;
+        }
+
+            .table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 15px;
+                font-size: 15px;
+                font-weight: bold;
+                text-align: left;
+            }
+}
+
+
+.badge-danger {
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.badge-info {
+    color: #fff;
+    background-color: #ffc107;
+}
+
+.badge-success {
+    color: #fff;
+    background-color: #28a745;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }

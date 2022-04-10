@@ -3,6 +3,7 @@
     using IssueSystem.Services.Common;
     using IssueSystem.Data.Models;
     using IssueSystem.Models.Admin.Department;
+    using IssueSystem.Models.Department;
 
     public interface IDepartmentService : IScopedService
     {
@@ -14,5 +15,6 @@
         Task AddProjectToDeparment(string projectId, string deparmtnetId);
         Task<Department> GetDbDepartmentbyId(string id);
         Task<DepartmentEditModel> GetDepartmentForEditById(string id);
+        Task<IEnumerable<DepartmentProjectsModel>> GetAllProjectsByDepartment(string userId);
     }
 }

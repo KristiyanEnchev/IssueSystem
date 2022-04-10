@@ -1,55 +1,84 @@
 ﻿@inject IFileService _fileService
 @{
-    var image = _fileService
-    .GetImageRequest(UserManager
-        .GetUserId(User));
+	var image = _fileService
+		.GetImageRequest(UserManager
+			.GetUserId(User));
 }
 
-<ul class="navbar-nav">
-    @if (this.User.Identity.IsAuthenticated)
-    {
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Profile" asp-action="Index" title="Manage">Hello
-                @this.User.Identity.Name!</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-                @if (image != null)
-                {
-                    <img class="header__avatar" style="width:40px;height:40px; object-fit:cover; border-radius:30px"
-                        src="data:image/*;base64,@(Convert.ToBase64String(image.Content))">
-                }
-                else
-                {
-                    <img class="header__avatar" id="profilePicture" src="~/assets/images/Portrait_Placeholder.png"
-                        object-fit:cover" src="">
-                }
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" asp-area="" asp-controller="Profile" asp-action="Index">
-                        <i class="fa fa-solid fa-user"></i><strong> Profile </strong>
-                    </a>
-                    <form id="logout" class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
-                        asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <a class="dropdown-item" href="#" onclick="logout()">
-                            <i class="fa fa-solid fa-door-open"></i><strong> Logout </strong>
-                        </a>
-                    </form>
-                </div>
-            </li>
-    }
-    else
-    {
-            <li class="nav-link">
-                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
-                    <i class="fa fa-solid fa-fingerprint"></i><strong> Register </strong>
-                </a>
-            </li>
-            <li class="nav-item nav-link">
-                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
-                    <i class="fa fa-solid fa-door-closed"></i><strong> Login </strong>
-                </a>
-            </li>
-    }
-</ul>
+@if (this.User.Identity.IsAuthenticated)
+{
+	<ul class="navbar-nav h-100 menuMain">
+		<li class="nav-item">
+			<a class="nav-link" asp-area="" asp-controller="Department" asp-action="Index">
+				<i class="fa fa-solid fa-building"></i> Department
+			</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" asp-area="" asp-controller="Project" asp-action="Index">
+				<i class="fas fa-solid fa-users-gear"></i> Projects
+			</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" asp-area="" asp-controller="Ticket" asp-action="Index">
+				<i class="fa fa-ticket"></i> Tickets
+			</a>
+		</li>
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
+				<i class="far fa-file-alt"></i>
+				<span>Ticket Reports <i class="fas fa-angle-down"></i> </span>
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				<a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="DailyReport">Daily Report</a>
+				<a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="WeeklyReport">Weekly Report</a>
+				<a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="YearlyReport">Yearly Report</a>
+			</div>
+		</li>
+	</ul>
+
+	<ul class="navbar-nav">
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
+			@if (image != null)
+			{
+				<img class="header__avatar" style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+					src="data:image/*;base64,@(Convert.ToBase64String(image.Content))">
+			}
+			else
+			{
+				<img class="header__avatar" id="profilePicture" src="~/assets/images/Portrait_Placeholder.png"
+					object-fit:cover" src="">
+			}
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				<a class="dropdown-item" asp-area="" asp-controller="Profile" asp-action="Index">
+					<i class="fa fa-solid fa-user"></i><strong> Profile </strong>
+				</a>
+				<form id="logout" class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+					asp-route-returnUrl="@Url.Action(" Index", "Home" , new { area="" })">
+					<a class="dropdown-item" href="#" onclick="logout()">
+						<i class="fa fa-solid fa-door-open"></i><strong> Logout </strong>
+					</a>
+				</form>
+			</div>
+		</li>
+	</ul>
+}
+else
+{
+	<ul class="navbar-nav">
+		<li class="nav-link">
+			<a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
+				<i class="fa fa-solid fa-fingerprint"></i><strong> Register </strong>
+			</a>
+		</li>
+		<li class="nav-item nav-link">
+			<a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
+				<i class="fa fa-solid fa-door-closed"></i><strong> Login </strong>
+			</a>
+		</li>
+	</ul>
+
+}

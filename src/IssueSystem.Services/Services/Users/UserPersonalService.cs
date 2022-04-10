@@ -44,6 +44,13 @@
             return profile;
         }
 
+        public async Task<string> GetDepartmentId(string userId) 
+        {
+            return await Data.Users
+                .Where(x => x.Id == userId)
+                .Select(x => x.DepartmentId)
+                .FirstOrDefaultAsync();
+        }
 
         public async Task<bool> UpdateUserData(ProfileViewModel model)
         {

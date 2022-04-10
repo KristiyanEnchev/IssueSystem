@@ -9,12 +9,20 @@
     using IssueSystem.Data;
     using IssueSystem.Models.Admin.Project;
     using IssueSystem.Models.Image;
+    using IssueSystem.Models.Department;
+    using IssueSystem.Services.Contracts.Users;
 
     public class ProjectService : BaseService<Project>, IProjectService
     {
-        public ProjectService(IssueSystemDbContext data, IMapper mapper)
+        private readonly IUserPersonalService _userService;
+
+        public ProjectService(
+            IssueSystemDbContext data,
+            IMapper mapper,
+            IUserPersonalService userService)
             : base(data, mapper)
         {
+            _userService = userService;
         }
 
         public async Task<Project> GetProjectById(string Id)
