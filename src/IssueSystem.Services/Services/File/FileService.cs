@@ -55,12 +55,12 @@
             return image;
         }
 
-        public RequestImageViewModel GetImageRequest(string userId)
+        public ResponseImageViewModel GetImageRequest(string userId)
         {
-            var image = _cacheService.Get<RequestImageViewModel>("File",
+            var image = _cacheService.Get<ResponseImageViewModel>("File",
              () =>
                 {
-                    return Mapper.ProjectTo<RequestImageViewModel>
+                    return Mapper.ProjectTo<ResponseImageViewModel>
                     (Data.Images
                     .Where(x => x.EmployeeId == userId))
                     .FirstOrDefault();

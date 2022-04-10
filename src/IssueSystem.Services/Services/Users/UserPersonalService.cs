@@ -11,6 +11,7 @@
     using IssueSystem.Models.Image;
     using IssueSystem.Services.Contracts.File;
     using IssueSystem.Services.Contracts.Users;
+    using IssueSystem.Services.HelpersServices.Cache;
 
     public class UserPersonalService : BaseService<Employee>, IUserPersonalService
     {
@@ -18,15 +19,19 @@
 
         private readonly IFileService _imageService;
 
+        private readonly ICacheService _cache;
+
         public UserPersonalService(
             IssueSystemDbContext data,
             IMapper mapper,
             UserManager<Employee> userManager,
-            IFileService imageService)
+            IFileService imageService,
+            ICacheService cache)
             : base(data, mapper)
         {
             this._userManager = userManager;
             this._imageService = imageService;
+            _cache = cache;
         }
 
         public async Task<ProfileViewModel> GetUserData(string userId)
@@ -65,6 +70,8 @@
         public async Task<string> UpdateUserProfilePicture(IFormFile file, string userId)
         {
             var result = string.Empty;
+
+            _cache.Clear("File");
 
             var user = await _userManager.FindByIdAsync(userId);
 

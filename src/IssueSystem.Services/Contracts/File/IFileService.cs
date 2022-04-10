@@ -7,6 +7,6 @@
     {
         Task<ResponseImageViewModel> GetImage(string userId);
         Task<bool> DeleteImage(string userId);
-        RequestImageViewModel GetImageRequest(string userId);
+        ResponseImageViewModel GetImageRequest(string userId);
     }
 }

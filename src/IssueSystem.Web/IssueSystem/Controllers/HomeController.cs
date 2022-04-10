@@ -3,9 +3,19 @@
     using Microsoft.AspNetCore.Mvc;
 
     using IssueSystem.Models;
+    using IssueSystem.Models.Image;
+    using IssueSystem.Services.Contracts.File;
+    using IssueSystem.Infrastructure.Extensions;
 
     public class HomeController : BaseController
     {
+        private readonly IFileService _fileService;
+
+        public HomeController(IFileService fileService)
+        {
+            _fileService = fileService;
+        }
+
         public  IActionResult Index()
         {
             if (User.IsInRole(IssueSystemRoles.AdministratorRoleName))
