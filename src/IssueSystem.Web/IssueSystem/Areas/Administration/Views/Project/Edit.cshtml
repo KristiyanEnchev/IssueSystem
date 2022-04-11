@@ -46,7 +46,7 @@
                 <span asp-validation-for="ProjectName" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <label for="department">Department</label>
+                <label asp-for="DepartmentName">Department</label>
                 <input asp-for="@Model.DepartmentName" id="department" class="form-control"
                     value="@Model.DepartmentName" readonly />
             </div>

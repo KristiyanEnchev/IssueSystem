@@ -25,7 +25,7 @@
             <div class="tm-product-table-container">
                 @if (@Model.Count() > 0)
                 {
-                    <table class="table tm-table-small tm-product-table">
+                    <table class="table tm-table-small tm-product-table custom-table">
                         <thead>
                             <tr>
                                 <th scope="col">PROJECT NAME</th>
@@ -46,20 +46,20 @@
                                     </td>
                                     <td class="tm-product-name" data-label="Tickets">@project.Tickets</td>
                                     <td class="tm-product-name" data-label="Avatar">
-                                        <ul class="list-inline">
+                                        <ul class="list-inline persons">
                                             @foreach (var avatar in project.EmployeesInProject)
                                             {
                                                 <li class="list-inline-item">
                                                     @if (avatar.Content != null)
                                                     {
                                                         <img class="header__avatar"
-                                                             style="width:40px;height:40px; object-fit:cover; border-radius:30px"
-                                                             src="data:image/*;base64,@(Convert.ToBase64String(avatar.Content))">
+                                             style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                                             src="data:image/*;base64,@(Convert.ToBase64String(avatar.Content))">
                                                     }
                                                     else
                                                     {
-                                                        <img class="header__avatar table-avatar some-avatar" id="profilePicture"
-                                                            src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                                                        <img  style="width:40px;height:40px;" class="header__avatar table-avatar some-avatar" id="profilePicture"
+                                             src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
                                                     }
                                                 </li>
                                             }
@@ -80,15 +80,18 @@
                                         }
                                     </td>
                                     <td class="text-center">
-                                          <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Details"
-                                            asp-controller="Project" asp-route-id="@project.ProjectId">
+                                        <a class="btn btn-primary btn-sm" asp-area="" asp-action="Details"
+                                   asp-controller="Project" asp-route-id="@project.ProjectId">
                                             <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Details
-                                            </a>
+                                        </a>
 
-                                          <a class="btn btn-primary btn-sm myBtn" asp-area="Administration" asp-action="CreateTicket"
-                                            asp-controller="Project" asp-route-id="@project.ProjectId">
-                                            <i style="padding-right:0.5rem;" class="fas fa-folder"></i>CreateTicket
+                                        @if (@project.IsInProject)
+                                        {
+                                            <a class="btn btn-primary btn-sm myBtn" asp-area="" asp-action="CreateTicket"
+                                   asp-controller="Project" asp-route-id="@project.ProjectId">
+                                                <i style="padding-right:0.5rem;" class="fas fa-folder"></i>CreateTicket
                                             </a>
+                                        }
                                     </td>
                                 </tr>
                             }

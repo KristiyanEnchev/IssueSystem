@@ -5,6 +5,7 @@
     using IssueSystem.Data.Models;
     using IssueSystem.Services.Common;
     using IssueSystem.Models.Department;
+    using IssueSystem.Models.Project;
 
     public interface IProjectService : IScopedService
     {
@@ -13,5 +14,6 @@
         Task<Project> GetProjectById(string Id);
         Task<ProjectEditViewModel> GetProjectForEditById(string Id);
         Task<IEnumerable<DepartmentProjectsModel>> GetAllProjectsByDepartment(string userId);
+        Task<ProjectDetailsModel> GetProjectDetails(string projectId);
     }
 }

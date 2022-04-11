@@ -20,5 +20,18 @@
 
             return View(model);
         }
+
+        public async Task<IActionResult> Details(string id) 
+        {
+            var project = await _projectService.GetProjectDetails(id);
+
+            //var modelPartial = await _adminProjectService.GetProjectHistory(id);
+
+            //ViewBag.History = modelPartial;
+
+            //TempData["DepartmentName"] = project.DepartmentName;
+
+            return View(project);
+        }
     }
 }

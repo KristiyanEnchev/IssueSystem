@@ -11,6 +11,7 @@
     using IssueSystem.Models.Image;
     using IssueSystem.Models.Department;
     using IssueSystem.Services.Contracts.Users;
+    using IssueSystem.Models.Project;
 
     public class ProjectService : BaseService<Project>, IProjectService
     {
@@ -70,11 +71,22 @@
                 .Where(x => x.DepartmentId == departmentId))
                 .ToListAsync();
 
+            var some = await Data.EmployeeProjects
+                .Include(x => x.Project)
+                .Include(x => x.Employee)
+                .Where(x => x.EmployeeId == userId)
+                .Select(x => x.Project).ToListAsync();
+
             foreach (var project in projects)
             {
                 var avatar = await GetProjectAvatars(project.ProjectId);
 
                 project.EmployeesInProject = avatar;
+
+                if (some.Any(x => x.ProjectId == project.ProjectId))
+                {
+                    project.IsInProject = true;
+                }
             }
 
             return projects;
@@ -89,6 +101,16 @@
 
             return await Mapper.ProjectTo<ProjectViewModel>(some).ToListAsync();
 
+        }
+
+        public async Task<ProjectDetailsModel> GetProjectDetails(string projectId) 
+        {
+            return await Mapper.ProjectTo<ProjectDetailsModel>
+                (Data.Projects
+                .Include(x => x.EmployeeProjects)
+                .ThenInclude(x => x.Employee)
+                .Where(x => x.ProjectId == projectId))
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<ResponseImageViewModel>> GetProjectAvatars(string projectId)

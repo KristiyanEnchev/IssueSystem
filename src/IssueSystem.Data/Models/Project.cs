@@ -24,7 +24,6 @@
         [Required]
         public string ProjectId { get; set; }
 
-
         [StringLength(ProjectNameMaxLenght)]
         [Required(ErrorMessage = "Project name is required")]
         public string ProjectName { get; set; }

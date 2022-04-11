@@ -23,6 +23,8 @@
 
         public int Tickets { get; set; }
 
+        public bool IsInProject { get; set; }
+
         public virtual void Mapping(Profile mapper)
         {
             mapper.CreateMap<Project, DepartmentProjectsModel>()

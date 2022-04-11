@@ -390,6 +390,7 @@ ul {
     border-color: #8064A2;
     outline: none !important;
     box-shadow: none !important;
+    margin-top: 0.5rem;
 }
 
 .myBtn {
@@ -446,7 +447,7 @@ footer {
 }
 
 .tm-block {
-    opacity: 0.7;
+    /*opacity: 0.7;*/
     box-shadow: 20px 20px 50px 15px #777
 }
 
@@ -654,3 +655,35 @@ body {
     margin-left: 1rem;
     margin-right: 1rem;
 }
+
+.projectImg {
+    border-radius: 6rem;
+    padding-left: 2rem;
+    /*max-height: 400px;*/
+    max-width: 300px
+}
+.projectText {
+    height: 150px;
+    padding: 2rem;
+    text-align: center;
+}
+
+
+
+
+.custom-table tbody .persons {
+    padding: 0;
+    margin: 0;
+}
+
+    .custom-table tbody .persons li {
+        padding: 0;
+        margin: 0 0 0 -15px;
+        list-style: none;
+        display: inline-block;
+    }
+
+        .custom-table tbody .persons li {
+            display: inline-block;
+            width: 36px;
+        }
