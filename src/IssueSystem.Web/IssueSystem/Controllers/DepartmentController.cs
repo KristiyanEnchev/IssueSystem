@@ -16,7 +16,7 @@
 
         public async Task<IActionResult> Index()
         {
-            var model = await _departmentService.GetAllProjectsByDepartment(this.User.GetId());
+            var model = await _departmentService.GetUserDepartmentInfo(this.User.GetId());
 
             return View(model);
         }

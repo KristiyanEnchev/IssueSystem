@@ -1,6 +1,7 @@
 ﻿namespace IssueSystem.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
     using IssueSystem.Models;
     using IssueSystem.Services.Contracts.File;
@@ -14,6 +15,7 @@
             _fileService = fileService;
         }
 
+        [AllowAnonymous]
         public  IActionResult Index()
         {
             if (User.IsInRole(IssueSystemRoles.AdministratorRoleName))

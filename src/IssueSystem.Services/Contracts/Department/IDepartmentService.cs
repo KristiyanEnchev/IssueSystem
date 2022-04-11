@@ -15,6 +15,6 @@
         Task AddProjectToDeparment(string projectId, string deparmtnetId);
         Task<Department> GetDbDepartmentbyId(string id);
         Task<DepartmentEditModel> GetDepartmentForEditById(string id);
-        Task<IEnumerable<DepartmentProjectsModel>> GetAllProjectsByDepartment(string userId);
+        Task<DepartmentIndexModel> GetUserDepartmentInfo(string userId);
     }
 }

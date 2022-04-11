@@ -61,6 +61,25 @@
             return projects;
         }
 
+        public async Task<IEnumerable<DepartmentProjectsModel>> GetAllProjectsByDepartment(string userId)
+        {
+            var departmentId = await _userService.GetDepartmentId(userId);
+
+            var projects = await Mapper.ProjectTo<DepartmentProjectsModel>
+                (Data.Projects
+                .Where(x => x.DepartmentId == departmentId))
+                .ToListAsync();
+
+            foreach (var project in projects)
+            {
+                var avatar = await GetProjectAvatars(project.ProjectId);
+
+                project.EmployeesInProject = avatar;
+            }
+
+            return projects;
+        }
+
         public async Task<IEnumerable<ProjectViewModel>> GetProjectsByDeparmentIdAndemployeeId(string deparmentId, string employeeId)
         {
             var some = Data.EmployeeProjects

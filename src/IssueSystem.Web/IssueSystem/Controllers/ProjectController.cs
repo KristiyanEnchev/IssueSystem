@@ -2,11 +2,23 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
+    using IssueSystem.Services.Contracts.Project;
+    using IssueSystem.Infrastructure.Extensions;
+
     public class ProjectController : BaseController
     {
-        public IActionResult Index()
+        private readonly IProjectService _projectService;
+
+        public ProjectController(IProjectService projectService)
         {
-            return View();
+            _projectService = projectService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var model = await _projectService.GetAllProjectsByDepartment(this.User.GetId());
+
+            return View(model);
         }
     }
 }

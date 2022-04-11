@@ -8,9 +8,10 @@
     using IssueSystem.Services.Services;
     using IssueSystem.Services.Contracts.Department;
     using IssueSystem.Models.Admin.Department;
-    using IssueSystem.Models.Department;
     using IssueSystem.Services.Contracts.Users;
     using IssueSystem.Services.Contracts.Project;
+    using IssueSystem.Models.Department;
+    using IssueSystem.Models.User;
 
     public class DepartmentService : BaseService<Department>, IDepartmentService
     {
@@ -40,26 +41,6 @@
                 .SingleOrDefaultAsync(x => x.DepartmentId == id);
         }
 
-
-        public async Task<IEnumerable<DepartmentProjectsModel>> GetAllProjectsByDepartment(string userId)
-        {
-            var departmentId = await _userService.GetDepartmentId(userId);
-
-            var projects = await Mapper.ProjectTo<DepartmentProjectsModel>
-                (Data.Projects
-                .Where(x => x.DepartmentId == departmentId))
-                .ToListAsync();
-
-            foreach (var project in projects)
-            {
-                var avatar = await _projectservice.GetProjectAvatars(project.ProjectId);
-
-                project.EmployeesInProject = avatar;
-            }
-
-            return projects;
-        }
-
         public async Task<DepartmnetViewModel> GetDepartmentById(string id)
         {
             var getdepartment = await Data.Departments
@@ -81,6 +62,22 @@
 
             return await Mapper.ProjectTo<DepartmentEditModel>(department)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<DepartmentIndexModel> GetUserDepartmentInfo(string userId)
+        {
+            var department = await Mapper.ProjectTo<DepartmentIndexModel>
+                (Data.Departments
+                .Where(x => x.Employees
+                    .Any(x => x.Id == userId)))
+                .FirstOrDefaultAsync();
+
+            department.Employees = await Mapper
+                .ProjectTo<ProfileViewModel>(Data.Employees
+                .Where(x => x.Department.DepartmentName == department.DepartmentName))
+                .ToListAsync();
+
+            return department;
         }
 
         public async Task<List<DepartmnetViewModel>> GetAllDepartmentsInfo()

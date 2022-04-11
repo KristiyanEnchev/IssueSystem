@@ -12,5 +12,6 @@
         Task<IEnumerable<ProjectViewModel>> GetAllProjects();
         Task<Project> GetProjectById(string Id);
         Task<ProjectEditViewModel> GetProjectForEditById(string Id);
+        Task<IEnumerable<DepartmentProjectsModel>> GetAllProjectsByDepartment(string userId);
     }
 }
