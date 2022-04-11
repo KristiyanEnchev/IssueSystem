@@ -25,11 +25,11 @@
         {
             var project = await _projectService.GetProjectDetails(id);
 
-            //var modelPartial = await _adminProjectService.GetProjectHistory(id);
+            var modelPartial = await _projectService.GetProjectHistory(id);
 
-            //ViewBag.History = modelPartial;
+            ViewBag.History = modelPartial;
 
-            //TempData["DepartmentName"] = project.DepartmentName;
+            TempData["DepartmentName"] = project.DepartmentName;
 
             return View(project);
         }

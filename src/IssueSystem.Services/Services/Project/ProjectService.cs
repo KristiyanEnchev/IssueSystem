@@ -12,18 +12,25 @@
     using IssueSystem.Models.Department;
     using IssueSystem.Services.Contracts.Users;
     using IssueSystem.Models.Project;
+    using IssueSystem.Models.Admin.User;
+    using IssueSystem.Services.Contracts.File;
+    using IssueSystem.Models.Admin.Ticket;
 
     public class ProjectService : BaseService<Project>, IProjectService
     {
         private readonly IUserPersonalService _userService;
 
+        private readonly IFileService _fileService;
+
         public ProjectService(
             IssueSystemDbContext data,
             IMapper mapper,
-            IUserPersonalService userService)
+            IUserPersonalService userService,
+            IFileService fileService)
             : base(data, mapper)
         {
             _userService = userService;
+            _fileService = fileService;
         }
 
         public async Task<Project> GetProjectById(string Id)
@@ -89,18 +96,7 @@
                 }
             }
 
-            return projects;
-        }
-
-        public async Task<IEnumerable<ProjectViewModel>> GetProjectsByDeparmentIdAndemployeeId(string deparmentId, string employeeId)
-        {
-            var some = Data.EmployeeProjects
-                .Include(x => x.Project)
-                .Where(x => x.Employee.DepartmentId == deparmentId && x.EmployeeId == employeeId)
-                .Select(x => x.Project);
-
-            return await Mapper.ProjectTo<ProjectViewModel>(some).ToListAsync();
-
+            return projects.OrderByDescending(x => x.IsInProject);
         }
 
         public async Task<ProjectDetailsModel> GetProjectDetails(string projectId) 
@@ -141,15 +137,6 @@
             }
 
             return list;
-
-            /// Left so i can check what fails with automapper
-
-            //return await Mapper.ProjectTo<ResponseImageViewModel>
-            //    (Data.EmployeeProjects
-            //    .Include(x => x.Project)
-            //    .Where(x => x.ProjectId == projectId)
-            //    .Select(x => x.Employee.ProfilePicture))
-            //    .ToListAsync();
         }
 
         public IQueryable<ResponseImageViewModel> GetProjectAvatarsAsQueriable(string projectId)
@@ -168,6 +155,57 @@
                 .Where(x => x.ProjectId == projectId))
                 .ToListAsync();
 
+        }
+
+        public async Task<ProjectHistory> GetProjectHistory(string id)
+        {
+            var users = await GetAllEmployeesForProject(id);
+
+            var tickets = await GetAllTicketsForProject(id);
+
+            var historyModel = new ProjectHistory
+            {
+                Employees = users,
+                Tickets = tickets,
+            };
+
+            return historyModel;
+        }
+
+        public async Task<List<TicketViewModel>> GetAllTicketsForProject(string projectId)
+        {
+            var tickets = await Mapper.ProjectTo<TicketViewModel>
+                (Data.Tickets
+                .Where(x => x.ProjectId == projectId)
+                .OrderBy(x => x.CreatedOn))
+                .ToListAsync();
+
+            foreach (var ticket in tickets)
+            {
+                ticket.CreatorAvatar = await _fileService.GetImage(ticket.CreatorId);
+                ticket.AcceptantAvatar = await _fileService.GetImage(ticket.AcceptantId);
+            }
+
+            return tickets;
+        }
+
+        public async Task<List<EmployeeViewModel>> GetAllEmployeesForProject(string projectId)
+        {
+            var employees = await Mapper.ProjectTo<EmployeeViewModel>
+                (Data.EmployeeProjects
+                .Include(x => x.Project)
+                .Where(x => x.ProjectId == projectId)
+                .OrderBy(x => x.CreatedOn))
+                .ToListAsync();
+
+            foreach (var employee in employees)
+            {
+                var avatar = await _fileService.GetImage(employee.UserId);
+
+                employee.ProfilePicture = avatar;
+            }
+
+            return employees;
         }
     }
 }

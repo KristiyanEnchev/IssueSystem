@@ -40,3 +40,107 @@
             <button class="btn btn-primary btn-block text-uppercase mb-3">Add new category</button>
         </div>
     </div>
+
+
+
+@*        <div class="card-body p-0">
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th style="width: 1%">#</th>
+                    <th style="width: 20%">Ticket</th>
+                    <th style="width: 1%">Comments</th>
+                    <th style="width: 10%">Creator</th>
+                    <th style="width: 10%">Acceptant</th>
+                    <th style="width: 10%">Priority</th>
+                    <th style="width: 10%">Category</th>
+                    <th style="width: 8%" class="text-center">Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ticket in @Model.Tickets)
+                {
+                    <tr>
+                        <td>#</td>
+                        <td data-label="Title">
+                            <a>@ticket.Title</a>
+                            <br>
+                            <small>Created @ticket.CreatedOn</small>
+                        </td>
+                        <td data-label="Comments">
+                            <a>@ticket.CommentsCount</a>
+                        </td>
+                        <td data-label="Creator">
+                            @if (ticket.CreatorAvatar != null)
+                            {
+                                <img class="header__avatar"
+                         style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                         src="data:image/*;base64,@(Convert.ToBase64String(ticket.CreatorAvatar.Content))">
+                            }
+                            else
+                            {
+                                <img class="header__avatar some-avatar" id="profilePicture"
+                         src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                            }
+                        </td>
+                        <td data-label="Acceptant">
+                            @if (ticket.AcceptantId != null)
+                            {
+                                @if (ticket.AcceptantAvatar != null)
+                                {
+                                    <img class="header__avatar"
+                         style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                         src="data:image/*;base64,@(Convert.ToBase64String(ticket.AcceptantAvatar.Content))">
+                                }
+                                else
+                                {
+                                    <img class="header__avatar some-avatar" id="profilePicture"
+                         src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                                }
+                            }
+                            else
+                            {
+                                <i class="fa fa-solid fa-user-xmark"></i>
+                            }
+                        </td>
+                        <td data-label="Priority">
+                            @if (@ticket.TicketPriority == "Low")
+                            {
+                                <span class="info-box-number text-center mb-0 badge badge-info">@ticket.TicketPriority</span>
+                            }
+                            else if (@ticket.TicketPriority == "Medium")
+                            {
+                                <span class="info-box-number text-center mb-0 badge badge-success">@ticket.TicketPriority</span>
+                            }
+                            else
+                            {
+                                <span class="info-box-number text-center mb-0 badge badge-danger">@ticket.TicketPriority</span>
+                            }
+                        </td>
+                        <td data-label="Category">
+                            <a>@ticket.TicketCategory</a>
+                        </td>
+                        <td data-label="Status" class="project-state">
+                            @if (ticket.CurrentStatus == "Open")
+                            {
+                                <span class="badge badge-info">@ticket.CurrentStatus</span>
+                            }
+                            else if (ticket.CurrentStatus == "Accepted")
+                            {
+                                <span class="badge badge-success">@ticket.CurrentStatus</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-danger">@ticket.CurrentStatus</span>
+                            }
+                        </td>
+                        <td class="project-actions text-right">
+                            <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Details"
+                       asp-controller="Ticket" asp-route-id="@ticket.TicketId"><i class="fas fa-folder"></i>Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>*@

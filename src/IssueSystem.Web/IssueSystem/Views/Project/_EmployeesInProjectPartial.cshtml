@@ -1,0 +1,50 @@
+﻿@model IEnumerable<EmployeeViewModel>
+@{
+}
+
+<table class="table tm-table-small tm-product-table">
+    <thead>
+        <tr>
+            <th scope="col">Employee Name</th>
+            <th scope="col">Profile Picture</th>
+            <th scope="col" class="text-center">Email</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in @Model)
+        {
+            <tr>
+                <td class="tm-product-name">
+                    <a>@employee.FirstName  @employee.LastName</a>
+                    <br>
+                    <small>Created @employee.CreatedOn</small>
+                </td>
+                <td class="tm-product-name">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            @if (employee.ProfilePicture != null)
+                            {
+                                <img class="header__avatar table-avatar"
+                             style="width:40px;height:40px; object-fit:cover; border-radius:30px"
+                             src="data:image/*;base64,@(Convert.ToBase64String(employee.ProfilePicture.Content))">
+                            }
+                            else
+                            {
+                                <img class="header__avatar table-avatar" id="profilePicture"
+                             src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
+                            }
+                        </li>
+                    </ul>
+                </td>
+                <td class="tm-product-name">
+                    <span class="badge badge-success">@employee.Email</span>
+                </td>
+                <td class="tm-product-name text-right">
+                    <a class="btn btn-primary btn-sm" asp-area="administration" asp-action="Edit"
+                   asp-controller="User" asp-route-id="@employee.UserId"><i style="padding-right:0.5rem;" class="fas fa-folder"></i>View</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

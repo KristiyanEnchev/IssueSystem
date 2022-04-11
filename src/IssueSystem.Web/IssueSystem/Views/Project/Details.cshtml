@@ -18,69 +18,6 @@
 	</div>
 </section>
 
-@*<div class="row tm-content-row">
-	<div class="tm-block-col">
-		<div class="tm-bg-primary-dark tm-block" style="max-height: 500px">
-			<h2 class="tm-block-title text-center">Project Details</h2>
-			<div class="tm-product-table-container">
-
-				<div class="col-xl-12 col-lg-12 col-md-12">
-					<div class="form-group mb-3 text-center">
-						<label asp-for="ProjectName" class="form-label"></label>
-						<input id="name" asp-for="ProjectName" class="form-control validate" readonly />
-					</div>
-					<div class="row text-center">
-						<div class="form-group mb-3 col-xs-12 col-sm-6">
-							<label asp-for="@Model.Status">Status</label>
-							<input id="expire_date" asp-for="@Model.Status" id="Status" class="form-control validate"
-								readonly value="
-                                @if (@Model.Status.ToString() == " InProgress") { <span
-								class="badge badge-info">@Model.Status</span>
-							}
-							else if (@Model.Status.ToString() == "Success")
-							{
-							<span class="badge badge-success">@Model.Status</span>
-							}
-							else
-							{
-							<span class="badge badge-danger">@Model.Status</span>
-							}
-							"/>
-						</div>
-						<div class="form-group mb-3 col-xs-12 col-sm-6">
-							<label asp-for="DepartmentName">Department</label>
-							<input id="expire_date" asp-for="@Model.DepartmentName" id="department" class="form-control"
-								value="@Model.DepartmentName" readonly />
-						</div>
-					</div>
-					<div class="form-group mb-3 text-center">
-						<label asp-for="@Model.Description">Description</label>
-						<textarea class="form-control validate tm-small" rows="5">@Model.Description</textarea>
-					</div>
-					<div class="form-group mb-3 text-center">
-						<label asp-for="@Model.CreatedOn">Created On</label>
-						<input id="expire_date" asp-for="@Model.CreatedOn" id="createdOn" class="form-control"
-								value="@date" readonly />
-					</div>
-					<div class="row text-center">
-						<div class="form-group mb-3 col-xs-12 col-sm-6">
-							<label asp-for="@Model.Employees">Employees</label>
-							<input id="expire_date" asp-for="@Model.Employees" id="employees" class="form-control"
-								value="@Model.Employees" readonly />
-						</div>
-						<div class="form-group mb-3 col-xs-12 col-sm-6">
-							<label asp-for="@Model.Tickets">Tickets</label>
-							<input id="expire_date" asp-for="@Model.Tickets" id="tickets" class="form-control"
-								value="@Model.Tickets" readonly />
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-</div>*@
-
 <div class="container tm-mt-big tm-mb-big">
       <div class="row text-center">
         <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
@@ -148,3 +85,5 @@
         </div>
       </div>
     </div>
+
+<partial name="_ProjectHistoryPartial_" model='ViewBag.History'/>
