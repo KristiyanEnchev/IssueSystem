@@ -1,0 +1,70 @@
+﻿@model IEnumerable<UserTicketsIndexModel>
+@{
+}
+
+<table class="table tm-table-small tm-product-table long-table">
+	<thead>
+		<tr>
+			<th scope="col">Ticket</th>
+			<th scope="col">Comments</th>
+			<th scope="col">Priority</th>
+			<th scope="col">Category</th>
+			<th scope="col">Status</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var ticket in @Model)
+		{
+		<tr>
+			<td data-label="Title" class="tm-product-name">
+				@ticket.Title
+				<br/>
+                <small>Created @ticket.CreatedOn</small>
+			</td>
+			<td data-label="Comments" class="tm-product-name">
+				@ticket.CommentsCount
+			</td>
+			<td data-label="ProjectName" class="tm-product-name">
+				@ticket.ProjectName
+			</td>
+			<td class="tm-product-name" data-label="Priority">
+				@if (@ticket.TicketPriority == "Low")
+				{
+				<span class="info-box-number text-center mb-0 badge badge-info">@ticket.TicketPriority</span>
+				}
+				else if (@ticket.TicketPriority == "Medium")
+				{
+				<span class="info-box-number text-center mb-0 badge badge-success">@ticket.TicketPriority</span>
+				}
+				else
+				{
+				<span class="info-box-number text-center mb-0 badge badge-danger">@ticket.TicketPriority</span>
+				}
+			</td>
+			<td data-label="Category" class="tm-product-name">
+				@ticket.TicketCategory
+			</td>
+			<td class="tm-product-name project-state" data-label="Status">
+				@if (ticket.CurrentStatus == "Open")
+				{
+				<span class="badge badge-info">@ticket.CurrentStatus</span>
+				}
+				else if (ticket.CurrentStatus == "Accepted")
+				{
+				<span class="badge badge-success">@ticket.CurrentStatus</span>
+				}
+				else
+				{
+				<span class="badge badge-danger">@ticket.CurrentStatus</span>
+				}
+			</td>
+			<td class="project-actions text-right">
+				<a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Details"
+					asp-controller="Ticket" asp-route-id="@ticket.TicketId"><i style="padding-right:0.5rem;"
+						class="fas fa-folder"></i>Details</a>
+			</td>
+		</tr>
+		}
+	</tbody>
+</table>

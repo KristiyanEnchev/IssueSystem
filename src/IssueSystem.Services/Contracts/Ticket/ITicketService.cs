@@ -2,7 +2,6 @@
 {
     using IssueSystem.Data.Models;
     using IssueSystem.Models.Admin.Ticket;
-    using IssueSystem.Models.Comment;
     using IssueSystem.Models.Tickets;
     using IssueSystem.Services.Common;
 
@@ -21,6 +20,11 @@
         Task<bool> AssigneTicket(string ticketId, string acceptantId);
         Task<bool> AcceptTicket(string ticketId, string acceptantId);
         Task<TicketViewModel> GetTicketDetails(string ticketId);
-        Task<CommentListViewModel> WriteComment(CommentViewModel commentModel);
+        Task<TicketsReportModel> GetDailyTicketsReport(string userId);
+        Task<TicketsReportModel> GetYearlyTicketsReport(string userId);
+        Task<TicketsReportModel> GetWeeklyTicketsReport(string userId);
+        Task<IList<UserTicketsIndexModel>> GetUserAcceptedTickets(string acceptantId);
+        Task<IList<UserTicketsIndexModel>> GetUserCreatedTickets(string creatorId);
+        Task<TicketsReportModel> GetUserTickets(string userId);
     }
 }

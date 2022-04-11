@@ -10,7 +10,6 @@
     using IssueSystem.Models.Admin.Ticket;
     using IssueSystem.Services.Contracts.File;
     using IssueSystem.Services.Contracts.Comment;
-    using IssueSystem.Models.Comment;
 
     public class TicketService : BaseService<Ticket>, ITicketService
     {
@@ -20,17 +19,93 @@
 
         private readonly ICommentService _commentService;
 
+        private readonly ITicketReportService _reportService;
+
         public TicketService(
             IssueSystemDbContext data,
             IMapper mapper,
             IStatusService statusService,
             IFileService fileService,
-            ICommentService commentService)
+            ICommentService commentService,
+            ITicketReportService reportService)
             : base(data, mapper)
         {
             _statusService = statusService;
             _fileService = fileService;
             _commentService = commentService;
+            _reportService = reportService;
+        }
+
+        public async Task<TicketsReportModel> GetUserTickets(string userId) 
+        {
+            var createdDailyTickets = await GetUserCreatedTickets(userId);
+            var acceptedDailyTickets = await GetUserAcceptedTickets(userId);
+
+            var model = new TicketsReportModel
+            {
+                AcceptedTickets = acceptedDailyTickets,
+                CreatedTickets = createdDailyTickets,
+            };
+
+            return model;
+        }
+
+        public async Task<IList<UserTicketsIndexModel>> GetUserCreatedTickets(string creatorId) 
+        {
+            return await Mapper.ProjectTo<UserTicketsIndexModel>
+                (Data.Tickets
+                .Where(x => x.CreatorId == creatorId))
+                .ToListAsync();
+        }
+
+        public async Task<IList<UserTicketsIndexModel>> GetUserAcceptedTickets(string acceptantId)
+        {
+            return await Mapper.ProjectTo<UserTicketsIndexModel>
+                (Data.Tickets
+                .Where(x => x.AcceptantId == acceptantId))
+                .ToListAsync();
+        }
+
+        public async Task<TicketsReportModel> GetDailyTicketsReport(string userId)
+        {
+            var createdDailyTickets = await _reportService.GetUserCreatedTicketsDaily(userId);
+            var acceptedDailyTickets = await _reportService.GetUserAcceptedTicketsDaily(userId);
+
+            var model = new TicketsReportModel
+            {
+                AcceptedTickets = acceptedDailyTickets,
+                CreatedTickets = createdDailyTickets,
+            };
+
+            return model;
+        }
+
+        public async Task<TicketsReportModel> GetWeeklyTicketsReport(string userId)
+        {
+            var createdDailyTickets = await _reportService.GetUserCreatedTicketsWeekly(userId);
+            var acceptedDailyTickets = await _reportService.GetUserAcceptedTicketsWeekly(userId);
+
+            var model = new TicketsReportModel
+            {
+                AcceptedTickets = acceptedDailyTickets,
+                CreatedTickets = createdDailyTickets,
+            };
+
+            return model;
+        }
+
+        public async Task<TicketsReportModel> GetYearlyTicketsReport(string userId)
+        {
+            var createdDailyTickets = await _reportService.GetUserCreatedTicketsYearly(userId);
+            var acceptedDailyTickets = await _reportService.GetUserAcceptedTicketsYearly(userId);
+
+            var model = new TicketsReportModel
+            {
+                AcceptedTickets = acceptedDailyTickets,
+                CreatedTickets = createdDailyTickets,
+            };
+
+            return model;
         }
 
         public async Task<bool> CreateTicket(CreateTicketViewModel model)
@@ -103,33 +178,6 @@
             }
 
             return result;
-        }
-
-        public async Task<CommentListViewModel> WriteComment(CommentViewModel commentModel)
-        {
-            var comment = await _commentService.WriteComment(commentModel);
-
-            var ticket = await GetTicketById(commentModel.TicketId);
-
-            var commentReturnModel = new CommentListViewModel();
-
-            if (comment != null && ticket != null)
-            {
-                ticket.Comments.Add(comment);
-
-                await Data.SaveChangesAsync();
-
-                commentReturnModel.AuthorName = comment.Author.FirstName + " " + comment.Author.LastName;
-                commentReturnModel.CommentId = comment.CommentId;
-                commentReturnModel.Content = comment.Content;
-                commentReturnModel.CreatedOn = comment.CreatedOn;
-                if (comment.Author.ProfilePicture != null)
-                {
-                    commentReturnModel.AuthorAvatar = comment.Author.ProfilePicture.Content;
-                }
-            }
-
-            return commentReturnModel;
         }
 
         public async Task<TicketViewModel> GetTicketDetails(string ticketId)

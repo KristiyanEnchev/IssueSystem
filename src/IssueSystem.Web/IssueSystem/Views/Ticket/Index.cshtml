@@ -1,146 +1,70 @@
-﻿ <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 tm-block-col">
-        <div class="tm-bg-primary-dark tm-block">
-            <h2 class="tm-block-title">Product Categories</h2>
-            <div class="tm-product-table-container">
-                <table class="table tm-table-small tm-product-table">
-                    <tbody>
-                        <tr>
-                            <td class="tm-product-name text-center">Product Category 1</td>
-                            <td class="text-center">
-                                <a href="#" class="tm-product-delete-link">
-                                    <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+﻿@model TicketsReportModel
+@{
+}
+<section class="page-title">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold"> Created Tickets</h1>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- table container -->
-            <button class="btn btn-primary btn-block text-uppercase mb-3">Add new category</button>
         </div>
     </div>
-    <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 tm-block-col">
+</section>
+
+<div class="row tm-content-row">
+    <div class="tm-block-col">
         <div class="tm-bg-primary-dark tm-block">
-            <h2 class="tm-block-title">Product Categories</h2>
+            <h2 class="tm-block-title text-center">All Created Tickets</h2>
             <div class="tm-product-table-container">
-                <table class="table tm-table-small tm-product-table">
-                    <tbody>
-                        <tr>
-                            <td class="tm-product-name text-center">Product Category 1</td>
-                            <td class="text-center">
-                                <a href="#" class="tm-product-delete-link">
-                                    <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- table container -->
-            <button class="btn btn-primary btn-block text-uppercase mb-3">Add new category</button>
-        </div>
-    </div>
-
-
-
-@*        <div class="card-body p-0">
-        <table class="table table-striped projects">
-            <thead>
-                <tr>
-                    <th style="width: 1%">#</th>
-                    <th style="width: 20%">Ticket</th>
-                    <th style="width: 1%">Comments</th>
-                    <th style="width: 10%">Creator</th>
-                    <th style="width: 10%">Acceptant</th>
-                    <th style="width: 10%">Priority</th>
-                    <th style="width: 10%">Category</th>
-                    <th style="width: 8%" class="text-center">Status</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var ticket in @Model.Tickets)
+                @if (@Model.CreatedTickets.Count() > 0)
                 {
-                    <tr>
-                        <td>#</td>
-                        <td data-label="Title">
-                            <a>@ticket.Title</a>
-                            <br>
-                            <small>Created @ticket.CreatedOn</small>
-                        </td>
-                        <td data-label="Comments">
-                            <a>@ticket.CommentsCount</a>
-                        </td>
-                        <td data-label="Creator">
-                            @if (ticket.CreatorAvatar != null)
-                            {
-                                <img class="header__avatar"
-                         style="width:40px;height:40px; object-fit:cover; border-radius:30px"
-                         src="data:image/*;base64,@(Convert.ToBase64String(ticket.CreatorAvatar.Content))">
-                            }
-                            else
-                            {
-                                <img class="header__avatar some-avatar" id="profilePicture"
-                         src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
-                            }
-                        </td>
-                        <td data-label="Acceptant">
-                            @if (ticket.AcceptantId != null)
-                            {
-                                @if (ticket.AcceptantAvatar != null)
-                                {
-                                    <img class="header__avatar"
-                         style="width:40px;height:40px; object-fit:cover; border-radius:30px"
-                         src="data:image/*;base64,@(Convert.ToBase64String(ticket.AcceptantAvatar.Content))">
-                                }
-                                else
-                                {
-                                    <img class="header__avatar some-avatar" id="profilePicture"
-                         src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
-                                }
-                            }
-                            else
-                            {
-                                <i class="fa fa-solid fa-user-xmark"></i>
-                            }
-                        </td>
-                        <td data-label="Priority">
-                            @if (@ticket.TicketPriority == "Low")
-                            {
-                                <span class="info-box-number text-center mb-0 badge badge-info">@ticket.TicketPriority</span>
-                            }
-                            else if (@ticket.TicketPriority == "Medium")
-                            {
-                                <span class="info-box-number text-center mb-0 badge badge-success">@ticket.TicketPriority</span>
-                            }
-                            else
-                            {
-                                <span class="info-box-number text-center mb-0 badge badge-danger">@ticket.TicketPriority</span>
-                            }
-                        </td>
-                        <td data-label="Category">
-                            <a>@ticket.TicketCategory</a>
-                        </td>
-                        <td data-label="Status" class="project-state">
-                            @if (ticket.CurrentStatus == "Open")
-                            {
-                                <span class="badge badge-info">@ticket.CurrentStatus</span>
-                            }
-                            else if (ticket.CurrentStatus == "Accepted")
-                            {
-                                <span class="badge badge-success">@ticket.CurrentStatus</span>
-                            }
-                            else
-                            {
-                                <span class="badge badge-danger">@ticket.CurrentStatus</span>
-                            }
-                        </td>
-                        <td class="project-actions text-right">
-                            <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Details"
-                       asp-controller="Ticket" asp-route-id="@ticket.TicketId"><i class="fas fa-folder"></i>Details</a>
-                        </td>
-                    </tr>
+                    <partial name="_CreatedTicketsPartial" model="@Model.CreatedTickets"/>
                 }
-            </tbody>
-        </table>
-    </div>*@
+                else
+                {
+                    <partial name="_MissingPartial_" model='new MissingModel{Word = "Created Tickets"}'/>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="page-title">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold"> Accepted Tickets</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row tm-content-row">
+    <div class="tm-block-col">
+        <div class="tm-bg-primary-dark tm-block">
+            <h2 class="tm-block-title text-center">All Accepted Tickets</h2>
+            <div class="tm-product-table-container">
+                @if (@Model.AcceptedTickets.Count() > 0)
+                {
+                    <partial name="_AcceptedTicketsPartial" model="@Model.AcceptedTickets"/>
+                }
+                else
+                {
+                    <partial name="_MissingPartial_" model='new MissingModel{Word = "Accepted Tickets"}'/>
+                }
+            </div>
+        </div>
+    </div>
+</div>

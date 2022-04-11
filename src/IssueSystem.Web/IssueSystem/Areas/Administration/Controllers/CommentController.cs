@@ -1,21 +1,17 @@
 ﻿namespace IssueSystem.Areas.Administration.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
     using IssueSystem.Models.Comment;
     using IssueSystem.Services.Contracts.Comment;
-    using IssueSystem.Services.Contracts.Ticket;
-    using Microsoft.AspNetCore.Mvc;
 
     public class CommentController : BaseController
     {
-        private readonly ITicketService _ticketService;
-
         private readonly ICommentService _commentService;
 
         public CommentController(
-            ITicketService ticketService,
             ICommentService commentService)
         {
-            _ticketService = ticketService;
             _commentService = commentService;
         }
 
@@ -29,7 +25,7 @@
         [HttpPost]
         public async Task<IActionResult> WriteComment(CommentViewModel model)
         {
-            var data = await _ticketService.WriteComment(model);
+            var data = await _commentService.WriteComment(model);
 
             return PartialView("_CommentPartial_", data);
         }
