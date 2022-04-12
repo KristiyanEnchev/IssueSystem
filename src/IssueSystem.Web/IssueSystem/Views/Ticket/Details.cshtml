@@ -38,12 +38,25 @@
                             </div>
                             <br />
                             <div class="row">
-                                <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                <div class="form-group mb-3 col-xs-6 col-sm-6">
                                     <label asp-for="@Model.CreatedOn">Created On</label>
                                     <div class="form-control text-center">@Model.CreatedOn.ToString("dd/MM/yyyy-H:mm")</div>
                                 </div>
-                                <div class="form-group mb-3 col-xs-12 col-sm-6">
-                                    <label asp-for="@Model.ProjectName">Project</label>
+                                <div class="form-group mb-3 col-xs-6 col-sm-6">
+                                    <label asp-for="@Model.AcceptedOn">Accepted On</label>
+                                    @if (@Model.AcceptantId != null)
+                                    {
+                                        <div class="form-control text-center">@Model.AcceptedOn.ToString("dd/MM/yyyy-H:mm")</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="myForm-control" style="height: 45px;">
+                                            <i class="fa fa-solid fa-user-xmark pt-3"></i>
+                                        </div>
+                                    }
+                                </div>
+                                <label style="color: #ffff;" asp-for="@Model.ProjectName">Project</label>
+                                <div class="myForm-control form-group mb-3 col-xs-12 col-sm-12">
                                     <input id="expire_date" asp-for="@Model.ProjectName" id="STATUS" class="form-control text-center"
                                            value="@Model.ProjectName" readonly />
                                 </div>
@@ -91,13 +104,82 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary btn-sm myBtn" type="submit" asp-action="CreateTicket" asp-controller="Ticket">
-                                <i style="padding-right:0.5rem;" class="fa fa-solid fa-circle-plus"></i>CreateTicket
-                            </button>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6">
+                                    <div class="myForm-control pt-2">
+                                        <div class="user-block">
+                                            @if (@Model.CreatorAvatar != null)
+                                            {
+                                                <img class="header__avatar"
+                                                 style="width:60px;height:60px; object-fit:cover; border-radius:30px"
+                                                 src="data:image/*;base64,@(Convert.ToBase64String(@Model.CreatorAvatar.Content))">
+                                            }
+                                            else
+                                            {
+                                                <img class="header__avatar some-avatar" id="profilePicture" style="width:60px;height:60px;"
+                                                 src="~/assets/images/Portrait_Placeholder.png" object-fit:cover">
+                                            }
+                                            <div class="row">
+                                                <a class="avatar-name" sp-area="" asp-action="UserProfile" asp-controller="User"
+                                                   asp-route-id="@Model.CreatorId">@Model.CreatorName</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6">
+                                    @if (@Model.AcceptantId != null)
+                                    {
+                                        <div class="myForm-control pt-2 mx-2">
+                                            <div class="user-block">
+                                                @if (@Model.AcceptantAvatar != null)
+                                                {
+                                                    <img class="header__avatar"
+                                                 style="width:60px;height:60px; object-fit:cover; border-radius:30px"
+                                                 src="data:image/*;base64,@(Convert.ToBase64String(@Model.AcceptantAvatar.Content))">
+                                                }
+                                                else
+                                                {
+                                                    <img class="header__avatar some-avatar" id="profilePicture" style="width:60px;height:60px;"
+                                                 src="~/assets/images/Portrait_Placeholder.png" object-fit:cover">
+                                                }
+                                                <div class="row">
+                                                    <a class="avatar-name" asp-area="" asp-action="UserProfile" asp-controller="User"
+                                                   asp-route-id="@Model.AcceptantId">@Model.AcceptantName</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="pt-2 mx-2">
+                                            <div class="user-block">
+                                                <section class="page-title">
+                                                    <div class="page-title-img bg-img bg-overlay-darken">
+                                                        <div class="container">
+                                                            <div class="row align-items-center justify-content-center">
+                                                                <div class="col-lg-8">
+                                                                    <div class="page-title-content">
+                                                                        <div class="title-border">
+                                                                            <h3 class="text-white text-uppercase font-weight-bold">
+                                                                                No
+                                                                                one have been assigned Yet
+                                                                            </h3>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
                             <div class="tm-product-img-edit mx-auto ">
-                                <img src="/assets/images/Webp.net-compress-image.jpg" alt="Product image" class="img-fluid projectImg">
+                                <img src="/assets/images/19362653.png" alt="Product image" class="img-fluid">
                             </div>
                         </div>
                     </div>
@@ -108,7 +190,32 @@
 
                     </div>
                 </form>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12">
+                        <button class="btn btn-primary btn-sm myBtn" asp-area="" asp-action="Details"
+                                asp-controller="Project" asp-route-id="@Model.ProjectId">
+                            <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Project Details
+                        </button>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12">
+                        @if (@Model.CurrentStatus != "Accepted" || @Model.CurrentStatus != "Closed")
+                        {
+                            <button class="btn btn-sm btn-accept" asp-area="" asp-action="AcceptTicket"
+                                asp-controller="Ticket" asp-route-id="@Model.TicketId">
+                                <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Accept Ticket
+                            </button>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<partial name="_CommentsSection" model="@Model.Comments"/>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <partial name="~/Areas/Administration/Views/Comment/_PostCommentPartial_.cshtml"
+            model="new CommentViewModel(@Model.TicketId, this.User.GetId())" />
+}

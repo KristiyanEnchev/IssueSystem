@@ -692,3 +692,41 @@ border-collapse: collapse;
     padding: 0 0 0 1rem !important;
     border-radius: 5rem;
 }
+
+.myForm-control {
+    display: block;
+    width: 100%;
+    /*padding: 0.375rem 0.75rem;*/
+    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #Fff;
+    background-color: #54657D;
+    /*background-clip: padding-box;*/
+    /*border: 1px solid #ced4da;*/
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 5rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.user-block {
+    padding: 0.9rem;
+}
+.avatar-name {
+    text-decoration: none;
+    color: #FFCA28
+}
+    .avatar-name:hover {
+        color:#ff8b28
+    }
+
+.btn-accept {
+    background-color:#3bd556;
+    color:#fff;
+}
+    .btn-accept:hover {
+        background-color: #66c877;
+        color: #000000;
+    }
