@@ -438,7 +438,8 @@ footer {
 
 .tm-block {
     /*opacity: 0.7;*/
-    box-shadow: 20px 20px 50px 15px #777
+    box-shadow: 20px 20px 50px 15px #777;
+    max-height: 100%;
 }
 
 
@@ -685,4 +686,9 @@ border-collapse: collapse;
                 font-weight: bold;
                 text-align: left;
             }
+}
+
+.custom-select {
+    padding: 0 0 0 1rem !important;
+    border-radius: 5rem;
 }

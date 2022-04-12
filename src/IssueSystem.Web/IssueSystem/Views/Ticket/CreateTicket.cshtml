@@ -1,0 +1,81 @@
+﻿@model CreateTicketViewModel
+@{
+    var categories = (List<SelectListItem>)ViewBag.TicketCategories;
+    var priorities = (List<SelectListItem>)ViewBag.TicketPriorities;
+}
+
+<section class="page-title">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Create ticket for Project</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row text-center">
+    <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="tm-block-title d-inline-block">Ticket</h2>
+                </div>
+            </div>
+            <div class="row tm-edit-product-row">
+                <form action="" method="post" class="tm-edit-product-form">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12">
+                            <input asp-for="CreatorId" type="hidden" name="CreatorId" value="@Model.CreatorId" />
+                            <input asp-for="ProjectId" type="hidden" name="ProjectId" value="@Model.ProjectId" />
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group mb-3">
+                                <label asp-for="@Model.Title">Ticket Title </label>
+                                <input asp-for="Title" class="form-control validate text-center" aria-required="true" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="form-group mb-3">
+                                <label for="category">Category</label>
+                                <select asp-for="TicketCategoryId" asp-items="@categories"
+                                        class="custom-select tm-select-accounts selectpicker" id="category">
+                                    <option value="">-- Select Category --</option>
+                                </select>
+                            </div>
+                            <br />
+                            <div class="form-group mb-3">
+                                <label for="category">Priority</label>
+                                <select asp-for="TicketPriorityId" asp-items="@priorities"
+                                        class="custom-select tm-select-accounts selectpicker" id="category">
+                                    <option value="">-- Select Priority --</option>
+                                </select>
+                            </div>
+                            <br />
+                            <button class="btn btn-primary btn-sm myBtn" type="submit" asp-action="CreateTicket" asp-controller="Ticket">
+                                <i style="padding-right:0.5rem;" class="fa fa-solid fa-circle-plus"></i>CreateTicket
+                            </button>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+                            <div class="tm-product-img-edit mx-auto ">
+                                <img src="/assets/images/Webp.net-compress-image.jpg" alt="Product image" class="img-fluid projectImg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="@Model.Description">Description</label>
+                        <textarea asp-for="@Model.Description" class="form-control z-depth-1 projectText" rows="10">@Model.Description</textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

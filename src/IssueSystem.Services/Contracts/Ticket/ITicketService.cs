@@ -2,6 +2,7 @@
 {
     using IssueSystem.Data.Models;
     using IssueSystem.Models.Admin.Ticket;
+    using IssueSystem.Models.Project;
     using IssueSystem.Models.Tickets;
     using IssueSystem.Services.Common;
 
@@ -23,8 +24,7 @@
         Task<TicketsReportModel> GetDailyTicketsReport(string userId);
         Task<TicketsReportModel> GetYearlyTicketsReport(string userId);
         Task<TicketsReportModel> GetWeeklyTicketsReport(string userId);
-        Task<IList<UserTicketsIndexModel>> GetUserAcceptedTickets(string acceptantId);
-        Task<IList<UserTicketsIndexModel>> GetUserCreatedTickets(string creatorId);
         Task<TicketsReportModel> GetUserTickets(string userId);
+        Task<IList<ProjectListTicketsModel>> GetAvaibleTickets(string userId);
     }
 }

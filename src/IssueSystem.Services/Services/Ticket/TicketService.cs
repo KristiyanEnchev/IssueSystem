@@ -10,6 +10,7 @@
     using IssueSystem.Models.Admin.Ticket;
     using IssueSystem.Services.Contracts.File;
     using IssueSystem.Services.Contracts.Comment;
+    using IssueSystem.Models.Project;
 
     public class TicketService : BaseService<Ticket>, ITicketService
     {
@@ -36,10 +37,23 @@
             _reportService = reportService;
         }
 
+        public async Task<IList<ProjectListTicketsModel>> GetAvaibleTickets(string userId) 
+        {
+            var model = await Mapper.ProjectTo<ProjectListTicketsModel>
+                (Data.EmployeeProjects
+                .Include(x => x.Project)
+                .Include(x => x.Project.Tickets)
+                .Where(x => x.EmployeeId == userId)
+                .Select(x => x.Project))
+                .ToListAsync();
+
+            return model;
+        }
+
         public async Task<TicketsReportModel> GetUserTickets(string userId) 
         {
-            var createdDailyTickets = await GetUserCreatedTickets(userId);
-            var acceptedDailyTickets = await GetUserAcceptedTickets(userId);
+            var createdDailyTickets = await _reportService.GetUserCreatedTickets(userId);
+            var acceptedDailyTickets = await _reportService.GetUserAcceptedTickets(userId);
 
             var model = new TicketsReportModel
             {
@@ -50,21 +64,6 @@
             return model;
         }
 
-        public async Task<IList<UserTicketsIndexModel>> GetUserCreatedTickets(string creatorId) 
-        {
-            return await Mapper.ProjectTo<UserTicketsIndexModel>
-                (Data.Tickets
-                .Where(x => x.CreatorId == creatorId))
-                .ToListAsync();
-        }
-
-        public async Task<IList<UserTicketsIndexModel>> GetUserAcceptedTickets(string acceptantId)
-        {
-            return await Mapper.ProjectTo<UserTicketsIndexModel>
-                (Data.Tickets
-                .Where(x => x.AcceptantId == acceptantId))
-                .ToListAsync();
-        }
 
         public async Task<TicketsReportModel> GetDailyTicketsReport(string userId)
         {

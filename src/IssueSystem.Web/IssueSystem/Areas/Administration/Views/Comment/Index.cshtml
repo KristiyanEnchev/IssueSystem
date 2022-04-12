@@ -61,7 +61,7 @@
                                     }
                                     </td>
                                     
-                                    <td data-label="CreatedOn" class="">@comment.CreatedOn</td>
+                                    <td data-label="CreatedOn" class="">@comment.CreatedOn.ToString("dd/MM/yyyy")</td>
                                     <td style="text-align: right">
                                         <a class="btn btn-primary btn-sm" asp-area="Administration" asp-action="Details" asp-controller="Ticket"
                                    asp-route-id="@comment.TicketId">

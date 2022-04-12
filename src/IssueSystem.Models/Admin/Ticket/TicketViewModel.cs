@@ -25,6 +25,7 @@
         public int CommentsCount { get; set; }
         public string ProjectId { get; set; }
         public string ProjectName { get; set; }
+        public string ProjectDescription { get; set; }
         public DateTime AcceptedOn { get; set; }
 
         public ICollection<CommentListViewModel> Comments { get; set; }
@@ -40,6 +41,8 @@
                 .ForPath(x => x.CreatorName, y => y.MapFrom(x => x.TicketCreator.FirstName + " " + x.TicketCreator.LastName))
                 .ForMember(x => x.ProjectName, y => y.MapFrom(x => x.Project.ProjectName))
                 .ForPath(x => x.ProjectName, y => y.MapFrom(x => x.Project.ProjectName))
+                .ForMember(x => x.ProjectDescription, y => y.MapFrom(x => x.Project.Description))
+                .ForPath(x => x.ProjectDescription, y => y.MapFrom(x => x.Project.Description))
                 .ForMember(x => x.TicketCategory, y => y.MapFrom(x => x.TicketCategory.CategoryName))
                 .ForPath(x => x.TicketCategory, y => y.MapFrom(x => x.TicketCategory.CategoryName))
                 .ForMember(x => x.TicketPriority, y => y.MapFrom(x => x.TicketPriority.PriorityType.ToString()))

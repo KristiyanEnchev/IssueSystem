@@ -81,16 +81,16 @@
                                     </td>
                                     <td class="text-center">
                                         <a class="btn btn-primary btn-sm" asp-area="" asp-action="Details"
-                                   asp-controller="Project" asp-route-id="@project.ProjectId">
+                                                asp-controller="Project" asp-route-id="@project.ProjectId">
                                             <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Details
                                         </a>
 
                                         @if (@project.IsInProject)
                                         {
-                                            <a class="btn btn-primary btn-sm myBtn" asp-area="" asp-action="CreateTicket"
-                                   asp-controller="Project" asp-route-id="@project.ProjectId">
+                                            <button class="btn btn-primary btn-sm myBtn" asp-area="" asp-action="CreateTicket"
+                                                asp-controller="Ticket" asp-route-id="@project.ProjectId">
                                                 <i style="padding-right:0.5rem;" class="fas fa-folder"></i>CreateTicket
-                                            </a>
+                                            </button>
                                         }
                                     </td>
                                 </tr>

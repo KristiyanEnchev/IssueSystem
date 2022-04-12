@@ -17,6 +17,22 @@
         {
         }
 
+        public async Task<IList<UserTicketsIndexModel>> GetUserCreatedTickets(string creatorId)
+        {
+            return await Mapper.ProjectTo<UserTicketsIndexModel>
+                (Data.Tickets
+                .Where(x => x.CreatorId == creatorId))
+                .ToListAsync();
+        }
+
+        public async Task<IList<UserTicketsIndexModel>> GetUserAcceptedTickets(string acceptantId)
+        {
+            return await Mapper.ProjectTo<UserTicketsIndexModel>
+                (Data.Tickets
+                .Where(x => x.AcceptantId == acceptantId))
+                .ToListAsync();
+        }
+
         public async Task<IList<UserTicketsIndexModel>> GetUserAcceptedTicketsDaily(string acceptantId)
         {
             return await Mapper.ProjectTo<UserTicketsIndexModel>
@@ -40,7 +56,7 @@
             return await Mapper.ProjectTo<UserTicketsIndexModel>
                 (Data.Tickets
                 .Where(x => x.AcceptantId == acceptantId)
-                .Where(x => x.CreatedOn.Date >= DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek - 6)))
+                .Where(x => x.CreatedOn.Day >= DateTime.UtcNow.Day - 6))
                 .ToListAsync();
         }
 
@@ -49,7 +65,7 @@
             return await Mapper.ProjectTo<UserTicketsIndexModel>
                 (Data.Tickets
                 .Where(x => x.CreatorId == creatorId)
-                .Where(x => x.CreatedOn.Date >= DateTime.UtcNow.AddDays(-(int)DateTime.UtcNow.DayOfWeek - 6)))
+                .Where(x => x.CreatedOn.Day >= DateTime.UtcNow.Day - 6))
                 .ToListAsync();
         }
 
