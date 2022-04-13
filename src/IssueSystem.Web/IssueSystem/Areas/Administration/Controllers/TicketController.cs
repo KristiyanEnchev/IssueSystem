@@ -1,10 +1,11 @@
 ﻿namespace IssueSystem.Areas.Administration.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
     using IssueSystem.Common;
     using IssueSystem.Infrastructure.Extensions;
     using IssueSystem.Services.Admin.Contracts;
     using IssueSystem.Services.Contracts.Ticket;
-    using Microsoft.AspNetCore.Mvc;
 
     public class TicketController : BaseController
     {

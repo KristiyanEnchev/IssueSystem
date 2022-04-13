@@ -1,51 +1,111 @@
 ﻿@{
+    var firstname = string.Empty;
+    var lastName = string.Empty;
+
+    if (this.User.GetFirstName() != null && this.User.GetLastName() != null)
+    {
+        firstname = this.User.GetFirstName();
+        lastName = this.User.GetLastName();
+    }
+    else
+    {
+        firstname = this.User.GetEmail();
+    }
 }
 
 <div class="wrapper">
-	@if (User.Identity.IsAuthenticated)
-	{
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <div class="row tm-content-row">
+            <div class="tm-block-col col-md-4 col-sm-12">
+                <div class="tm-block tm-block-settings">
+                    <h2 class="tm-block-title text-center">Hellow <strong style="color:#F5A623">@firstname.ToUpper() @lastName.ToUpper()</strong></h2>
+                    <div class="row">
+                        <figure class="text-center">
+                            <blockquote class="blockquote">
+                                <h3 class="tm-block-title text-center">
+                                    Wellcome to the <strong style="color:#F5A623">Bug Jar</strong> Demo
+                                </h3>
+                            </blockquote>
+                            <h2 class="tm-block-title" style="text-align: center;">Here you can</h2>
+                            <figcaption style="color: #fff2a8;" class="blockquote-footer">
+                                Check all your colegues that are in your department
+                            </figcaption>
+                            <br/>
+                            <figcaption style="color: #fff2a8;" class="blockquote-footer">
+                                All the projects in your Department
+                            </figcaption>
+                            <br/>
+                            <figcaption style="color: #fff2a8;" class="blockquote-footer">
+                                Find and accept tickets(Issues) assigne to projects that you are into
+                            </figcaption>
+                            <br/>
+                            <figcaption style="color: #fff2a8;" class="blockquote-footer">
+                                Get Reports of all your created and accepted tickets 
+                            </figcaption>
+                            <br/>
+                            <figcaption style="color: #fff2a8;" class="blockquote-footer">
+                               Comment on tickets, with your coligues so you resolve the Issues faster 
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
 
-	}
-	else
-	{
-		 <div class="row tm-content-row">
-			<div class="row tm-content-row">
+            <div class="tm-block-col col-md-8 col-sm-12">
+                <div class="tm-block">
+                    <h2 class="tm-block-title" style="text-align: center;">Wellcome To Bug Jar</h2>
+                    <div class="tm-avatar-container">
+                        <div class="form-group text-center">
+                            <img id="wellcome" src="~/assets/images/wllcome1.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row tm-content-row">
+            <div class="row tm-content-row">
 
-				<div class="tm-block-col tm-col-avatar">
-					<div class="tm-bg-primary-dark tm-block tm-block-avatar">
-						<h2 class="tm-block-title" style="text-align: center;">Wellcome To Bug Jar</h2>
-						<div class="tm-avatar-container">
-							 <a asp-area="Identity" asp-page="/Account/Login">
-								<div class="form-group">
-									<img id="photo" src="~/assets/images/Index-avatar.png">
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
+                <div class="tm-block-col col-md-5 colsm-5">
+                    <div class="tm-bg-primary-dark tm-block tm-block-avatar">
+                        <h2 class="tm-block-title" style="text-align: center;">Wellcome To Bug Jar</h2>
+                        <div class="tm-avatar-container">
+                            <a asp-area="Identity" asp-page="/Account/Login">
+                                <div class="form-group">
+                                    <img id="photo" src="~/assets/images/Index-avatar.png">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="tm-block-col tm-col-account-settings">
-					<div class="tm-bg-primary-dark tm-block tm-block-settings">
-						<h2 class="tm-block-title text-center">Simple Issues Tracking system (Bug Tracker)</h2>
-						<div class="row">
-							<figure class="text-center">
-							  <blockquote class="blockquote">
+                <div class="tm-block-col col-md-6 col-sm-6">
+                    <div class="tm-bg-primary-dark tm-block tm-block-settings">
+                        <h2 class="tm-block-title text-center">Simple Issues Tracking system (Bug Tracker)</h2>
+                        <div class="row">
+                            <figure class="text-center">
+                                <blockquote class="blockquote">
 
-								<h3 class="tm-block-title text-center"> Created for entertanment pourposess  and to represents the skills acuired during my studies of 
-									<strong style="color:#F5A623"> C# Web Development</strong> in Softuni</h3>
+                                    <h3 class="tm-block-title text-center">
+                                        Created for entertanment pourposess  and to represents the skills acuired during my studies of
+                                        <strong style="color:#F5A623"> C# Web Development</strong> in Softuni
+                                    </h3>
 
-							  </blockquote>
-								<h2 class="tm-block-title" style="text-align: center;">Some Features</h2>
+                                </blockquote>
+                                <h2 class="tm-block-title" style="text-align: center;">Some Features</h2>
 
-							  <figcaption style="color: #fff2a8;" class="blockquote-footer">
-								Need to write the features that i have inplimented <cite title="Source Title">If I am able to finish the project :D</cite>
-							  </figcaption>
+                                <figcaption style="color: #fff2a8;" class="blockquote-footer">
+                                    Need to write the features that i have inplimented <cite title="Source Title">If I am able to finish the project :D</cite>
+                                </figcaption>
 
-							</figure>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	}
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>

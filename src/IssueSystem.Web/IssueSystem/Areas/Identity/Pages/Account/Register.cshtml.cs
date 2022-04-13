@@ -21,6 +21,7 @@
     using IssueSystem.Data.Models;
     using IssueSystem.Services.HelpersServices.SendGrid;
     using IssueSystem.Common;
+    using System.Security.Claims;
 
     public class RegisterModel : PageModel
     {
@@ -104,7 +105,11 @@
                         LastName = this.Input.LastName,
                     };
 
-                    await this.userStore.SetUserNameAsync(user, this.Input.Email, CancellationToken.None);
+                    await this.userStore.SetUserNameAsync(user, this.Input.FirstName, CancellationToken.None);
+
+                    var claimType = "Surname";
+                    await this.userManager.AddClaimAsync(user, new Claim(claimType, user.LastName));
+
                     await this.emailStore.SetEmailAsync(user, this.Input.Email, CancellationToken.None);
                     var result = await this.userManager.CreateAsync(user, this.Input.Password);
 

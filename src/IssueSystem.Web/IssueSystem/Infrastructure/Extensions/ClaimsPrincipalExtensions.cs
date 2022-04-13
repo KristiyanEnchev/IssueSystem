@@ -16,7 +16,7 @@
             => user.FindFirstValue(ClaimTypes.Name);
 
         public static string GetLastName(this ClaimsPrincipal user)
-            => user.FindFirstValue(ClaimTypes.Surname);
+            => user.FindFirstValue("Surname");
 
         public static bool IsAdmin(this ClaimsPrincipal user)
             => user.IsInRole(IssueSystemRoles.AdministratorRoleName);

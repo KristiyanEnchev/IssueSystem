@@ -730,3 +730,14 @@ border-collapse: collapse;
         background-color: #66c877;
         color: #000000;
     }
+
+#wellcome {
+    max-width: 100%;
+}
+
+.index {
+    max-width: 100%;
+    height: 1000px;
+    /*max-height: 100%;*/
+    margin-top: 7%;
+}

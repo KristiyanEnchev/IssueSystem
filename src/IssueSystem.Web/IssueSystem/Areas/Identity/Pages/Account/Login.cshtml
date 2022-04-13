@@ -4,66 +4,68 @@
 @{
     ViewData["Title"] = "Log in";
 }
-    <div class="container tm-mt-big tm-mb-big">
-      <div class="row">
+<div class="container tm-mt-big tm-mb-big">
+    <div class="row">
         <div class="col-12 mx-auto tm-login-col">
-          <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
-            <div class="row">
-              <div class="col-12 text-center">
-                   <section class="page-title">
-                        <div class="page-title-img bg-img bg-overlay-darken">
-                            <div class="container">
-                                <div class="row align-items-center justify-content-center height100px">
-                                    <div class="col-lg-8">
-                                        <div class="page-title-content">
-                                            <div class="title-border">
-                                                <h1 class="text-white text-uppercase font-weight-bold">@this.ViewData["Title"]</h1>
+            <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <section class="page-title">
+                            <div class="page-title-img bg-img bg-overlay-darken">
+                                <div class="container">
+                                    <div class="row align-items-center justify-content-center height100px">
+                                        <div class="col-lg-8">
+                                            <div class="page-title-content">
+                                                <div class="title-border">
+                                                    <h1 class="text-white text-uppercase font-weight-bold">@this.ViewData["Title"]</h1>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                  </section>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col-12">
-                <form id="account" method="post" class="tm-login-form">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                  <div class="form-group">
-                    <input asp-for="Input.Email" id="username" class="form-control validate" autocomplete="username" aria-required="true" placeholder="Email address" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                  </div>
-                  <div class="form-group mt-3">
-                    <input asp-for="Input.Password" id="password" class="form-control validate" autocomplete="new-password" aria-required="true" placeholder="Password" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                  </div>
-                    <div class="form-group mt-4">
-                        <div class="checkbox">
-                            <label asp-for="Input.RememberMe" class="form-label">
-                                <input class="form-check-input" asp-for="Input.RememberMe" />
+                        </section>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <form id="account" method="post" class="tm-login-form">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <input asp-for="Input.Email" id="username" class="form-control validate" autocomplete="username" aria-required="true" placeholder="Email address" />
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mt-3">
+                                <input asp-for="Input.Password" id="password" class="form-control validate" autocomplete="new-password" aria-required="true" placeholder="Password" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mt-4">
+                                <div class="checkbox">
+                                    <label asp-for="Input.RememberMe" class="form-label">
+                                        <input class="form-check-input" asp-for="Input.RememberMe" />
                                         @Html.DisplayNameFor(m => m.Input.RememberMe)
-                            </label>
-                        </div>
-                    </div>
+                                    </label>
+                                </div>
+                            </div>
 
-                    <div class="d-grid">
-                        <button id="login-submit" type="submit" class="btn btn-primary btn-block text-uppercase">Log in</button>
+                            <div class="d-grid">
+                                <button id="login-submit" type="submit" class="btn btn-primary btn-block text-uppercase">Log in</button>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <a class="mt-5 btn btn-primary btn-block text-uppercase" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <a class="mt-5 btn btn-primary btn-block text-uppercase" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="row">
-                        <div class="col-12 text-center pt-3">
-                                <a class="mt-5 btn btn-primary btn-block text-uppercase" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                                <a class="mt-5 btn btn-primary btn-block text-uppercase" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                        </div>
-                    </div>
-                </form>
-              </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
+</div>
 
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
