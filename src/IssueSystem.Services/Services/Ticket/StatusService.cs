@@ -8,6 +8,7 @@
     using IssueSystem.Data.Models;
     using IssueSystem.Services.Contracts.Ticket;
     using IssueSystem.Data.Models.Enumeration;
+    using Microsoft.EntityFrameworkCore;
 
     public class StatusService : BaseService<TicketStatus>, IStatusService
     {
@@ -18,15 +19,25 @@
         {
         }
 
-        public async Task<(bool acceped, TicketStatus status)> Accept(string ticketId, string acceptantId)
+        public async Task<(bool acceped, TicketStatus status)> Accept(string acceptantId, string ticketId)
         {
             var accepted = false;
 
             var acceptedStatus = new TicketStatus();
 
-            var ticket = Data.Tickets.FirstOrDefault(x => x.TicketId == ticketId);
+            var ticket = await Data.Tickets.FirstOrDefaultAsync(x => x.TicketId == ticketId);
+            var currentstatus = ticket.TicketStatuses
+                .OrderByDescending(x => x.CreatedOn)
+                .FirstOrDefault()
+                .StatusType;
 
-            if (acceptantId != null && ticketId != null && ticket != null && ticket.AcceptantId != acceptantId)
+            ///not sure if creator can accept ticket if no 
+            ///&& ticket.AcceptantId != acceptantId
+
+            if (acceptantId != null &&
+                ticketId != null &&
+                ticket != null &&
+                currentstatus != StatusType.Accepted)
             {
                 acceptedStatus.TicketId = ticketId;
                 acceptedStatus.EmployeeId = acceptantId;

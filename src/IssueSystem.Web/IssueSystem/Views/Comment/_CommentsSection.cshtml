@@ -1,1 +1,29 @@
-﻿
+﻿@model CommentListViewModel
+@{
+    var time = @Model.CreatedOn.ToString("dd/MM/yyyy h:mm");
+}
+
+
+
+<div class="myForm-control p-3 mb-2">
+    <div class="d-flex flex-row pt-3">
+        @if (@Model.AuthorAvatar != null)
+        {
+            <img class="header__avatar"
+             style="width:60px;height:60px; object-fit:cover; border-radius:30px"
+             src="data:image/*;base64,@(Convert.ToBase64String(@Model.AuthorAvatar.Content))">
+        }
+        else
+        {
+            <img class="header__avatar some-avatar" id="profilePicture"
+             src="~/assets/images/Portrait_Placeholder.png" object-fit:cover">
+        }
+        <div class="col-8 d-flex flex-column ms-2">
+            <h6 class="mb-1 text-primary">@Model.AuthorName</h6>
+            <p style="word-wrap: break-word;" class="comment-text">@Model.Content</p>
+        </div>
+    </div>
+    <div class="d-flex text-center justify-content-center">
+        <div class="d-flex flex-row"> <span class="text-muted fw-normal fs-10"></span> @time </div>
+    </div>
+</div>

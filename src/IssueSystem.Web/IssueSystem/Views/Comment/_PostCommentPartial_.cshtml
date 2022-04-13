@@ -1,1 +1,45 @@
-﻿<ul id="some"></ul>
+﻿@model CommentViewModel
+@{
+}
+
+<br/>
+<br/>
+<section class="page-title">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Write your Comment</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="col-md-12 col-sm-12 well">
+    <form id="commentSubmmit" asp-controller="Comment" asp-action="WriteComment" method="post" class="form-block" data-ajax="true" data-ajax-method="post"
+          data-ajax-update="#comments" data-ajax-mode="after" data-ajax-url="@Url.Action("WriteComment", "Comment")">
+        <input asp-for="@Model.AuthorId" type="hidden" name="AuthorId" />
+        <input asp-for="@Model.TicketId" type="hidden" name="TicketId" />
+        <textarea id="commentTextArea" asp-for="@Model.Content" class="form-control z-depth-1 projectText" required="" placeholder="Write your comment"></textarea>
+        <div class="d-flex justify-content-center align-items-center">
+            <button asp-controller="Comment" asp-action="WriteComment" type="submit" class="btn btn-info mt-2">Comment</button>
+        </div>
+    </form>
+
+@*    <form class="form-block">
+        <input asp-for="@Model.AuthorId" type="hidden" name="AuthorId" />
+        <input asp-for="@Model.TicketId" type="hidden" name="TicketId" />
+        <textarea id="commentTextArea" asp-for="@Model.Content" class="form-control z-depth-1 projectText" required="" placeholder="Write your comment"></textarea>
+        <div class="d-flex justify-content-center align-items-center">
+            <button type="submit" class="btn btn-info mt-2">Comment</button>
+        </div>
+    </form>*@
+</div>
+
+@section Scripts {
+<script src="~/assets/js/Ajax.js"></script>
+}

@@ -79,7 +79,6 @@
             return View(model);
         }
 
-        [HttpPost]
         public async Task<IActionResult> AcceptTicket(string id)
         {
             var accepted = await _ticketService.AcceptTicket(id, this.User.GetId());

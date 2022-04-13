@@ -2,28 +2,32 @@
 {
     using AutoMapper;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity;
 
     using IssueSystem.Data;
     using IssueSystem.Data.Models;
     using IssueSystem.Models.Comment;
+    using IssueSystem.Services.Contracts.File;
     using IssueSystem.Services.Contracts.Comment;
-    using IssueSystem.Services.Contracts.Ticket;
-    using Microsoft.AspNetCore.Identity;
 
     public class CommentService : BaseService<Comment>, ICommentService
     {
         private readonly UserManager<Employee> _userManager;
 
+        private readonly IFileService _fileService;
+
         public CommentService(
             IssueSystemDbContext data,
             IMapper mapper,
-            UserManager<Employee> userManager)
+            UserManager<Employee> userManager,
+            IFileService fileService)
             : base(data, mapper)
         {
             _userManager = userManager;
+            _fileService = fileService;
         }
 
-        public async Task<Comment> WriteComment(CommentViewModel model)
+        public async Task<CommentListViewModel> WriteComment(CommentViewModel model)
         {
             var comment = new Comment();
 
@@ -38,7 +42,10 @@
                 await Data.SaveChangesAsync();
             }
 
-            return comment;
+            var returnComment = Mapper.Map<CommentListViewModel>(comment);
+            returnComment.AuthorAvatar = await _fileService.GetImage(comment.AuthorId);
+
+            return returnComment;
         }
 
         public async Task<List<CommentListViewModel>> GetAllTicketComments(string ticketId)

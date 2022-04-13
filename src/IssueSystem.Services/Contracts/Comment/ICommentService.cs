@@ -6,7 +6,7 @@
 
     public interface ICommentService : IScopedService
     {
-        Task<Comment> WriteComment(CommentViewModel model);
+        Task<CommentListViewModel> WriteComment(CommentViewModel model);
         Task<List<CommentListViewModel>> GetAllTicketComments(string ticketId);
         Task<List<CommentIndexModel>> GetLastCommentForAllProject();
     }

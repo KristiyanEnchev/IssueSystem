@@ -1,5 +1,6 @@
 ﻿namespace IssueSystem.Controllers
 {
+    using IssueSystem.Models.Comment;
     using IssueSystem.Services.Contracts.Comment;
     using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,14 @@
             var model = await _commentService.GetAllTicketComments(ticketId);
 
             return Json(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> WriteComment(CommentViewModel model)
+        {
+            var data = await _commentService.WriteComment(model);
+
+            return PartialView("_CommentsSection", data);
         }
     }
 }

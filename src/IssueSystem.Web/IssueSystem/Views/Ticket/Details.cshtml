@@ -192,18 +192,18 @@
                 </form>
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-12">
-                        <button class="btn btn-primary btn-sm myBtn" asp-area="" asp-action="Details"
+                        <a class="btn btn-primary btn-sm mb-2 myBtn" asp-area="" asp-action="Details"
                                 asp-controller="Project" asp-route-id="@Model.ProjectId">
                             <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Project Details
-                        </button>
+                        </a>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12">
-                        @if (@Model.CurrentStatus != "Accepted" || @Model.CurrentStatus != "Closed")
+                        @if (@Model.CurrentStatus != "Accepted" && @Model.CurrentStatus != "Closed")
                         {
-                            <button class="btn btn-sm btn-accept" asp-area="" asp-action="AcceptTicket"
+                            <a class="btn btn-sm btn-accept" asp-area="" asp-action="AcceptTicket"
                                 asp-controller="Ticket" asp-route-id="@Model.TicketId">
                                 <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Accept Ticket
-                            </button>
+                            </a>
                         }
                     </div>
                 </div>
@@ -211,11 +211,39 @@
         </div>
     </div>
 </div>
+<br/>
+<br/>
+<section class="page-title">
+    <div class="page-title-img bg-img bg-overlay-darken">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height100px">
+                <div class="col-lg-8">
+                    <div class="page-title-content">
+                        <div class="title-border">
+                            <h1 class="text-white text-uppercase font-weight-bold">Comment Section</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<partial name="_CommentsSection" model="@Model.Comments"/>
-
-@if (User.Identity.IsAuthenticated)
-{
-    <partial name="~/Areas/Administration/Views/Comment/_PostCommentPartial_.cshtml"
-            model="new CommentViewModel(@Model.TicketId, this.User.GetId())" />
-}
+<div class="row">
+    <div class="col-xl-8 col-lg-8 col-md-11 col-sm-11 mx-auto">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+            <div class="row tm-edit-product-row">
+                <div id="comments">
+                @foreach (var comment in @Model.Comments)
+                {
+                    <partial name="~/Views/Comment/_CommentsSection.cshtml" model="@comment" />
+                }
+                </div>
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <partial name="~/Views/Comment/_PostCommentPartial_.cshtml" model="new CommentViewModel(@Model.TicketId, this.User.GetId())" />
+                }
+            </div>
+        </div>
+    </div>
+</div>
