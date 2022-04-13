@@ -31,12 +31,15 @@
         {
             var comment = new Comment();
 
+            var author = await _userManager.FindByIdAsync(model.AuthorId);
+
             if (model != null)
             {
                 comment.TicketId = model.TicketId;
                 comment.AuthorId = model.AuthorId;
                 comment.Content = model.Content;
-                comment.Author = await _userManager.FindByIdAsync(model.AuthorId);
+                comment.Author = author;
+
                 await Data.Comments.AddAsync(comment);
 
                 await Data.SaveChangesAsync();
@@ -65,8 +68,7 @@
             foreach (var project in Data.Projects
                 .Include(x => x.Tickets)
                 .ThenInclude(x => x.Comments)
-                .Include(x => x.EmployeeProjects)
-                .ThenInclude(x => x.Employee))
+                .ThenInclude(x => x.Author))
             {
                 foreach (var ticket in project.Tickets)
                 {
@@ -78,15 +80,18 @@
                         {
                             TicketId = com.TicketId,
                             CreatedOn = com.CreatedOn,
-                            AuthorName = com.Author.FirstName + " " + com.Author.LastName,
                             ProjectName = project.ProjectName,
                             TicketTitle = ticket.Title,
                         };
 
-                        if (com.Author.ProfilePicture != null)
+                        if (com.Author != null)
                         {
-                            comment.AuthorAvatar = com.Author.ProfilePicture.Content;
+                            comment.AuthorName = com.Author.FirstName + " " + com.Author.LastName;
 
+                            if (com.Author.ProfilePicture != null)
+                            {
+                                comment.AuthorAvatar = com.Author.ProfilePicture.Content;
+                            }
                         }
 
                         if (comment != null)

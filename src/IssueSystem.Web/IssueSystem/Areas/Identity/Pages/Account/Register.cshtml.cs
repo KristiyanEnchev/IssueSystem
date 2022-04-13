@@ -143,6 +143,7 @@
                         }
                         else
                         {
+                            await this.signInManager.UserManager.AddToRoleAsync(user, IssueSystemRoles.EmployeeRoleName);
                             await this.signInManager.SignInAsync(user, isPersistent: false);
                             return this.LocalRedirect(returnUrl);
                         }

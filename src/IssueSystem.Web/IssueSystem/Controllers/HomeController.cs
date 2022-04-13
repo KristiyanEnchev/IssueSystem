@@ -4,17 +4,9 @@
     using Microsoft.AspNetCore.Authorization;
 
     using IssueSystem.Models;
-    using IssueSystem.Services.Contracts.File;
 
     public class HomeController : BaseController
     {
-        private readonly IFileService _fileService;
-
-        public HomeController(IFileService fileService)
-        {
-            _fileService = fileService;
-        }
-
         [AllowAnonymous]
         public  IActionResult Index()
         {

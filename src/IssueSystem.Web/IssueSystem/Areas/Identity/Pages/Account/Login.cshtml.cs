@@ -115,8 +115,7 @@
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            //returnUrl ??= Url.Content("~/Identity/Account/Manage");
-            returnUrl ??= Url.Content("~/");
+            //returnUrl ??= Url.Content("~/");
 
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -131,15 +130,13 @@
                     _logger.LogInformation("User logged in.");
 
                     var user = await _userManager.FindByEmailAsync(Input.Email);
-                    await _userManager.AddToRoleAsync(user, IssueSystemRoles.EmployeeRoleName);
 
                     if (await _userManager.IsInRoleAsync(user, IssueSystemRoles.AdministratorRoleName))
                     {
                         return RedirectToAction("Index", "Home", new { area = "Administration" });
                     }
 
-
-                    return LocalRedirect(returnUrl);
+                    return RedirectToAction("Index", "Home", new { area=""});
                 }
                 if (result.RequiresTwoFactor)
                 {

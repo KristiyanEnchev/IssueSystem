@@ -87,10 +87,10 @@
 
                                         @if (@project.IsInProject)
                                         {
-                                            <button class="btn btn-primary btn-sm myBtn" asp-area="" asp-action="CreateTicket"
+                                            <a type="submit" class="btn btn-primary btn-sm myBtn" asp-area="" asp-action="CreateTicket"
                                                 asp-controller="Ticket" asp-route-id="@project.ProjectId">
                                                 <i style="padding-right:0.5rem;" class="fas fa-folder"></i>CreateTicket
-                                            </button>
+                                            </a>
                                         }
                                     </td>
                                 </tr>

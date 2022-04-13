@@ -25,7 +25,10 @@
 
             var acceptedStatus = new TicketStatus();
 
-            var ticket = await Data.Tickets.FirstOrDefaultAsync(x => x.TicketId == ticketId);
+            var ticket = await Data.Tickets
+                .Include(x => x.TicketStatuses)
+                .FirstOrDefaultAsync(x => x.TicketId == ticketId);
+
             var currentstatus = ticket.TicketStatuses
                 .OrderByDescending(x => x.CreatedOn)
                 .FirstOrDefault()

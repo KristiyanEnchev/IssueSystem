@@ -1,8 +1,9 @@
 ﻿namespace IssueSystem.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
     using IssueSystem.Models.Comment;
     using IssueSystem.Services.Contracts.Comment;
-    using Microsoft.AspNetCore.Mvc;
 
     public class CommentController : BaseController
     {

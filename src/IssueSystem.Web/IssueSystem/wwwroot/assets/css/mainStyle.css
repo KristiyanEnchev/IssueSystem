@@ -390,12 +390,12 @@ ul {
 }
 
 .myBtn {
-    background-color: #FFCA28;
-    border-color: #FFCA28;
+    background-color: #FFCA28 !important;
+    border-color: #FFCA28 !important;
 }
 
 .myBtn:hover {
-    background-color: #FFF176;
+    background-color: #FFF176 !important;
 }
 
 .btn {
