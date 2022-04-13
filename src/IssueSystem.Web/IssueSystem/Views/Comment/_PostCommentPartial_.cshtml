@@ -29,17 +29,4 @@
             <button asp-controller="Comment" asp-action="WriteComment" type="submit" class="btn btn-info mt-2">Comment</button>
         </div>
     </form>
-
-@*    <form class="form-block">
-        <input asp-for="@Model.AuthorId" type="hidden" name="AuthorId" />
-        <input asp-for="@Model.TicketId" type="hidden" name="TicketId" />
-        <textarea id="commentTextArea" asp-for="@Model.Content" class="form-control z-depth-1 projectText" required="" placeholder="Write your comment"></textarea>
-        <div class="d-flex justify-content-center align-items-center">
-            <button type="submit" class="btn btn-info mt-2">Comment</button>
-        </div>
-    </form>*@
 </div>
-
-@section Scripts {
-<script src="~/assets/js/Ajax.js"></script>
-}
