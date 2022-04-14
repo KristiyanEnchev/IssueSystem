@@ -35,6 +35,5 @@ Bug Jar is a demo BugTracker-like application, for Issues management and ticketi
 
 <img src="https://res.cloudinary.com/dmkgrwjes/image/upload/v1649953042/404Denied_dyecj7.jpg" />
 
-<img src="" />
 
 </p>
