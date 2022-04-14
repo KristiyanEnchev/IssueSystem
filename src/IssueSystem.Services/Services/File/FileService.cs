@@ -1,6 +1,5 @@
 ﻿namespace IssueSystem.Services.Services.File
 {
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
     using AutoMapper;
@@ -22,28 +21,6 @@
         {
             _cacheService = cacheService;
         }
-
-        //public async Task<(bool isPictureExist, ResponseImageViewModel image)> GetUserImage(string userId)
-        //{
-        //    var image = new ResponseImageViewModel();
-        //    bool isPictureExist = false;
-
-        //    var data = await Data.Images
-        //        .FirstOrDefaultAsync(x => x.EmployeeId == userId);
-
-        //    if (data != null)
-        //    {
-        //        image.Name = data.Name;
-        //        image.Content = data.Content;
-        //        image.FileExtension = data.FileExtension;
-        //        image.FilePath = data.FilePath;
-        //        image.EmployeeId = data.EmployeeId;
-
-        //        isPictureExist = true;
-        //    }
-
-        //    return (isPictureExist, image);
-        //}
 
         public async Task<ResponseImageViewModel> GetImage(string userId)
         {

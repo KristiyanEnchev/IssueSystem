@@ -101,14 +101,16 @@
                     {
                         await file.CopyToAsync(dataStream);
 
-                        ////if smaler than 2MB
-                        if (dataStream.Length < 2097152)
+                        ////if smaler than 500KB
+                        if (dataStream.Length < 512067)
                         {
                             userImage.Content = dataStream.ToArray();
                         }
                         else
                         {
-                            result = "Your picture is too big, should be less than 2 MB";
+                            result = "Your picture is too big, should be less than 500 KB";
+
+                            return result;
                         }
                     }
 
@@ -128,14 +130,16 @@
                     {
                         await file.CopyToAsync(dataStream);
 
-                        ////if smaler than 2MB
-                        if (dataStream.Length < 2097152)
+                        ////if smaler than 500KB
+                        if (dataStream.Length < 512067)
                         {
                             image.Content = dataStream.ToArray();
                         }
                         else
                         {
-                            result = "Your picture is too big, should be less than 2 MB";
+                            result = "Your picture is too big, should be less than 500 KB";
+
+                            return result;
                         }
                     }
 
