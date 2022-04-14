@@ -40,6 +40,7 @@
     <div class="col-lg-4 col-md-6 col-sm-6">
         <form id="edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           <input asp-for="ProjectId" type="hidden" name="ProjectId" value="@Model.ProjectId" />
             <div class="form-floating">
                 <label asp-for="ProjectName" class="form-label"></label>
                 <input asp-for="ProjectName" class="form-control" aria-required="true" />

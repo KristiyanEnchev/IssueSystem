@@ -84,6 +84,7 @@
         [HttpPost]
         public async Task<IActionResult> Edit(ProjectEditViewModel viewModel)
         {
+            ModelState.Remove("Description");
             if (!ModelState.IsValid)
             {
                 return View(viewModel);
@@ -102,7 +103,7 @@
                 TempData[MessageConstant.ErrorMessage] = "There was some problem when updating the project";
             }
 
-            return View(viewModel);
+            return RedirectToAction("Edit", "Project", new RouteValueDictionary { { "id", viewModel.ProjectId } });
         }
 
         /// Get the user that are not in the project
