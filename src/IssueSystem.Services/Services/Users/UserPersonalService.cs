@@ -89,32 +89,63 @@
                 var fileName = Path.GetFileNameWithoutExtension(file.FileName);
                 var extension = Path.GetExtension(file.FileName);
 
-                userImage.Name = fileName;
-                userImage.FileExtension = extension;
-                userImage.EmployeeId = userId;
-                userImage.EmployeePicture = user;
-
-                using (var dataStream = new MemoryStream())
+                if (userImage != null)
                 {
-                    await file.CopyToAsync(dataStream);
 
-                    ////if smaler than 2MB
-                    if (dataStream.Length < 2097152)
+                    userImage.Name = fileName;
+                    userImage.FileExtension = extension;
+                    userImage.EmployeeId = userId;
+                    userImage.EmployeePicture = user;
+
+                    using (var dataStream = new MemoryStream())
                     {
-                        userImage.Content = dataStream.ToArray();
+                        await file.CopyToAsync(dataStream);
+
+                        ////if smaler than 2MB
+                        if (dataStream.Length < 2097152)
+                        {
+                            userImage.Content = dataStream.ToArray();
+                        }
+                        else
+                        {
+                            result = "Your picture is too big, should be less than 2 MB";
+                        }
                     }
-                    else
-                    {
-                        result = "Your picture is too big, should be less than 2 MB";
-                    }
+
+                    Data.Images.Update(userImage);
                 }
+                else
+                {
+                    var image = new Image
+                    {
+                        Name = fileName,
+                        FileExtension = extension,
+                        EmployeeId = userId,
+                        EmployeePicture = user,
+                    };
 
-                Data.Images.Update(userImage);
+                    using (var dataStream = new MemoryStream())
+                    {
+                        await file.CopyToAsync(dataStream);
 
-                await Data.SaveChangesAsync();
+                        ////if smaler than 2MB
+                        if (dataStream.Length < 2097152)
+                        {
+                            image.Content = dataStream.ToArray();
+                        }
+                        else
+                        {
+                            result = "Your picture is too big, should be less than 2 MB";
+                        }
+                    }
 
-                result = "Succesful update picture";
+                    await Data.Images.AddAsync(image);
+                }
             }
+
+            await Data.SaveChangesAsync();
+
+            result = "Succesful update picture";
 
             return result;
         }

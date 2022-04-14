@@ -5,6 +5,8 @@ $(window).on("load", function () {
     $(".loader-wrapper").fadeOut("slow");
 });
 
+
+//// logout submit
 function logout() {
     document.getElementById("logout").submit();
 }
@@ -75,7 +77,6 @@ $(window).on("load", function () {
 
 
 var commentSubmmit = document.getElementById("commentSubmmit");
-var commentTextArea = document.getElementById("commentTextArea");
 
 //if (commentSubmmit) {
 //    commentSubmmit.addEventListener("submit", function (e) {

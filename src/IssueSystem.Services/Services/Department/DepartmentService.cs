@@ -72,10 +72,13 @@
                     .Any(x => x.Id == userId)))
                 .FirstOrDefaultAsync();
 
-            department.Employees = await Mapper
-                .ProjectTo<ProfileViewModel>(Data.Employees
-                .Where(x => x.Department.DepartmentName == department.DepartmentName))
-                .ToListAsync();
+            if (department != null)
+            {
+                department.Employees = await Mapper
+                    .ProjectTo<ProfileViewModel>(Data.Employees
+                    .Where(x => x.Department.DepartmentName == department.DepartmentName))
+                    .ToListAsync();
+            }
 
             return department;
         }

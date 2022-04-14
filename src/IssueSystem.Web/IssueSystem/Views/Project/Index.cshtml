@@ -21,10 +21,10 @@
 <div class="row tm-content-row">
     <div class="tm-block-col">
         <div class="tm-bg-primary-dark tm-block">
-            <h2 class="tm-block-title text-center">All Projects in the @Model.First().DepartmentName Department</h2>
-            <div class="tm-product-table-container">
-                @if (@Model.Count() > 0)
-                {
+            @if (@Model.Count() > 0)
+            {
+                <h2 class="tm-block-title text-center">All Projects in the @Model.First().DepartmentName Department</h2>
+                <div class="tm-product-table-container">
                     <table class="table tm-table-small tm-product-table custom-table">
                         <thead>
                             <tr>
@@ -58,7 +58,7 @@
                                                     }
                                                     else
                                                     {
-                                                        <img  style="width:40px;height:40px;" class="header__avatar table-avatar some-avatar" id="profilePicture"
+                                                        <img style="width:40px;height:40px;" class="header__avatar table-avatar some-avatar" id="profilePicture"
                                              src="~/assets/images/Portrait_Placeholder.png" object-fit:cover" src="">
                                                     }
                                                 </li>
@@ -81,14 +81,14 @@
                                     </td>
                                     <td class="text-center">
                                         <a class="btn btn-primary btn-sm" asp-area="" asp-action="Details"
-                                                asp-controller="Project" asp-route-id="@project.ProjectId">
+                                   asp-controller="Project" asp-route-id="@project.ProjectId">
                                             <i style="padding-right:0.5rem;" class="fas fa-folder"></i>Details
                                         </a>
 
                                         @if (@project.IsInProject)
                                         {
                                             <a type="submit" class="btn btn-primary btn-sm myBtn" asp-area="" asp-action="CreateTicket"
-                                                asp-controller="Ticket" asp-route-id="@project.ProjectId">
+                                   asp-controller="Ticket" asp-route-id="@project.ProjectId">
                                                 <i style="padding-right:0.5rem;" class="fas fa-folder"></i>CreateTicket
                                             </a>
                                         }
@@ -97,12 +97,12 @@
                             }
                         </tbody>
                     </table>
-                }
-                else
-                {
-                    <partial name="_MissingPartial_" model='new MissingModel{Word = "Projects"}'/>
-                }
-            </div>
+                </div>
+            }
+            else
+            {
+                <partial name="_MissingPartial_" model='new MissingModel{Word = "Projects"}' />
+            }
         </div>
     </div>
 

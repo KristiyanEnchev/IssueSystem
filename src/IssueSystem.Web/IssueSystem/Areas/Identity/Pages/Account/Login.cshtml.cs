@@ -14,6 +14,7 @@
 
     using IssueSystem.Data.Models;
     using IssueSystem.Common;
+    using IssueSystem.Services.HelpersServices.Cache;
 
     public class LoginModel : PageModel
     {
@@ -23,14 +24,18 @@
 
         private readonly ILogger<LoginModel> _logger;
 
+        private readonly ICacheService _cacheService;
+
         public LoginModel(
             SignInManager<Employee> signInManager,
             ILogger<LoginModel> logger,
-            UserManager<Employee> userManager)
+            UserManager<Employee> userManager,
+            ICacheService cacheService)
         {
             _signInManager = signInManager;
             _logger = logger;
             _userManager = userManager;
+            _cacheService = cacheService;
         }
 
         /// <summary>
@@ -100,6 +105,8 @@
 
                 returnUrl ??= Url.Content("~/");
 
+                //Clear cache
+                _cacheService.Clear("File");
                 // Clear the existing external cookie to ensure a clean login process
                 await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
@@ -116,7 +123,6 @@
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             //returnUrl ??= Url.Content("~/");
-
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 

@@ -13,7 +13,7 @@
             => user.FindFirstValue(ClaimTypes.Email);
 
         public static string GetFirstName(this ClaimsPrincipal user)
-            => user.FindFirstValue(ClaimTypes.Name);
+            => user.FindFirstValue("FirstName");
 
         public static string GetLastName(this ClaimsPrincipal user)
             => user.FindFirstValue("Surname");

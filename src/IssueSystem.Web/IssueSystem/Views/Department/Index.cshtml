@@ -9,7 +9,14 @@
                 <div class="col-lg-8">
                     <div class="page-title-content">
                         <div class="title-border">
-                            <h1 class="text-white text-uppercase font-weight-bold">@Model.DepartmentName Department</h1>
+                            @if (@Model != null)
+                            {
+                                <h1 class="text-white text-uppercase font-weight-bold">@Model.DepartmentName Department</h1>
+                            }
+                            else
+                            {
+                                <h1 class="text-white text-uppercase font-weight-bold">You are not in Department yet</h1>
+                            }
                         </div>
                     </div>
                 </div>

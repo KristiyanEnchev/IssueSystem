@@ -105,7 +105,10 @@
                         LastName = this.Input.LastName,
                     };
 
-                    await this.userStore.SetUserNameAsync(user, this.Input.FirstName, CancellationToken.None);
+                    await this.userStore.SetUserNameAsync(user, this.Input.Email, CancellationToken.None);
+
+                    var claimTypeFirstName = "FirstName";
+                    await this.userManager.AddClaimAsync(user, new Claim(claimTypeFirstName, user.FirstName));
 
                     var claimType = "Surname";
                     await this.userManager.AddClaimAsync(user, new Claim(claimType, user.LastName));
