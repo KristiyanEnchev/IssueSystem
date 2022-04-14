@@ -21,7 +21,7 @@
         <div class="tm-bg-primary-dark tm-block">
             <h2 class="tm-block-title text-center"> </h2>
             <div class="">
-                @if (@Model.Employees != null)
+                @if (@Model.Employees.Count > 0)
                 {
                     <partial name="_EmployeesInProjectPartial" model="@Model.Employees" />
                 }
@@ -55,7 +55,7 @@
         <div class="tm-bg-primary-dark tm-block">
             <h2 class="tm-block-title text-center"> </h2>
             <div class="">
-                @if (@Model.Tickets != null)
+                @if (@Model.Tickets.Count > 0)
                 {
                     <partial name="_AllProjectTickets_" model="@Model.Tickets" />
                 }

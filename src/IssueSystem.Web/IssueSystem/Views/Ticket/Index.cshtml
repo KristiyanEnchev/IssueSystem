@@ -41,9 +41,16 @@
                             </div>
                         </div>
                     </div>
+                    @if (@project.Tickets.Count > 0)
+                    {
                         <div class="">
                             <partial name="_TicketsInProjectPartial" model="@project.Tickets" />
                         </div>
+                    }
+                    else
+                    {
+                        <partial name="_MissingPartial_" model='new MissingModel{Word = "Tickets"}' />
+                    }
                 </div>
             </div>
         </div>

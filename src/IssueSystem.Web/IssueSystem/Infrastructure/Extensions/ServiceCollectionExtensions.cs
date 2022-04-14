@@ -1,15 +1,15 @@
 ﻿namespace IssueSystem.Infrastructure.Extensions
 {
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
 
     using IssueSystem.Data;
     using IssueSystem.Data.Models;
-    using IssueSystem.Services.Common;
-    using IssueSystem.Data.Contracts;
     using IssueSystem.Data.DataSeed;
-    using IssueSystem.Services.HelpersServices.SendGrid;
+    using IssueSystem.Data.Contracts;
+    using IssueSystem.Services.Common;
     using IssueSystem.Infrastructure.Filters;
+    using IssueSystem.Services.HelpersServices.SendGrid;
 
     public static class ServiceCollectionExtensions
     {
@@ -18,13 +18,14 @@
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<IssueSystemDbContext>(options =>
                 options.UseSqlServer(connectionString))
-                .AddTransient<IInitialData, SeedProjects>()
-                .AddTransient<IInitialData, SeedTicketCategories>()
-                .AddTransient<IInitialData, SeedTicketPriorities>()
+                .AddTransient<IInitializer, IssueSystemDbInitializer>()
                 .AddTransient<IRoleSeeder, RoleSeeder>()
-                .AddTransient<IInitialData, SeedEmployees>()
                 .AddTransient<IInitialData, SeedDepartments>()
-                .AddTransient<IInitializer, IssueSystemDbInitializer>();
+                .AddTransient<IInitialData, SeedProjects>()
+                .AddTransient<IInitialData, SeedEmployees>()
+                .AddTransient<IInitialData, SeedEmployeeProjects>()
+                .AddTransient<IInitialData, SeedTicketPriorities>()
+                .AddTransient<IInitialData, SeedTicketCategories>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

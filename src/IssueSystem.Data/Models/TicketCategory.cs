@@ -13,7 +13,7 @@
     {
         public TicketCategory()
         {
-            this.Employees = new HashSet<Employee>();
+            //this.Employees = new HashSet<Employee>();
             this.Tickets = new HashSet<Ticket>();
             this.TicketCategoryId = Guid.NewGuid().ToString();
         }
@@ -26,7 +26,7 @@
         [Required(ErrorMessage = "Category name is required")]
         public string CategoryName { get; set; }
 
-        public virtual ICollection<Employee> Employees { get; set; }
+        //public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }
