@@ -8,7 +8,7 @@
 
     using static Data.ModelConstants.Comment;
 
-    public class Comment : BaseEntity, IDeletableEntity
+    public class Comment : BaseEntity
     {
         public Comment()
         {
@@ -29,7 +29,5 @@
         [ForeignKey(nameof(Ticket))]
         public string TicketId { get; set; }
         public virtual Ticket Ticket { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? DeletedOn { get; set; }
     }
 }

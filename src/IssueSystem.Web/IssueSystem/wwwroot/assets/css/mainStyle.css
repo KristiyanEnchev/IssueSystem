@@ -735,6 +735,14 @@ border-collapse: collapse;
 .index {
     max-width: 100%;
     height: 1000px;
-    /*max-height: 100%;*/
     margin-top: 7%;
+}
+
+.card-tools {
+    float: right;
+}
+
+.btn-tool {
+    color: aliceblue;
+    font-size: 20px;
 }

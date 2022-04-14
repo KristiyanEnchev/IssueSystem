@@ -3,9 +3,16 @@
     var time = @Model.CreatedOn.ToString("dd/MM/yyyy h:mm");
 }
 
-
-
 <div class="myForm-control p-3 mb-2">
+    <div class="card-tools">
+        @if (@Model.AuthorId == this.User.GetId())
+        {
+            <a type="button" class="btn btn-tool" asp-action="DeleteComment" asp-controller="Comment" asp-route-id="@Model.CommentId"
+           data-card-widget="remove" title="Delete Comment">
+                <i class="fas fa-times"></i>
+            </a>
+        }
+    </div>
     <div class="d-flex flex-row pt-3">
         @if (@Model.AuthorAvatar != null)
         {
@@ -19,7 +26,7 @@
              src="~/assets/images/Portrait_Placeholder.png" object-fit:cover">
         }
         <div class="col-8 d-flex flex-column ms-2">
-            <h6 class="mb-1 text-primary">@Model.AuthorName</h6>
+            <h6 class="mb-1 text-warning">@Model.AuthorName</h6>
             <p style="word-wrap: break-word;" class="comment-text">@Model.Content</p>
         </div>
     </div>

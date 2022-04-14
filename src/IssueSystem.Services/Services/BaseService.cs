@@ -1,7 +1,8 @@
 ﻿namespace IssueSystem.Services.Services
 {
-    using Microsoft.EntityFrameworkCore;
     using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
 
     using IssueSystem.Data;
     using IssueSystem.Services.Contracts;
@@ -30,5 +31,25 @@
         public IQueryable<TEntity> AllAsNoTracking() => All().AsNoTracking();
 
         public int SaveChanges() => Data.SaveChanges();
+
+
+        public async Task DeleteAsync(object id)
+        {
+            TEntity entity = await GetByIdAsync(id);
+
+            Delete(entity);
+        }
+
+        public void Delete(TEntity entity)
+        {
+            EntityEntry entry = this.Data.Entry(entity);
+
+            if (entry.State == EntityState.Detached)
+            {
+                this.DbSet().Attach(entity);
+            }
+
+            entry.State = EntityState.Deleted;
+        }
     }
 }

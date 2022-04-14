@@ -5,6 +5,15 @@
 }
 
 <div class="card p-3 mb-2">
+        <div class="card-tools">
+        @if (@Model.AuthorId == this.User.GetId())
+        {
+            <a type="button" class="btn btn-tool float-right" asp-area="Administration" asp-action="DeleteComment" asp-controller="Comment" asp-route-id="@Model.CommentId"
+            title="Delete Comment">
+                <i class="fas fa-times"></i>
+            </a>
+        }
+    </div>
     <div class="d-flex flex-row">
         @if (@Model.AuthorAvatar != null)
         {

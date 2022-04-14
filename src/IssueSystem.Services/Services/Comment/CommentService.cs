@@ -38,7 +38,11 @@
                 comment.TicketId = model.TicketId;
                 comment.AuthorId = model.AuthorId;
                 comment.Content = model.Content;
-                comment.Author = author;
+
+                if (author != null)
+                {
+                    comment.Author = author;
+                }
 
                 await Data.Comments.AddAsync(comment);
 
@@ -46,7 +50,13 @@
             }
 
             var returnComment = Mapper.Map<CommentListViewModel>(comment);
-            returnComment.AuthorAvatar = await _fileService.GetImage(comment.AuthorId);
+
+            var avatar = await _fileService.GetImage(comment.AuthorId);
+
+            if (avatar != null)
+            {
+                returnComment.AuthorAvatar = avatar;
+            }
 
             return returnComment;
         }
@@ -62,7 +72,12 @@
 
             foreach (var comment in comments)
             {
-                comment.AuthorAvatar = await _fileService.GetImage(comment.AuthorId);
+                var avatr = await _fileService.GetImage(comment.AuthorId);
+
+                if (avatr != null)
+                {
+                    comment.AuthorAvatar = avatr;
+                }
             }
 
             return comments;
@@ -110,6 +125,30 @@
             }
 
             return list;
+        }
+
+        public async Task<(bool deleted, string ticketId)> DeleteComment(string commentId)
+        {
+            var result = false;
+            var id = string.Empty;
+
+            var comment = await Data.Comments
+                .Include(x => x.Ticket)
+                .Include(x => x.Author)
+                .FirstOrDefaultAsync(x => x.CommentId == commentId);
+
+            if (comment != null)
+            {
+                await this.DeleteAsync(comment.CommentId);
+
+                await Data.SaveChangesAsync();
+
+                result = true;
+
+                id = comment.Ticket.TicketId;
+            }
+
+            return (result, id);
         }
     }
 }
