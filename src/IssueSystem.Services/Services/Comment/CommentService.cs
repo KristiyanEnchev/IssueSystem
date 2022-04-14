@@ -53,12 +53,19 @@
 
         public async Task<List<CommentListViewModel>> GetAllTicketComments(string ticketId)
         {
-            return await Mapper.ProjectTo<CommentListViewModel>
+            var comments = await Mapper.ProjectTo<CommentListViewModel>
                 (Data.Comments
                 .Include(x => x.Author)
                 .Where(x => x.TicketId == ticketId))
                 .OrderBy(x => x.CreatedOn)
                 .ToListAsync();
+
+            foreach (var comment in comments)
+            {
+                comment.AuthorAvatar = await _fileService.GetImage(comment.AuthorId);
+            }
+
+            return comments;
         }
 
         public async Task<List<CommentIndexModel>> GetLastCommentForAllProject()
