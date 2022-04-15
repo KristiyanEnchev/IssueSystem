@@ -3,12 +3,12 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
 
     using IssueSystem.Data;
     using IssueSystem.Data.Models;
     using IssueSystem.Services.Contracts.Ticket;
     using IssueSystem.Data.Models.Enumeration;
-    using Microsoft.EntityFrameworkCore;
 
     public class StatusService : BaseService<TicketStatus>, IStatusService
     {

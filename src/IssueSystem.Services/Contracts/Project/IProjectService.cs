@@ -4,7 +4,6 @@
     using IssueSystem.Models.Image;
     using IssueSystem.Data.Models;
     using IssueSystem.Services.Common;
-    using IssueSystem.Models.Department;
     using IssueSystem.Models.Project;
 
     public interface IProjectService : IScopedService

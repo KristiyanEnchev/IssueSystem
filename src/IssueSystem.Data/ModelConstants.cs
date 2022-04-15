@@ -18,7 +18,11 @@
             public const int EmployeeFirstMaxLenght = 20;
             public const int EmployeeLastMaxLenght = 40;
 
+            public const string FirstNamegLengthErrorMessage = "Should not be longer than 20 symbols";
+            public const string LastNamegLengthErrorMessage = "Should not be longer than 40 symbols";
+
             public const int passwordMinLenght = 3;
+            public const string PasswordsDoNotMatchErrorMessage = "Confirm password do not match";
 
             public const int EmailAdressMinLenght = 3;
             public const int EmailAdressMaxLenght = 100;

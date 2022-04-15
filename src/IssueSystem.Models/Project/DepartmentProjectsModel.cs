@@ -1,4 +1,4 @@
-﻿namespace IssueSystem.Models.Department
+﻿namespace IssueSystem.Models.Project
 {
     using AutoMapper;
 

@@ -9,7 +9,6 @@
     using IssueSystem.Data;
     using IssueSystem.Models.Admin.Project;
     using IssueSystem.Models.Image;
-    using IssueSystem.Models.Department;
     using IssueSystem.Services.Contracts.Users;
     using IssueSystem.Models.Project;
     using IssueSystem.Models.Admin.User;
