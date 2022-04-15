@@ -9,6 +9,7 @@
     public interface ITicketService : IScopedService
     {
         Task<bool> CreateTicket(CreateTicketViewModel model);
+        Task<bool> DeleteTicket(string id);
         Task<List<TicketCategory>> GetTicketCategories();
         Task<List<TicketPriority>> GetTicketPriorities();
         Task<TicketCategory> GetTicketCategoryById(string id);

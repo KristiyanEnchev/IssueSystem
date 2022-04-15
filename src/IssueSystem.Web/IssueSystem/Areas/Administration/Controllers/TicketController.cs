@@ -117,5 +117,33 @@
 
             return RedirectToAction("Index");
         }
+
+
+        /// This method flags the ticket as deleted 
+        /// button for action will remain disabled for now 
+        /// Further Logic is needed
+        public async Task<IActionResult> Delete(string id)
+        {
+            /// JUST IN CASE
+            if (true)
+            {
+                TempData[MessageConstant.SuccessMessage] = "Button is Disabled";
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var isDeleted = await _ticketService.DeleteTicket(id);
+
+                if (!isDeleted)
+                {
+                    TempData[MessageConstant.ErrorMessage] = $"Somethin went wrong while attempting to delete ticket";
+                }
+
+                TempData[MessageConstant.SuccessMessage] = "Ticket is deleted";
+
+                return RedirectToAction("Index");
+            }
+        }
     }
 }

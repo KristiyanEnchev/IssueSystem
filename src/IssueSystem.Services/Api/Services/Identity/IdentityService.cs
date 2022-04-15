@@ -7,6 +7,7 @@
     using IssueSystem.Data.Models;
     using IssueSystem.Models.Api.Identity;
     using IssueSystem.Services.Api.Contracts.Identity;
+    using IssueSystem.Common;
 
     public class IdentityService : IIdentityService
     {
@@ -32,6 +33,8 @@
             };
 
             var identityResult = await userManager.CreateAsync(user, model.Password);
+
+            await userManager.AddToRoleAsync(user, IssueSystemRoles.EmployeeRoleName);
 
             var error = identityResult.Errors.ToArray();
 

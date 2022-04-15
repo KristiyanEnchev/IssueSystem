@@ -95,32 +95,15 @@
         {
             var result = false;
 
-            var deparment = await Data.Departments.FirstOrDefaultAsync(x => x.DepartmentId == id);
+            var deparment = await this.FindByIdAsync(id);
 
             if (deparment != null)
             {
-                Data.Attach(deparment);
-
-                Data.Departments.Remove(deparment);
+                Data.Remove(deparment);
 
                 await Data.SaveChangesAsync();
 
                 result = true;
-            }
-
-            var projects = await Data.Projects.Where(x => x.DepartmentId == id).ToListAsync();
-            var employees = await Data.Employees.Where(x => x.DepartmentId == id).ToListAsync();
-
-            foreach (var project in projects)
-            {
-                project.Departament = null;
-                project.DepartmentId = null;
-            }
-
-            foreach (var employee in employees)
-            {
-                employee.Department = null;
-                employee.DepartmentId = null;
             }
 
             return result;
@@ -174,5 +157,11 @@
 
             return employees;
         }
+
+        private async Task<Department> FindByIdAsync(string id)
+        => await this
+            .All()
+            .Where(p => p.DepartmentId == id)
+            .FirstOrDefaultAsync();
     }
 }

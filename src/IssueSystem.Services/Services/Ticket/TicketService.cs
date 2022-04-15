@@ -209,6 +209,24 @@
             return ticket;
         }
 
+        public async Task<bool> DeleteTicket(string id)
+        {
+            var result = false;
+
+            var ticket = await this.GetTicketById(id);
+
+            if (ticket != null)
+            {
+                Data.Remove(ticket);
+
+                await Data.SaveChangesAsync();
+
+                result = true;
+            }
+
+            return result;
+        }
+
         public async Task<List<TicketCategory>> GetTicketCategories()
         {
             return await Data.TicketCategories.AsNoTracking().ToListAsync();
@@ -245,7 +263,9 @@
         }
         public async Task<Ticket> GetTicketById(string id)
         {
-            return await Data.Tickets.FirstOrDefaultAsync(x => x.TicketId == id);
+            return await this.All()
+                .Where(x => x.TicketId == id)
+                .FirstOrDefaultAsync();
         }
     }
 }
