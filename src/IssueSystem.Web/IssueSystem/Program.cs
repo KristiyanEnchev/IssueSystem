@@ -29,7 +29,7 @@ namespace IssueSystem
             app
                 .UseExceptionHandling(app.Environment)
                 .UseNotFound()
-                //.UseValidationExceptionHandler()
+                .UseValidationExceptionHandler()
                 .UseHttpsRedirection()
                 .UseStaticFiles()
                 .UseRouting()
