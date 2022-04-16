@@ -9,7 +9,6 @@
     using IssueSystem.Data.Models;
     using IssueSystem.Services.Admin.Contracts;
     using IssueSystem.Data;
-    using IssueSystem.Models;
     using IssueSystem.Models.Admin.User;
 
     public class AdminService : BaseService<Employee>, IAdminService

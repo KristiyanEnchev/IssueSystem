@@ -1,10 +1,10 @@
 ﻿namespace IssueSystem.Tests.Common
 {
-    using IssueSystem.Data.Models;
+    using Moq;
 
     using Microsoft.AspNetCore.Identity;
 
-    using Moq;
+    using IssueSystem.Data.Models;
 
     public class UserManagerMoq
     {

@@ -5,7 +5,7 @@
 
     public class ClaimsPrincipleMoq
     {
-        public static ClaimsPrincipal Instance(string userId = "TestId")
+        public static ClaimsPrincipal Instance(string userId = "User1")
         {
             var fakeClaims = new List<Claim>()
             {
