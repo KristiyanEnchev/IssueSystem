@@ -285,7 +285,7 @@
             var projectId = "Project2";
             var userId = "User1";
             await SetUpProjectServices(projectId);
-
+            await SetUpTicketSetvice("Ticket 1");
             var model = await this._userService.GetUserRecentHistory(userId);
 
             model.ShouldNotBeNull();
@@ -298,6 +298,13 @@
             var projectBefore = await this.Data.Projects.FirstAsync(x => x.ProjectId == projectId);
 
             _projectService.Setup(x => x.GetProjectById(projectId)).ReturnsAsync(projectBefore);
+        }
+
+        public async Task SetUpTicketSetvice(string ticketId)
+        {
+            var model = new TicketViewModel();
+
+            _ticketService.Setup(x => x.GetTicketDetails(ticketId)).Returns(Task.Run(() => model));
         }
 
         public async Task SetUpImageServices(string employeeId)
@@ -354,6 +361,13 @@
         private async Task AddFakeProjects(int count)
         {
             var fakes = ProjectsTestData.GetProjects(count);
+
+            await this.Data.AddRangeAsync(fakes);
+            await this.Data.SaveChangesAsync();
+        }
+        public async Task AddFakeTickets(int count)
+        {
+            var fakes = TicketsTestData.GetTicketsNoAccepted(count);
 
             await this.Data.AddRangeAsync(fakes);
             await this.Data.SaveChangesAsync();
