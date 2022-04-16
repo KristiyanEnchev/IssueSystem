@@ -30,6 +30,9 @@
 
                 userManager.Setup(x => x.UpdateAsync(It.IsAny<Employee>())).ReturnsAsync(IdentityResult.Success);
 
+                userManager.Setup(x => x.GetUserAsync(ClaimsPrincipleMoq.Instance("User1"))).Returns(Task.Run(() =>
+                    new Employee { FirstName = "User1", LastName = "Name1", Id = "User1", Email = "Useremail1" }));
+
                 userManager.Setup(x => x.FindByIdAsync("User1")).ReturnsAsync(
                     new Employee { FirstName = "User1", LastName = "Name1", Id = "User1", Email= "Useremail1" });
 

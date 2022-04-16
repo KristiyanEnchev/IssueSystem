@@ -12,6 +12,7 @@
     using IssueSystem.Services.Admin.Contracts;
     using IssueSystem.Services.Admin.Services;
     using IssueSystem.Models.Admin.User;
+    using IssueSystem.Tests.Data;
 
     public class AdminSetviceTest : SetupFixture
     {
@@ -54,5 +55,26 @@
             Assert.IsType<IdentityResult>(result);
             result.Succeeded.ShouldBeFalse();
         }
+
+        //[Fact]
+        //public async Task ChangePaasword_Should_return_IdentityResult()
+        //{
+        //    var mode = new ChangeAdminPasswordModel();
+        //    var principal = ClaimsPrincipleMoq.Instance;
+        //    await this.AddFakeEmployees(1);
+
+        //    var result = await _adminService.ChangePassword(mode, principal("User1"));
+
+        //    Assert.IsType<IdentityResult>(result);
+        //    result.Succeeded.ShouldBeFalse();
+        //}
+
+        //private async Task AddFakeEmployees(int count)
+        //{
+        //    var fakes = UsersTestData.GetEmployeesForDepartment(count);
+
+        //    await this.Data.AddRangeAsync(fakes);
+        //    await this.Data.SaveChangesAsync();
+        //}
     }
 }

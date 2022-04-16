@@ -20,6 +20,8 @@
     using Microsoft.EntityFrameworkCore;
     using IssueSystem.Models.Image;
     using System.Linq;
+    using IssueSystem.Models.Admin.Project;
+    using IssueSystem.Models.Admin.Ticket;
 
     public class UserServiceTest : SetupFixture
     {
@@ -160,7 +162,7 @@
         }
 
         [Fact]
-        public async Task GetUsersForProject_Shoild_Return_EmptyCollection_IF_No_EmplProjects() 
+        public async Task GetUsersForProject_Shoild_Return_EmptyCollection_IF_No_EmplProjects()
         {
             await this.AddFakeDepartments(1);
             await this.AddFakeProjects(1);
@@ -181,22 +183,117 @@
         {
             await this.AddFakeDepartments(1);
             await this.AddFakeProjects(1);
-            await this.AddFakeEmployees(1);
-            await this.AddFakeEmployeeProjects(1);
+            await this.AddFakeEmployeesWtihProject(1);
 
 
             var projectId = "Project1";
-            var departmentName = "Deparmtnet 1";
+            var departmentName = "Department 1";
             var employeeId = "User1";
 
             await SetUpImageServices(employeeId);
+
             var model = await this._userService.GetUsersForProject(projectId, departmentName);
 
             model.ShouldNotBeNull();
             Assert.IsType<List<EmployeeViewModel>>(model);
+            model.ToList().Count.ShouldBeGreaterThan(0);
+            model.ToList()[0].ShouldNotBeNull();
+            model.ToList()[0].ProfilePicture.ShouldNotBeNull();
         }
 
-        public async Task SetUpProjectServices(string employeeId, string projectId)
+        [Fact]
+        public async Task GetUsersInProject_Shoild_Return_EmptyCollection_IF_No_EmplProjects()
+        {
+            await this.AddFakeDepartments(1);
+            await this.AddFakeProjects(1);
+            await this.AddFakeEmployees(1);
+
+            var projectId = "Project1";
+
+            var model = await this._userService.GetUsersInProject(projectId);
+
+            model.ShouldNotBeNull();
+            Assert.IsType<List<EmployeeViewModel>>(model);
+            model.ToList().Count.ShouldBeLessThan(1);
+        }
+
+        [Fact]
+        public async Task GetUsersInProject_Shoild_Work_Correctly()
+        {
+            await this.AddFakeDepartments(1);
+            await this.AddFakeProjects(1);
+            await this.AddFakeEmployeesWtihProject(1);
+
+            var projectId = "Project2";
+            var employeeId = "User1";
+
+            await SetUpImageServices(employeeId);
+
+            var model = await this._userService.GetUsersInProject(projectId);
+
+            model.ShouldNotBeNull();
+            Assert.IsType<List<EmployeeViewModel>>(model);
+            model.ToList().Count.ShouldBeGreaterThan(0);
+            model.ToList()[0].ShouldNotBeNull();
+            model.ToList()[0].ProfilePicture.ShouldNotBeNull();
+        }
+
+        [Fact]
+        public async Task GetUsersForRemove_Shoild_Return_EmptyCollection_IF_No_EmplProject()
+        {
+            await this.AddFakeDepartments(1);
+            await this.AddFakeProjects(1);
+            await this.AddFakeEmployees(1);
+
+            var projectId = "Project1";
+
+            var model = await this._userService.GetUsersForRemove(projectId);
+
+            model.ShouldNotBeNull();
+            Assert.IsType<List<EmployeeViewModel>>(model);
+            model.ToList().Count.ShouldBeLessThan(1);
+        }
+
+        [Fact]
+        public async Task GetUsersForRemove_Shoild_Work_Correctly()
+        {
+            await this.AddFakeDepartments(1);
+            await this.AddFakeProjects(1);
+            await this.AddFakeEmployeesWtihProject(1);
+
+            var projectId = "Project2";
+            var employeeId = "User1";
+
+            await SetUpImageServices(employeeId);
+
+            var model = await this._userService.GetUsersForRemove(projectId);
+
+            model.ShouldNotBeNull();
+            Assert.IsType<List<EmployeeViewModel>>(model);
+            model.ToList().Count.ShouldBeGreaterThan(0);
+            model.ToList()[0].ShouldNotBeNull();
+            model.ToList()[0].ProfilePicture.ShouldNotBeNull();
+        }
+
+        [Fact]
+        public async Task GetUserRecentHistory_Should_work_Correctly() 
+        {
+            await this.AddFakeDepartments(1);
+            await this.AddFakeProjects(1);
+            await this.AddFakeEmployeesWtihProject(1);
+
+            var projectId = "Project2";
+            var userId = "User1";
+            await SetUpProjectServices(projectId);
+
+            var model = await this._userService.GetUserRecentHistory(userId);
+
+            model.ShouldNotBeNull();
+            Assert.IsType<HistoryModel>(model);
+            Assert.IsType<EmployeeProjectViewModel>(model.ProjectsData[0]);
+        }
+
+        public async Task SetUpProjectServices(string projectId)
         {
             var projectBefore = await this.Data.Projects.FirstAsync(x => x.ProjectId == projectId);
 
@@ -218,6 +315,13 @@
         private async Task AddFakeDepartments(int count)
         {
             var fakes = DepartmentsTestData.Getdepartments(count);
+
+            await this.Data.AddRangeAsync(fakes);
+            await this.Data.SaveChangesAsync();
+        }
+        private async Task AddFakeEmployeesWtihProject(int count)
+        {
+            var fakes = UsersTestData.GetEmployeeWithProject(count);
 
             await this.Data.AddRangeAsync(fakes);
             await this.Data.SaveChangesAsync();
