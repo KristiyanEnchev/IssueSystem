@@ -19,6 +19,7 @@
                 var roleManager = new Mock<RoleManager<IssueSystemRole>>(store.Object, null, null, null, null);
 
                 roleManager.Object.RoleValidators.Add(new RoleValidator<IssueSystemRole>());
+                roleManager.Object.RoleValidators.Add(new RoleValidator<IssueSystemRole>());
 
                 roleManager.Setup(x => x.CreateAsync(It.IsAny<IssueSystemRole>())).Returns(Task.Run(() => IdentityResult.Success));
 

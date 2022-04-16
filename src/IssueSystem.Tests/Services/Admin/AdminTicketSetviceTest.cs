@@ -9,8 +9,6 @@
     using IssueSystem.Tests.Common;
     using IssueSystem.Tests.Data;
     using IssueSystem.Models.Admin.Ticket;
-    using IssueSystem.Data.Models;
-    using IssueSystem.Data.Models.Enumeration;
 
     public class AdminTicketSetviceTest : SetupFixture
     {
@@ -79,30 +77,12 @@
             await this.Data.SaveChangesAsync();
         }
 
-        public async Task AddFakeAvatars(int count)
-        {
-            var fakes = AvatarTestData.GetAvatars(count);
-
-            await this.Data.AddRangeAsync(fakes);
-            await this.Data.SaveChangesAsync();
-        }
-
         public async Task AddFakeProjects(int count)
         {
             var fakes = ProjectsTestData.GetProjects(count);
 
             await this.Data.AddRangeAsync(fakes);
             await this.Data.SaveChangesAsync();
-        }
-        public static TicketPriority GetPriority()
-        {
-            var priority = new TicketPriority
-            {
-                PriorityType = PriorityType.Low,
-                PriorityId = "Prority",
-            };
-
-            return priority;
         }
     }
 }

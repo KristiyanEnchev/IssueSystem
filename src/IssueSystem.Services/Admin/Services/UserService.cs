@@ -89,27 +89,32 @@
         {
             var user = await _userManager.FindByIdAsync(id);
 
-            var editUser = new UserEditViewModel()
+            if (user != null)
             {
-                UserId = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-            };
+                var editUser = new UserEditViewModel()
+                {
+                    UserId = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                };
 
-            if (user.Department == null && user.DepartmentId == null)
-            {
-                editUser.Department = "Not Yet Assigned";
+                if (user.Department == null && user.DepartmentId == null)
+                {
+                    editUser.Department = "Not Yet Assigned";
+                }
+                else
+                {
+                    var userDeparmtnet = await _departmentService.GetDbDepartmentbyId(user.DepartmentId);
+
+                    editUser.Department = userDeparmtnet.DepartmentName;
+                    editUser.DepartmentId = userDeparmtnet.DepartmentId;
+                }
+
+                return editUser;
             }
-            else
-            {
-                var userDeparmtnet = await _departmentService.GetDbDepartmentbyId(user.DepartmentId);
 
-                editUser.Department = userDeparmtnet.DepartmentName;
-                editUser.DepartmentId = userDeparmtnet.DepartmentId;
-            }
-
-            return editUser;
+            return null;
         }
 
         public async Task<IEnumerable<UserListViewModel>> GetUsers()
@@ -147,11 +152,7 @@
                 user.LastName = model.LastName;
                 user.Email = model.Email;
 
-                Data.Attach(user);
-
                 await _userManager.UpdateAsync(user);
-
-                Data.Employees.Update(user);
 
                 await Data.SaveChangesAsync();
 
