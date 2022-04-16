@@ -38,7 +38,7 @@
             return await Mapper.ProjectTo<UserTicketsIndexModel>
                 (Data.Tickets
                 .Where(x => x.AcceptantId == acceptantId)
-                .Where(x => x.CreatedOn.Date == DateTime.Today))
+                .Where(x => x.CreatedOn.Date == DateTime.UtcNow.Date))
                 .ToListAsync();
         }
 
@@ -47,7 +47,7 @@
             return await Mapper.ProjectTo<UserTicketsIndexModel>
                 (Data.Tickets
                 .Where(x => x.CreatorId == creatorId)
-                .Where(x => x.CreatedOn.Date == DateTime.Today))
+                .Where(x => x.CreatedOn.Date == DateTime.UtcNow.Date))
                 .ToListAsync();
         }
 
