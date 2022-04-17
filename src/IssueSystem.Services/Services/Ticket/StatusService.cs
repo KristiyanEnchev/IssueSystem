@@ -19,7 +19,7 @@
         {
         }
 
-        public async Task<(bool acceped, TicketStatus status)> Accept(string acceptantId, string ticketId)
+        public async Task<(bool acceped, TicketStatus status)> Accept(string ticketId, string  acceptantId)
         {
             var accepted = false;
 
