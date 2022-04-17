@@ -12,7 +12,7 @@ Bug Jar is a demo BugTracker-like application, for Issues management and ticketi
 
 **Employee:**  user@example.com : 123456
 
-**There is more demo accounts in the Database:** all there passwords are : 123456
+**There is more demo accounts in the Database:** all their passwords are : 123456
 
 ## Screenshots
 <p align="center">
