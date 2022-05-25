@@ -1,4 +1,4 @@
-## <span style="color:#F5A623">Bug Jar</span> - Issue Tracker ( In Development )
+## <span style="color:#F5A623">Bug Jar</span> - Issue Tracker
 
 ## Overview
 Bug Jar is a demo BugTracker-like application, for Issues management and ticketing documentation, the UI is clean and easy to use. There is two main layouts,
