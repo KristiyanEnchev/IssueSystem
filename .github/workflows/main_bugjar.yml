@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'BugJar'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B088A8A744AE43A888AC4BB1BF6E90A9 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_811AA6A3BB4F480DB52CD54DD5B4F7C8 }}
           package: .
